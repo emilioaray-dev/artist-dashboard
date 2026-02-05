@@ -49,13 +49,21 @@ specs/001-artist-dashboard/
 
 ### Source Code (repository root)
 
+**Design Reference**: [Lovable Boceto](https://even-artist-hub.lovable.app) - Multi-page dashboard with sidebar navigation
+
 ```text
 src/
 ├── app/
-│   ├── layout.tsx           # Root layout with providers
-│   ├── page.tsx             # Dashboard main page
+│   ├── layout.tsx           # Root layout with Sidebar
+│   ├── page.tsx             # Overview page (dashboard summary)
 │   ├── globals.css          # Global styles + Tailwind
-│   └── api/                 # API Routes for data fetching
+│   ├── releases/
+│   │   └── page.tsx         # Releases grid page
+│   ├── fans/
+│   │   └── page.tsx         # Fans page
+│   ├── settings/
+│   │   └── page.tsx         # Settings page (placeholder)
+│   └── api/
 │       ├── releases/
 │       │   └── route.ts     # GET /api/releases
 │       ├── sales/
@@ -64,26 +72,21 @@ src/
 │           └── route.ts     # GET /api/engagement
 ├── components/
 │   ├── ui/                  # shadcn/ui components
-│   │   ├── card.tsx
-│   │   ├── skeleton.tsx
-│   │   └── ...
+│   ├── layout/
+│   │   └── Sidebar.tsx      # Sidebar navigation (persistent)
 │   ├── dashboard/
-│   │   ├── Header.tsx
-│   │   ├── RecentReleases/
-│   │   │   ├── ReleaseCard.tsx
-│   │   │   ├── ReleasesGrid.tsx
-│   │   │   └── index.tsx
-│   │   ├── SalesAnalytics/
-│   │   │   ├── RevenueChart.client.tsx    # Client Component for interactivity
-│   │   │   ├── ChannelBreakdown.client.tsx
-│   │   │   └── page.tsx                   # Server Component container
-│   │   └── FanEngagement/
-│   │       ├── MetricCard.tsx
-│       │       ├── FanChart.client.tsx
-│       │       └── page.tsx                # Server Component container
+│   │   ├── MetricCard.tsx          # Reusable metric card with trend
+│   │   ├── RevenueChart.client.tsx # Revenue area chart (Gross vs Net)
+│   │   ├── FanGrowthChart.client.tsx # Fan growth area chart
+│   │   ├── RecentReleasesList.tsx  # Recent releases list for overview
+│   │   └── TopFans.tsx             # Top fans ranking
+│   ├── releases/
+│   │   ├── ReleaseCard.tsx         # Release card with cover art
+│   │   └── ReleasesGrid.tsx        # Responsive grid of releases
 │   └── shared/
 │       ├── EmptyState.tsx
-│       └── LoadingSkeleton.tsx
+│       ├── SectionSkeleton.tsx
+│       └── ErrorState.tsx
 ├── lib/
 │   ├── api.ts               # API service functions
 │   ├── data-service.ts      # Data service layer (mock implementations)
@@ -92,12 +95,13 @@ src/
 ├── __mocks__/
 │   ├── releases.ts
 │   ├── sales.ts
+│   ├── fans.ts
 │   └── engagement.ts
 └── types/
     └── index.ts             # All TypeScript interfaces
 ```
 
-**Structure Decision**: Single Next.js application (frontend-only). Using App Router with file-based routing following Next.js recommended structure. API Routes serve as reverse proxy to data service layer that abstracts mock data. This creates a clean separation between UI, API layer, and data sources, facilitating future migration to real APIs. Components organized by feature domain (dashboard sections) with shared UI components from shadcn/ui. Server Components used by default, Client Components only when interactivity is required (following SOLID principles and Next.js best practices). All code written in TypeScript with strict mode and comprehensive TSDoc documentation.
+**Structure Decision**: Multi-page Next.js application with sidebar navigation matching the [Lovable boceto](https://even-artist-hub.lovable.app). App Router with pages: Overview (`/`), Releases (`/releases`), Fans (`/fans`), Settings (`/settings`). Sidebar persistent via root layout. API Routes as reverse proxy to data service layer. Components organized by page/feature domain. Server Components by default, Client Components only for chart interactivity. TypeScript strict mode with TSDoc.
 
 ## Complexity Tracking
 

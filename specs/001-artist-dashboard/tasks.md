@@ -1,21 +1,22 @@
 # Tasks: EVEN Backstage Dashboard
 
 **Input**: Design documents from `/specs/001-artist-dashboard/`
+**Design Reference**: [Lovable Boceto](https://even-artist-hub.lovable.app)
 **Prerequisites**: plan.md, spec.md, data-model.md, research.md, quickstart.md
 
 **Tests**: Unit tests (Jest + React Testing Library) and E2E tests (Playwright) included.
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+**Organization**: Tasks follow the multi-page architecture from the Lovable boceto: Overview (`/`), Releases (`/releases`), Fans (`/fans`), Settings (`/settings`) with persistent sidebar navigation.
 
-## Format: `[ID] [P?] [Story] Description`
+## Format: `[ID] [P?] [Page] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
+- **[Page]**: Which page this task belongs to (Overview, Releases, Fans, Shared)
 - Include exact file paths in descriptions
 
 ## Path Conventions
 
-- **Project type**: Next.js App Router (frontend only)
+- **Project type**: Next.js App Router (frontend only, multi-page with sidebar)
 - **Source**: `src/` at repository root
 - **Components**: `src/components/`
 - **Types**: `src/types/`
@@ -33,175 +34,181 @@
 
 ### Core Dependencies
 
-- [ ] T001 Initialize shadcn/ui with `npx shadcn@latest init` (base color: slate, CSS variables: yes)
-- [ ] T002 Add shadcn/ui components: `npx shadcn@latest add card skeleton button chart`
-- [ ] T003 Install additional dependencies: `npm install lucide-react zustand`
+- [x] T001 Initialize shadcn/ui with `npx shadcn@latest init` (base color: neutral, CSS variables: yes)
+- [x] T002 Add shadcn/ui components: `npx shadcn@latest add card skeleton button chart`
+- [x] T003 Install additional dependencies: lucide-react, zustand (already in package.json)
 
 ### Testing Setup
 
-- [ ] T004 Setup Jest and React Testing Library: `npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom @types/jest ts-node`
+- [x] T004 Setup Jest and React Testing Library: `npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom @types/jest ts-node`
 - [ ] T005 Create Jest config in jest.config.ts and jest.setup.ts
-- [ ] T006 Setup Playwright: `npm init playwright@latest` (TypeScript, e2e folder, GitHub Actions: no)
+- [x] T006 Setup Playwright: `npm init playwright@latest` (TypeScript, e2e folder)
 - [ ] T007 Add test scripts to package.json: `"test": "jest"`, `"test:e2e": "playwright test"`
 
 ### Base Code Structure
 
-- [ ] T008 [P] Create TypeScript interfaces in src/types/index.ts (Channel, Release, SalesData, EngagementMetrics, ApiResponse)
+- [ ] T008 [P] Create TypeScript interfaces in src/types/index.ts (Channel, Release, SalesData, EngagementMetrics, Fan, ApiResponse)
 - [ ] T009 [P] Create utility functions in src/lib/utils.ts (cn helper, formatNumber, formatCurrency, formatDate)
-- [ ] T010 [P] Create channel constants in src/lib/constants.ts (channel colors, names, icons for Direct to Fan, Digital, Physical, Bundles)
+- [ ] T010 [P] Create channel constants in src/lib/constants.ts (channel colors, names, icons, navigation items)
 
 ---
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
-**Purpose**: API Routes, Service Layer, and shared components that ALL user stories depend on
+**Purpose**: Sidebar, API Routes, Service Layer, and shared components that ALL pages depend on
 
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
+**CRITICAL**: No page implementation can begin until this phase is complete
+
+### Sidebar & Layout
+
+- [ ] T011 [Shared] Create Sidebar component in src/components/layout/Sidebar.tsx (collapsible, nav links: Overview, Releases, Fans, Settings with Lucide icons, active state, "E Backstage" logo)
+- [ ] T012 [Shared] Update root layout in src/app/layout.tsx (integrate Sidebar, flex layout with sidebar + main content area)
 
 ### Data Service Layer
 
-- [ ] T011 Create data service interface in src/lib/data-service.ts (abstract data source with TSDoc)
-- [ ] T012 [P] Create mock releases data in src/__mocks__/releases.ts (8-10 sample releases with channel breakdown)
-- [ ] T013 [P] Create mock sales data in src/__mocks__/sales.ts (30 days of daily revenue by channel)
-- [ ] T014 [P] Create mock engagement data in src/__mocks__/engagement.ts (fan metrics + purchase rate + history)
-- [ ] T015 Implement data service with mock data in src/lib/data-service.ts
+- [ ] T013 Create data service interface in src/lib/data-service.ts (abstract data source with TSDoc)
+- [ ] T014 [P] Create mock releases data in src/__mocks__/releases.ts (4 releases: Midnight Sessions Vol. 3, Electric Dreams, Acoustic Sessions, Summer Vibes Bundle with status LIVE/UPCOMING/ENDED)
+- [ ] T015 [P] Create mock sales data in src/__mocks__/sales.ts (30 days of daily Gross vs Net revenue)
+- [ ] T016 [P] Create mock engagement data in src/__mocks__/engagement.ts (fan metrics + fan history)
+- [ ] T017 [P] Create mock fans data in src/__mocks__/fans.ts (top fans: Alex Rivera, Jordan Kim, Sam Chen, Morgan Taylor, Riley Quinn)
+- [ ] T018 Implement data service with mock data in src/lib/data-service.ts
 
 ### API Routes (Reverse Proxy Pattern)
 
-- [ ] T016 Create API route for releases in src/app/api/releases/route.ts (GET with error handling, simulated delay)
-- [ ] T017 [P] Create API route for sales in src/app/api/sales/route.ts (GET with error handling, simulated delay)
-- [ ] T018 [P] Create API route for engagement in src/app/api/engagement/route.ts (GET with error handling, simulated delay)
-- [ ] T019 Create API client functions in src/lib/api.ts (fetchReleases, fetchSales, fetchEngagement with typed responses)
+- [ ] T019 Create API route for releases in src/app/api/releases/route.ts (GET with error handling, simulated delay)
+- [ ] T020 [P] Create API route for sales in src/app/api/sales/route.ts (GET with error handling, simulated delay)
+- [ ] T021 [P] Create API route for engagement in src/app/api/engagement/route.ts (GET with error handling, simulated delay)
+- [ ] T022 Create API client functions in src/lib/api.ts (fetchReleases, fetchSales, fetchEngagement with typed responses)
 
 ### Shared Components
 
-- [ ] T020 Create EmptyState component in src/components/shared/EmptyState.tsx (with TSDoc)
-- [ ] T021 [P] Create SectionSkeleton component in src/components/shared/SectionSkeleton.tsx (with TSDoc)
-- [ ] T022 [P] Create ErrorState component in src/components/shared/ErrorState.tsx (with retry button, TSDoc)
-- [ ] T023 Create DashboardHeader component in src/components/dashboard/Header.tsx (with TSDoc)
-- [ ] T024 Update root layout in src/app/layout.tsx (metadata, fonts, providers)
+- [ ] T023 [P] Create EmptyState component in src/components/shared/EmptyState.tsx (with TSDoc)
+- [ ] T024 [P] Create SectionSkeleton component in src/components/shared/SectionSkeleton.tsx (with TSDoc)
+- [ ] T025 [P] Create ErrorState component in src/components/shared/ErrorState.tsx (with retry button, TSDoc)
 
-**Checkpoint**: Foundation ready - user story implementation can now begin
+**Checkpoint**: Foundation ready - page implementation can now begin
 
 ---
 
-## Phase 3: User Story 1 - Recent Releases (Priority: P1) 🎯 MVP
+## Phase 3: Overview Page (`/`) - Dashboard Summary
 
-**Goal**: Display a responsive grid of exclusive releases with cover art, title, date, sales count, and revenue
+**Goal**: Display overview with 4 metric cards, Revenue chart (Gross vs Net), Fan Growth chart, Recent Releases list, and Top Fans ranking
 
-**Independent Test**: Load dashboard → verify release cards display in responsive grid with all required info from API
+**Matches Lovable boceto**: Overview page layout exactly
 
-### Implementation for User Story 1
+### Implementation for Overview Page
 
-- [ ] T025 [P] [US1] Create ReleaseCard component in src/components/dashboard/RecentReleases/ReleaseCard.tsx (Server Component with TSDoc)
-- [ ] T026 [P] [US1] Create ReleaseCardSkeleton component in src/components/dashboard/RecentReleases/ReleaseCardSkeleton.tsx
-- [ ] T027 [US1] Create ReleasesGrid component in src/components/dashboard/RecentReleases/ReleasesGrid.tsx (Server Component, fetches from API)
-- [ ] T028 [US1] Create barrel export in src/components/dashboard/RecentReleases/index.tsx
-- [ ] T029 [US1] Add RecentReleases section to dashboard page in src/app/page.tsx (with Suspense boundary)
+- [ ] T026 [P] [Overview] Create MetricCard component in src/components/dashboard/MetricCard.tsx (icon, trend badge with %, value, label - amber/gold accent)
+- [ ] T027 [P] [Overview] Create RevenueChart component in src/components/dashboard/RevenueChart.client.tsx (Client Component, AreaChart with Gross vs Net lines, amber gradient)
+- [ ] T028 [P] [Overview] Create FanGrowthChart component in src/components/dashboard/FanGrowthChart.client.tsx (Client Component, AreaChart with Total vs Active lines)
+- [ ] T029 [P] [Overview] Create RecentReleasesList component in src/components/dashboard/RecentReleasesList.tsx (list layout with thumbnail, title, status badge, type, date, revenue, trend)
+- [ ] T030 [P] [Overview] Create TopFans component in src/components/dashboard/TopFans.tsx (ranked list with avatar, name, purchases, total spent)
+- [ ] T031 [Overview] Build Overview page in src/app/page.tsx (4 metric cards row + Revenue chart + Fan Growth chart + Recent Releases & Top Fans side by side, with Suspense boundaries)
 
-### Unit Tests for User Story 1
+### Unit Tests for Overview
 
-- [ ] T030 [P] [US1] Write unit test for ReleaseCard in __tests__/components/ReleaseCard.test.tsx
-- [ ] T031 [P] [US1] Write unit test for ReleasesGrid in __tests__/components/ReleasesGrid.test.tsx
-- [ ] T032 [US1] Write unit test for formatNumber and formatCurrency utilities in __tests__/lib/utils.test.ts
+- [ ] T032 [P] [Overview] Write unit test for MetricCard in __tests__/components/MetricCard.test.tsx
+- [ ] T033 [P] [Overview] Write unit test for RecentReleasesList in __tests__/components/RecentReleasesList.test.tsx
+- [ ] T034 [Overview] Write unit test for formatNumber and formatCurrency utilities in __tests__/lib/utils.test.ts
 
-**Checkpoint**: User Story 1 complete - dashboard shows releases grid with tests passing
-
----
-
-## Phase 4: User Story 2 - Sales Analytics (Priority: P1)
-
-**Goal**: Display interactive charts showing revenue trends and channel breakdown (Direct to Fan focus)
-
-**Independent Test**: Load dashboard → verify revenue chart displays with tooltips and channel breakdown chart
-
-### Implementation for User Story 2
-
-- [ ] T033 [P] [US2] Create RevenueChart component in src/components/dashboard/SalesAnalytics/RevenueChart.client.tsx (Client Component, AreaChart)
-- [ ] T034 [P] [US2] Create ChannelBreakdown component in src/components/dashboard/SalesAnalytics/ChannelBreakdown.client.tsx (Client Component, BarChart)
-- [ ] T035 [P] [US2] Create SalesSummaryCard component in src/components/dashboard/SalesAnalytics/SalesSummaryCard.tsx (gross vs net revenue)
-- [ ] T036 [US2] Create SalesAnalytics section component in src/components/dashboard/SalesAnalytics/index.tsx (Server Component container)
-- [ ] T037 [US2] Add SalesAnalytics section to dashboard page in src/app/page.tsx (with Suspense boundary)
-
-### Unit Tests for User Story 2
-
-- [ ] T038 [P] [US2] Write unit test for SalesSummaryCard in __tests__/components/SalesSummaryCard.test.tsx
-- [ ] T039 [P] [US2] Write unit test for API route sales endpoint in __tests__/api/sales.test.ts
-- [ ] T040 [US2] Write unit test for RevenueChart renders without errors in __tests__/components/RevenueChart.test.tsx
-
-**Checkpoint**: User Stories 1 AND 2 complete with tests passing
+**Checkpoint**: Overview page complete - dashboard shows all summary data
 
 ---
 
-## Phase 5: User Story 3 - Fan Engagement (Priority: P2)
+## Phase 4: Releases Page (`/releases`) - Release Grid
 
-**Goal**: Display fan metrics (total fans, buyers, engagement rate, purchase rate) with trend indicators and growth chart
+**Goal**: Display responsive grid of release cards with cover art, status badge, title, type, date, revenue, and trend
 
-**Independent Test**: Load dashboard → verify metric cards display with trends and fan growth chart renders
+**Matches Lovable boceto**: Releases page with 3-column grid
 
-### Implementation for User Story 3
+### Implementation for Releases Page
 
-- [ ] T041 [P] [US3] Create MetricCard component in src/components/dashboard/FanEngagement/MetricCard.tsx (with trend indicator)
-- [ ] T042 [P] [US3] Create FanChart component in src/components/dashboard/FanEngagement/FanChart.client.tsx (Client Component, LineChart)
-- [ ] T043 [US3] Create FanEngagement section component in src/components/dashboard/FanEngagement/index.tsx (Server Component container)
-- [ ] T044 [US3] Add FanEngagement section to dashboard page in src/app/page.tsx (with Suspense boundary)
+- [ ] T035 [P] [Releases] Create ReleaseCard component in src/components/releases/ReleaseCard.tsx (large cover art, status badge overlay LIVE/UPCOMING/ENDED, title, type + date, revenue + trend)
+- [ ] T036 [P] [Releases] Create ReleaseCardSkeleton component in src/components/releases/ReleaseCardSkeleton.tsx
+- [ ] T037 [Releases] Create ReleasesGrid component in src/components/releases/ReleasesGrid.tsx (responsive grid: 3 cols desktop, 2 tablet, 1 mobile)
+- [ ] T038 [Releases] Build Releases page in src/app/releases/page.tsx (header "Releases" + subtitle + grid, with Suspense boundary)
 
-### Unit Tests for User Story 3
+### Unit Tests for Releases
 
-- [ ] T045 [P] [US3] Write unit test for MetricCard in __tests__/components/MetricCard.test.tsx
-- [ ] T046 [P] [US3] Write unit test for trend indicator logic in __tests__/components/MetricCard.test.tsx
-- [ ] T047 [US3] Write unit test for FanChart renders without errors in __tests__/components/FanChart.test.tsx
+- [ ] T039 [P] [Releases] Write unit test for ReleaseCard in __tests__/components/ReleaseCard.test.tsx
+- [ ] T040 [P] [Releases] Write unit test for ReleasesGrid in __tests__/components/ReleasesGrid.test.tsx
 
-**Checkpoint**: All user stories complete with unit tests passing
+**Checkpoint**: Releases page complete - shows grid of releases with cover art
 
 ---
 
-## Phase 6: E2E Tests (Playwright)
+## Phase 5: Fans Page (`/fans`) - Fan Engagement
 
-**Purpose**: End-to-end tests verifying complete user journeys
+**Goal**: Display 3 fan metric cards (Total Fans, Active Buyers, Engagement Rate), Fan Growth chart, and Top Fans ranking
 
-- [ ] T048 [P] Write E2E test: Dashboard loads with all sections in e2e/dashboard.spec.ts
-- [ ] T049 [P] Write E2E test: Recent Releases grid displays correctly in e2e/releases.spec.ts
-- [ ] T050 [P] Write E2E test: Sales Analytics charts are interactive in e2e/sales.spec.ts
-- [ ] T051 [P] Write E2E test: Fan Engagement metrics display with trends in e2e/engagement.spec.ts
-- [ ] T052 Write E2E test: Responsive design works on mobile viewport in e2e/responsive.spec.ts
-- [ ] T053 Run all E2E tests and verify passing: `npm run test:e2e`
+**Matches Lovable boceto**: Fans page layout exactly
+
+### Implementation for Fans Page
+
+- [ ] T041 [P] [Fans] Create FanMetricCard component (reuse MetricCard with fan-specific icons: Users, UserCheck, Heart)
+- [ ] T042 [Fans] Build Fans page in src/app/fans/page.tsx (3 metric cards + Fan Growth Chart & Top Fans side by side, with Suspense boundaries)
+
+### Unit Tests for Fans
+
+- [ ] T043 [P] [Fans] Write unit test for Fans page metrics in __tests__/pages/fans.test.tsx
+- [ ] T044 [Fans] Write unit test for TopFans component in __tests__/components/TopFans.test.tsx
+
+**Checkpoint**: Fans page complete - shows fan metrics and engagement data
+
+---
+
+## Phase 6: Settings Page (`/settings`) - Placeholder
+
+- [ ] T045 [Settings] Create Settings placeholder page in src/app/settings/page.tsx (header + "Settings coming soon" message)
+
+---
+
+## Phase 7: E2E Tests (Playwright)
+
+**Purpose**: End-to-end tests verifying complete user journeys across pages
+
+- [ ] T046 [P] Write E2E test: Overview page loads with all sections in e2e/overview.spec.ts
+- [ ] T047 [P] Write E2E test: Releases page grid displays correctly in e2e/releases.spec.ts
+- [ ] T048 [P] Write E2E test: Fans page metrics display with trends in e2e/fans.spec.ts
+- [ ] T049 [P] Write E2E test: Sidebar navigation works across pages in e2e/navigation.spec.ts
+- [ ] T050 Write E2E test: Responsive design works on mobile viewport in e2e/responsive.spec.ts
+- [ ] T051 Run all E2E tests and verify passing: `npm run test:e2e`
 
 **Checkpoint**: All E2E tests passing - full user journeys verified
 
 ---
 
-## Phase 7: Polish & Cross-Cutting Concerns
+## Phase 8: Polish & Cross-Cutting Concerns
 
 **Purpose**: Final improvements, animations, accessibility, and deployment preparation
 
 ### Animations & Micro-interactions
 
-- [ ] T054 [P] Add fade-in animation to dashboard sections on load in src/app/globals.css
-- [ ] T055 [P] Add hover scale effect to ReleaseCard in src/components/dashboard/RecentReleases/ReleaseCard.tsx
-- [ ] T056 [P] Add smooth chart tooltip transitions in chart components
-- [ ] T057 [P] Add skeleton pulse animation enhancement in src/components/shared/SectionSkeleton.tsx
-- [ ] T058 [P] Add trend indicator animation (subtle bounce) to MetricCard
+- [ ] T052 [P] Add fade-in animation to page sections on load in src/app/globals.css
+- [ ] T053 [P] Add hover scale effect to ReleaseCard in src/components/releases/ReleaseCard.tsx
+- [ ] T054 [P] Add smooth chart tooltip transitions in chart components
+- [ ] T055 [P] Add skeleton pulse animation enhancement in src/components/shared/SectionSkeleton.tsx
+- [ ] T056 [P] Add trend indicator animation (subtle bounce) to MetricCard
 
 ### Accessibility
 
-- [ ] T059 [P] Add keyboard navigation and focus states to all interactive elements
-- [ ] T060 [P] Verify color contrast meets WCAG 2.1 AA (4.5:1 ratio)
-- [ ] T061 [P] Add aria-labels to charts and interactive elements
+- [ ] T057 [P] Add keyboard navigation and focus states to Sidebar and all interactive elements
+- [ ] T058 [P] Verify color contrast meets WCAG 2.1 AA (4.5:1 ratio)
+- [ ] T059 [P] Add aria-labels to charts and interactive elements
 
 ### Documentation & Code Quality
 
-- [ ] T062 [P] Verify all public functions have TSDoc/JSDoc documentation
-- [ ] T063 [P] Run TypeScript strict mode validation: `npx tsc --noEmit`
-- [ ] T064 [P] Update README.md with final feature list and screenshots
-- [ ] T065 [P] Complete docs/AI_USAGE.md with all AI interaction logs and reflection answers
+- [ ] T060 [P] Verify all public functions have TSDoc/JSDoc documentation
+- [ ] T061 [P] Run TypeScript strict mode validation: `npx tsc --noEmit`
+- [ ] T062 [P] Update README.md with final feature list and screenshots
+- [ ] T063 [P] Complete docs/AI_USAGE.md with all AI interaction logs and reflection answers
 
 ### Final Validation & Deployment
 
-- [ ] T066 Test full responsive design across breakpoints (320px, 768px, 1024px, 1280px)
-- [ ] T067 Run all tests: `npm test && npm run test:e2e`
-- [ ] T068 Run production build and verify no errors: `npm run build`
-- [ ] T069 Deploy to Vercel and verify live demo
+- [ ] T064 Test full responsive design across breakpoints (320px, 768px, 1024px, 1280px)
+- [ ] T065 Run all tests: `npm test && npm run test:e2e`
+- [ ] T066 Run production build and verify no errors: `npm run build`
+- [ ] T067 Deploy to Vercel and verify live demo
 
 ---
 
@@ -213,131 +220,28 @@
 Phase 1 (Setup) ──────────────────────────────────────────────►
                     │
                     ▼
-Phase 2 (Foundational) ───────────────────────────────────────►
+Phase 2 (Foundational: Sidebar + API + Shared) ──────────────►
                     │
         ┌───────────┼───────────┐
         ▼           ▼           ▼
-Phase 3 (US1)   Phase 4 (US2)   Phase 5 (US3)  ← Can run in parallel
+Phase 3 (Overview)  Phase 4     Phase 5 (Fans)  ← Can run in parallel
+                    (Releases)
         │           │           │
         └───────────┼───────────┘
                     ▼
-Phase 6 (E2E Tests) ──────────────────────────────────────────►
-                    │
+Phase 6 (Settings placeholder) ──────────────────────────────►
                     ▼
-Phase 7 (Polish) ─────────────────────────────────────────────►
+Phase 7 (E2E Tests) ─────────────────────────────────────────►
+                    ▼
+Phase 8 (Polish) ─────────────────────────────────────────────►
 ```
 
-### User Story Dependencies
+### Page Dependencies
 
-- **User Story 1 (P1)**: Depends only on Phase 2. No dependencies on other stories.
-- **User Story 2 (P1)**: Depends only on Phase 2. Independent of US1 and US3.
-- **User Story 3 (P2)**: Depends only on Phase 2. Independent of US1 and US2.
-
-### Within Each User Story
-
-1. Parallel component creation (cards, charts) - marked [P]
-2. Section container component (Server Component)
-3. Integration into main page (with Suspense)
-4. Unit tests for components
-
----
-
-## Parallel Execution Examples
-
-### Phase 1 Parallel Tasks
-
-```bash
-# Can run simultaneously after T001-T007:
-T008: "Create TypeScript interfaces in src/types/index.ts"
-T009: "Create utility functions in src/lib/utils.ts"
-T010: "Create channel constants in src/lib/constants.ts"
-```
-
-### Phase 2 Parallel Tasks
-
-```bash
-# Can run simultaneously after T011:
-T012: "Create mock releases data in src/__mocks__/releases.ts"
-T013: "Create mock sales data in src/__mocks__/sales.ts"
-T014: "Create mock engagement data in src/__mocks__/engagement.ts"
-
-# API Routes can run in parallel after T015:
-T016: "Create API route for releases"
-T017: "Create API route for sales"
-T018: "Create API route for engagement"
-```
-
-### User Story + Tests Parallel Tasks
-
-```bash
-# US1 parallel components:
-T025: "Create ReleaseCard component"
-T026: "Create ReleaseCardSkeleton component"
-
-# US1 parallel tests (after implementation):
-T030: "Write unit test for ReleaseCard"
-T031: "Write unit test for ReleasesGrid"
-
-# E2E tests (all parallel):
-T048-T051: All E2E test files can be written in parallel
-```
-
----
-
-## Implementation Strategy
-
-### MVP First (User Story 1 Only) - Recommended for Time Constraint
-
-1. Complete Phase 1: Setup (T001-T010)
-2. Complete Phase 2: Foundational (T011-T024)
-3. Complete Phase 3: User Story 1 + Tests (T025-T032)
-4. **STOP and VALIDATE**: Run unit tests
-5. Add key E2E test (T048-T049)
-6. Add animations (T054-T055) and accessibility (T059-T061)
-7. Complete documentation (T064-T065)
-8. Complete deployment tasks (T066-T069)
-
-**Result**: Working dashboard with releases section + tests + animations + a11y
-
-### Full Implementation
-
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational
-3. Complete Phase 3: User Story 1 + Tests → **Checkpoint: MVP ready**
-4. Complete Phase 4: User Story 2 + Tests → **Checkpoint: +Analytics**
-5. Complete Phase 5: User Story 3 + Tests → **Checkpoint: Full feature**
-6. Complete Phase 6: E2E Tests → **Checkpoint: All tests passing**
-7. Complete Phase 7: Polish → **Checkpoint: Production ready**
-
----
-
-## Notes
-
-- [P] tasks = different files, no dependencies - can run in parallel
-- [US#] label maps task to specific user story for traceability
-- Each user story is independently completable and testable
-- Commit after each task or logical group
-- Stop at any checkpoint to validate independently
-- All chart components require `"use client"` directive
-- Server Components used by default, Client Components only for interactivity
-- All code must include TSDoc/JSDoc documentation
-- **Run tests frequently**: `npm test` after each phase
-
-### Architecture Reminders
-
-- **API Routes** serve as reverse proxy to data service layer (FR-016 to FR-020)
-- **SOLID Principles** must be followed in all components (FR-021)
-- **Server Components** by default, Client Components only when needed (FR-024)
-- **TSDoc/JSDoc** on all public functions (FR-026)
-- **TypeScript strict mode** - no implicit any (FR-027)
-
-### AI Documentation Reminder (REQUIRED)
-
-**After each major feature, update `docs/AI_USAGE.md`:**
-1. Add new entry under "AI Tools Usage Log" using the template
-2. Document: Goal, Tool Used, Prompt/Approach, Result, Learning
-3. Be specific about what you modified from AI suggestions
-4. Complete reflection questions before final submission
+- **Overview** (`/`): Depends on Phase 2. Uses MetricCard, RevenueChart, FanGrowthChart, RecentReleasesList, TopFans.
+- **Releases** (`/releases`): Depends on Phase 2. Independent of Overview and Fans.
+- **Fans** (`/fans`): Depends on Phase 2. Reuses MetricCard, FanGrowthChart, TopFans from Overview.
+- **Settings** (`/settings`): Placeholder, no dependencies.
 
 ---
 
@@ -346,31 +250,27 @@ T048-T051: All E2E test files can be written in parallel
 | Phase | Tasks | Parallel | Description |
 |-------|-------|----------|-------------|
 | Setup | 10 | 3 | Dependencies + test frameworks |
-| Foundational | 14 | 8 | API Routes + Service Layer + shared components |
-| US1 - Releases | 8 | 4 | Implementation + unit tests |
-| US2 - Sales | 8 | 4 | Implementation + unit tests |
-| US3 - Engagement | 7 | 4 | Implementation + unit tests |
+| Foundational | 15 | 8 | Sidebar + API Routes + Service Layer + shared |
+| Overview | 9 | 6 | Overview page + unit tests |
+| Releases | 6 | 3 | Releases grid page + unit tests |
+| Fans | 4 | 2 | Fans page + unit tests |
+| Settings | 1 | 0 | Placeholder page |
 | E2E Tests | 6 | 4 | Playwright tests |
 | Polish | 16 | 11 | Animations + a11y + docs + deploy |
-| **Total** | **69** | **38** |
+| **Total** | **67** | **37** |
 
-## Requirements Coverage
+---
 
-| Requirement | Status | Tasks |
-|-------------|--------|-------|
-| Next.js 16+ App Router | ✅ | Built-in |
-| TypeScript strict | ✅ | T008, T063 |
-| Tailwind CSS | ✅ | Built-in |
-| shadcn/ui | ✅ | T001-T002 |
-| API Routes (reverse proxy) | ✅ | T016-T019 |
-| Service Layer | ✅ | T011, T015 |
-| SOLID Principles | ✅ | All components |
-| Server/Client Components | ✅ | T025-T044 |
-| TSDoc/JSDoc | ✅ | T062 |
-| State management (Zustand) | ✅ | T003 (installed if needed) |
-| **Testing (unit)** | ✅ | T030-T032, T038-T040, T045-T047 |
-| **Testing (E2E)** | ✅ | T048-T053 |
-| Animations/micro-interactions | ✅ | T054-T058 |
-| Error handling & loading states | ✅ | T020-T022, T026 |
-| Accessibility | ✅ | T059-T061 |
-| AI Usage Documentation | ✅ | T065 (docs/AI_USAGE.md) |
+## Notes
+
+- [P] tasks = different files, no dependencies - can run in parallel
+- [Page] label maps task to specific page for traceability
+- Each page is independently completable and testable
+- Commit after each task or logical group
+- Stop at any checkpoint to validate independently
+- All chart components require `"use client"` directive
+- Server Components used by default, Client Components only for interactivity
+- All code must include TSDoc/JSDoc documentation
+- **Run tests frequently**: `npm test` after each phase
+- **Design reference**: Match the Lovable boceto at https://even-artist-hub.lovable.app
+- **Color palette**: Dark theme with amber/gold accents for icons and data, green for positive trends
