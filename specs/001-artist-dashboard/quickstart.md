@@ -1,7 +1,7 @@
-# Quickstart: Music Artist Dashboard
+# Quickstart: EVEN Backstage Dashboard
 
 **Feature**: 001-artist-dashboard
-**Date**: 2026-02-04
+**Date**: 2026-02-05 (updated)
 
 ## Prerequisites
 
@@ -14,30 +14,19 @@
 ### 1. Clone and Install
 
 ```bash
-# Clone the repository
 git clone https://github.com/[your-username]/artist-dashboard.git
 cd artist-dashboard
-
-# Install dependencies
 npm install
 ```
 
 ### 2. Install Additional Dependencies
 
 ```bash
-# shadcn/ui (interactive prompts)
-npx shadcn@latest init
+# Motion (animation library, React 19 compatible)
+npm install motion
 
-# When prompted:
-# - Style: Default
-# - Base color: Slate
-# - CSS variables: Yes
-
-# Add required components (including charts)
-npx shadcn@latest add card skeleton button chart
-
-# Icons + State Management
-npm install lucide-react zustand
+# shadcn/ui components (if not already initialized)
+npx shadcn@latest add card skeleton button chart tabs
 ```
 
 ### 3. Run Development Server
@@ -53,14 +42,22 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```
 src/
 ├── app/                    # Next.js App Router
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Dashboard page
-│   └── globals.css         # Global styles
+│   ├── layout.tsx          # Root layout + Sidebar + MotionConfig
+│   ├── template.tsx        # Page transition wrapper
+│   ├── page.tsx            # Overview page
+│   ├── releases/page.tsx   # Releases grid page
+│   ├── fans/page.tsx       # Fans page
+│   ├── globals.css         # Design tokens + Tailwind
+│   └── api/                # API Routes (reverse proxy)
 ├── components/
 │   ├── ui/                 # shadcn/ui components
-│   └── dashboard/          # Feature components
-├── data/mock/              # Mock data files
-├── lib/                    # Utilities
+│   ├── motion/             # Animation primitives
+│   ├── layout/             # Sidebar
+│   ├── dashboard/          # Overview components
+│   ├── releases/           # Release components + waveform
+│   └── shared/             # Empty state, skeleton
+├── lib/                    # Utils, API client, data service
+├── __mocks__/              # Mock data files
 └── types/                  # TypeScript interfaces
 ```
 
@@ -72,78 +69,47 @@ src/
 | `npm run build` | Build for production |
 | `npm run start` | Run production build |
 | `npm run lint` | Run ESLint |
+| `npm test` | Run unit tests (Jest) |
+| `npm run test:e2e` | Run E2E tests (Playwright) |
 
 ## Development Workflow
 
-### 1. Start with Types
+### 1. Start with Types → Mock Data → API Routes
+Define interfaces, create mock data, wire API routes.
 
-Define your data structures in `src/types/index.ts` before building components.
+### 2. Build Motion Primitives
+Create `MotionProvider`, `StaggerContainer`, `FadeIn` — used across all pages.
 
-### 2. Create Mock Data
-
-Add realistic mock data in `src/data/mock/` that matches your type definitions.
-
-### 3. Build Components Bottom-Up
-
-1. Create small, reusable components first (cards, skeletons)
-2. Compose them into section components (ReleasesGrid, RevenueChart)
-3. Assemble sections on the main page
+### 3. Build Components with Animation
+Each component includes its animations from the start. Use `StaggerContainer` for lists, `FadeIn` for sections.
 
 ### 4. Test Responsive Design
-
-Use browser dev tools to test breakpoints:
 - Mobile: 375px
 - Tablet: 768px
 - Desktop: 1280px
 
-## Verification Checklist
+### 5. Document AI Usage Incrementally
+Update `docs/AI_USAGE.md` after each major phase.
 
-After implementation, verify:
+## Verification Checklist
 
 - [ ] Dashboard loads in under 3 seconds
 - [ ] All three sections display correctly
-- [ ] Grid is responsive (1-4 columns based on viewport)
-- [ ] Charts are interactive (tooltips work)
-- [ ] Metric cards show trend indicators
-- [ ] Loading skeletons appear briefly
-- [ ] No horizontal scroll on any viewport size
-- [ ] Keyboard navigation works on interactive elements
+- [ ] Page transitions animate smoothly
+- [ ] Release cards show waveform visualizer
+- [ ] Charts have time range tabs (7d/30d/90d)
+- [ ] Charts have clickable channel legend
+- [ ] Metric cards animate on entrance
+- [ ] Grid is responsive (1-4 columns)
+- [ ] `prefers-reduced-motion` disables animations
+- [ ] No horizontal scroll on any viewport
+- [ ] Keyboard navigation works
 
 ## Deployment
 
-### Deploy to Vercel
-
 ```bash
-# Install Vercel CLI (if not installed)
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Follow prompts to link/create project
+# Deploy to Vercel
+npx vercel
 ```
 
-Or connect your GitHub repository to Vercel for automatic deployments.
-
-## Troubleshooting
-
-### shadcn/ui components not found
-
-Make sure you ran `npx shadcn@latest init` and components.json exists in the root.
-
-### Chart SSR issues
-
-shadcn/ui chart components need client-side rendering. Wrap with `"use client"` directive at the top of the file.
-
-### Tailwind styles not applying
-
-Check that `globals.css` imports Tailwind directives:
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-
-### TypeScript errors with mock data
-
-Ensure mock data files export typed arrays matching the interfaces in `types/index.ts`.
+Or connect GitHub repository to Vercel for automatic deployments.

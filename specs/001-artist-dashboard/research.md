@@ -232,6 +232,68 @@ interface ApiResponse<T> {
 
 ---
 
+### 9. Animation Library: Motion (formerly Framer Motion)
+
+**Decision**: Use `motion` package (the official evolution of Framer Motion) for all animations
+
+**Rationale**:
+- Official successor to `framer-motion` with React 19 support
+- `framer-motion` has known incompatibility issues with React 19 (GitHub #2668)
+- New import path: `import { motion } from "motion/react"`
+- `LazyMotion` + `m` components reduce bundle from ~34KB to ~5KB
+- Built-in `prefers-reduced-motion` support via `MotionConfig`
+- `template.tsx` pattern enables App Router page transitions with `AnimatePresence`
+
+**Alternatives Considered**:
+| Alternative | Rejected Because |
+|-------------|------------------|
+| framer-motion | Known React 19 incompatibility issues |
+| CSS animations only | No staggered list animations, no AnimatePresence, no layout animations |
+| React Spring | Less community support, different mental model |
+| Auto Animate | Too limited for page transitions and complex stagger patterns |
+
+**Key Implementation Patterns**:
+- **Page transitions**: `template.tsx` + `AnimatePresence` (not layout.tsx)
+- **Staggered lists**: Parent variant with `staggerChildren: 0.1`, child variants for individual motion
+- **Accessibility**: `<MotionConfig reducedMotion="user">` at app root
+- **Bundle optimization**: `LazyMotion` with `domAnimation` features for ~5KB footprint
+- **Server Components**: Motion requires `"use client"` — wrap animated components as Client Components
+
+**Installation**:
+```bash
+npm install motion
+```
+
+---
+
+### 10. Audio Waveform Visualization: Custom SVG
+
+**Decision**: Custom SVG bars with Motion animations, no audio libraries
+
+**Rationale**:
+- Minimal bundle impact (<1KB for waveform logic)
+- Full control over appearance and animation
+- No audio processing overhead — purely visual
+- Mock waveform data: `Array.from({ length: 40 }, () => Math.random() * 100)`
+- Play/pause state toggles Motion scale animation on individual bars with random delays
+
+**Alternatives Considered**:
+| Alternative | Rejected Because |
+|-------------|------------------|
+| Wavesurfer.js | ~100KB+, massive overkill for visual-only waveform |
+| react-music-waveform | External dependency for something achievable with 30 lines of SVG |
+| Web Audio API | Requires actual audio files, unnecessary complexity |
+| Canvas | Less accessible than SVG, harder to animate with Motion |
+
+**Implementation Approach**:
+- Generate static array of random amplitudes per release (seeded by release ID for consistency)
+- Render as SVG `<rect>` elements with varying heights
+- On hover/click: toggle Motion animations (subtle scale pulse per bar with staggered delays)
+- Play state indicated by animated bars + play/pause icon toggle
+- Mobile: tap-to-play, only one waveform active at a time
+
+---
+
 ## Best Practices Applied
 
 ### Next.js 16 App Router
@@ -283,3 +345,8 @@ interface ApiResponse<T> {
 | Empty state design? | Centered illustration + message + optional CTA |
 | Light/Dark mode? | Dark mode only - premium SaaS aesthetic, no theme switching |
 | Data fetching pattern? | API Routes + Service Layer for clean separation |
+| Animation library? | `motion` package (not `framer-motion`) — React 19 compatible, ~5KB with LazyMotion |
+| Page transitions with App Router? | `template.tsx` + `AnimatePresence` pattern |
+| Waveform visualization? | Custom SVG bars + Motion animations, no audio libraries (<1KB) |
+| Reduced motion accessibility? | `MotionConfig` with `reducedMotion="user"` at app root |
+| Visual identity? | Premium / Luxury SaaS — #09090B base, #F59E0B amber accent, large type hierarchy |
