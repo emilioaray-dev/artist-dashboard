@@ -1,11 +1,11 @@
 "use client";
 
 import { Release } from "@/types";
-import { ReleaseCard } from "./ReleaseCard";
+import { ReleaseCard } from "@/components/ui/customs/cards/ReleaseCard";
 import { StaggerContainer } from "@/components/motion/StaggerContainer";
 import { FadeIn } from "@/components/motion/FadeIn";
-import { EmptyState } from "@/components/shared/EmptyState";
-import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/customs/feedback/EmptyState";
+import { Button } from "@/components/ui/core/button";
 import { Music } from "lucide-react";
 
 type ReleasesGridProps = {

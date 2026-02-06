@@ -1,11 +1,12 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/core/card";
 import { cn, formatCurrency, formatDate } from "@/lib/utils";
 import { usePlayerStore } from "@/store/player-store";
-import { Release, ReleaseStatus } from "@/types";
+import { Release } from "@/types";
+import { STATUS_COLORS } from "@/lib/constants";
 import Image from "next/image";
-import { AudioWaveform } from "./AudioWaveform";
+import { AudioWaveform } from "@/components/audio/AudioWaveform";
 
 type ReleaseCardProps = {
   release: Release;
@@ -18,14 +19,6 @@ type ReleaseCardProps = {
  * Hover effect: subtle card lift + border glow with amber accent
  */
 export function ReleaseCard({ release, className }: ReleaseCardProps) {
-  // Determine status badge styling
-  const statusColors: Record<ReleaseStatus, string> = {
-    draft: "bg-gray-500",
-    scheduled: "bg-blue-500",
-    live: "bg-green-500",
-    archived: "bg-gray-700"
-  };
-
   // Get player state and actions
   const { currentTrack, isPlaying, play, pause } = usePlayerStore();
   const isCurrentTrack = currentTrack === release.audioUrl;
@@ -35,7 +28,10 @@ export function ReleaseCard({ release, className }: ReleaseCardProps) {
     if (isCurrentTrack && isPlaying) {
       pause();
     } else {
-      play(release.audioUrl || "https://pub-d285a77a938b46bf93539cdd85ba963b.r2.dev/Nul%20Tiel%20Records%20-%20Jeopardy.mp3");
+      play(
+        release.audioUrl ||
+          "https://pub-d285a77a938b46bf93539cdd85ba963b.r2.dev/Nul%20Tiel%20Records%20-%20Jeopardy.mp3",
+      );
     }
   };
 
@@ -45,11 +41,11 @@ export function ReleaseCard({ release, className }: ReleaseCardProps) {
   const trendColor = revenueTrend === "up" ? "text-positive" : "text-negative";
 
   return (
-    <Card 
+    <Card
       className={cn(
-        "group overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-accent/20", 
-        "border border-surface-elevated hover:border-accent/50",
-        className
+        "group hover:shadow-accent/20 overflow-hidden transition-all duration-300 hover:shadow-lg",
+        "border-surface-elevated hover:border-accent/50 border",
+        className,
       )}
     >
       <CardContent className="p-4">
@@ -62,46 +58,50 @@ export function ReleaseCard({ release, className }: ReleaseCardProps) {
                 alt={release.title}
                 width={300}
                 height={300}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
             ) : (
-              <div className="flex size-full items-center justify-center bg-muted">
+              <div className="bg-muted flex size-full items-center justify-center">
                 <span className="text-muted-foreground">No cover</span>
               </div>
             )}
           </div>
-          
+
           {/* Status Badge */}
-          <div className="absolute left-2 top-2">
-            <span className={cn(
-              "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium text-white",
-              statusColors[release.status]
-            )}>
+          <div className="absolute top-2 left-2">
+            <span
+              className={cn(
+                "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium text-white",
+                STATUS_COLORS[release.status],
+              )}
+            >
               {release.status.toUpperCase()}
             </span>
           </div>
-
         </div>
-        
+
         {/* Title and Info */}
         <div className="mb-2">
           <h3 className="truncate font-semibold">{release.title}</h3>
-          <p className="text-xs text-muted-foreground capitalize">
+          <p className="text-muted-foreground text-xs capitalize">
             {release.type} • {formatDate(release.releaseDate)}
           </p>
         </div>
-        
+
         {/* Revenue and Trend */}
         <div className="flex items-center justify-between">
-          <span className="font-medium">{formatCurrency(release.totalRevenue)}</span>
+          <span className="font-medium">
+            {formatCurrency(release.totalRevenue)}
+          </span>
           <span className={cn("text-xs font-medium", trendColor)}>
             {trendIcon} {(release.totalRevenue / 1000000).toFixed(1)}K
           </span>
         </div>
-        
+
         {/* Audio Waveform */}
-        <div className="mt-3">
-          <AudioWaveform release={release} />
+        <div className="mt-3" data-testid="audio-waveform-container">
+          <AudioWaveform release={release} onPlayPause={togglePlayback} />
         </div>
       </CardContent>
     </Card>
