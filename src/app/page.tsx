@@ -1,5 +1,5 @@
-import HomePageClient from "./components/HomePageClient";
+import HomePageStreaming from "./_components/HomePageStreaming";
 
 export default function OverviewPage() {
-  return <HomePageClient />;
+  return <HomePageStreaming />;
 }

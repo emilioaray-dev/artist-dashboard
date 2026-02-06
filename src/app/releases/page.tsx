@@ -1,5 +1,5 @@
-import ReleasesPageClient from "./components/ReleasesPageClient";
+import ReleasesPageServer from "./_components/ReleasesPageServer";
 
 export default function ReleasesPage() {
-  return <ReleasesPageClient />;
+  return <ReleasesPageServer />;
 }

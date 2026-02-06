@@ -1,5 +1,5 @@
-import FansPageClient from "./components/FansPageClient";
+import FansPageServer from "./_components/FansPageServer";
 
 export default function FansPage() {
-  return <FansPageClient />;
+  return <FansPageServer />;
 }
