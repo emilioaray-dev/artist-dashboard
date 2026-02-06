@@ -68,3 +68,10 @@ node_modules/
 # Jest
 jest.config.ts
 jest.setup.ts
+
+# MCP configuration
+.mcp.json
+
+# Local dev scripts/files
+generate-covers.js
+traks
