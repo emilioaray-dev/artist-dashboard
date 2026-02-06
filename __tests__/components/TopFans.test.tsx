@@ -1,7 +1,8 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { screen, cleanup } from "@testing-library/react";
 import { describe, it, expect, afterEach } from "vitest";
 import { TopFans } from "@/components/ui/customs/lists/TopFans";
 import { Fan } from "@/types";
+import { renderWithIntl } from "../test-utils";
 
 describe("TopFans", () => {
   // Clean up DOM after each test
@@ -34,7 +35,7 @@ describe("TopFans", () => {
   ];
 
   it("renders ranked list with correct formatting", () => {
-    render(<TopFans fans={mockFans} />);
+    renderWithIntl(<TopFans fans={mockFans} />);
 
     // Check if the header is rendered
     expect(screen.getByText("Top Fans")).toBeInTheDocument();
@@ -51,7 +52,7 @@ describe("TopFans", () => {
   });
 
   it("renders all fans in the list", () => {
-    render(<TopFans fans={mockFans} />);
+    renderWithIntl(<TopFans fans={mockFans} />);
 
     // Check if all three fans are rendered by their names
     expect(screen.getByText("MusicLover42")).toBeInTheDocument();
@@ -60,7 +61,7 @@ describe("TopFans", () => {
   });
 
   it("handles empty list", () => {
-    render(<TopFans fans={[]} />);
+    renderWithIntl(<TopFans fans={[]} />);
 
     // Should render the header even with empty list
     expect(screen.getByText("Top Fans")).toBeInTheDocument();

@@ -1,8 +1,9 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, afterEach } from "vitest";
 import { RevenueChart } from "@/components/ui/customs/charts/RevenueChart";
 import { SalesSummary } from "@/types";
+import { renderWithIntl } from "../test-utils";
 
 describe("RevenueChart", () => {
   // Clean up DOM after each test
@@ -66,7 +67,7 @@ describe("RevenueChart", () => {
   };
 
   it("renders chart with time range tabs", () => {
-    render(<RevenueChart initialSalesData={mockSalesData} />);
+    renderWithIntl(<RevenueChart initialSalesData={mockSalesData} />);
 
     // Check if chart title is present
     expect(screen.getByText("Revenue")).toBeInTheDocument();
@@ -79,7 +80,7 @@ describe("RevenueChart", () => {
 
   it("switches data when time range tabs are clicked", async () => {
     const user = userEvent.setup();
-    render(<RevenueChart initialSalesData={mockSalesData} />);
+    renderWithIntl(<RevenueChart initialSalesData={mockSalesData} />);
 
     // Initially should show 30d as active
     const thirtyDayTab = screen.getByRole("tab", { name: "30 Days" });
@@ -94,7 +95,7 @@ describe("RevenueChart", () => {
   });
 
   it("displays period date range in description", () => {
-    render(<RevenueChart initialSalesData={mockSalesData} />);
+    renderWithIntl(<RevenueChart initialSalesData={mockSalesData} />);
 
     // Check if the period is shown (both dates in the same description text)
     const description = screen.getByText(/2026-01-05.*2026-02-04/);
