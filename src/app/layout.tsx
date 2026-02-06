@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import ClientLayout from "./client-layout";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -24,11 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html className="dark" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} bg-background min-h-screen font-sans antialiased`}
       >
-        <ClientLayout>{children}</ClientLayout>
+        {children}
       </body>
     </html>
   );

@@ -1,4 +1,3 @@
-// src/app/fans/components/FansPageWithSuspense.tsx
 "use client";
 
 import { Suspense } from "react";
@@ -10,6 +9,7 @@ import { useEngagement } from "@/hooks/useApiData";
 import { MetricCardSkeleton } from "@/components/ui/customs/feedback/MetricCardSkeleton";
 import { FadeInAnimation } from "@/components/motion/AnimationUtils";
 import { EngagementMetrics } from "@/types";
+import { useLocale, useTranslations } from "next-intl";
 
 interface FansPageContentProps {
   initialEngagement?: EngagementMetrics;
@@ -17,6 +17,9 @@ interface FansPageContentProps {
 
 function FansPageInner({ initialEngagement }: FansPageContentProps) {
   const { data: engagement, isLoading, error: isError } = useEngagement();
+  const locale = useLocale();
+  const t = useTranslations("Fans");
+  const tCommon = useTranslations("Common");
 
   // Use initial data if available, otherwise use SWR data
   const finalEngagement = initialEngagement || engagement;
@@ -26,13 +29,11 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
       <div className="container mx-auto py-6">
         <FadeInAnimation duration={0.3}>
           <div className="mb-8">
-            <h1 className="text-foreground text-2xl font-bold">Fans</h1>
-            <p className="text-muted-foreground mt-1">
-              Loading fan engagement data...
-            </p>
+            <h1 className="text-foreground text-2xl font-bold">{t("title")}</h1>
+            <p className="text-muted-foreground mt-1">{t("loading")}</p>
           </div>
         </FadeInAnimation>
-        <div className="p-4">Loading...</div>
+        <div className="p-4">{tCommon("loading")}</div>
       </div>
     );
   }
@@ -42,14 +43,12 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
       <div className="container mx-auto py-6">
         <FadeInAnimation duration={0.3}>
           <div className="mb-8">
-            <h1 className="text-foreground text-2xl font-bold">Fans</h1>
-            <p className="text-muted-foreground mt-1">
-              Error loading fan engagement data
-            </p>
+            <h1 className="text-foreground text-2xl font-bold">{t("title")}</h1>
+            <p className="text-muted-foreground mt-1">{t("errorLoading")}</p>
           </div>
         </FadeInAnimation>
         <div className="text-destructive p-4">
-          {isError ? "Error loading fan data" : "No engagement data available"}
+          {isError ? t("errorFanData") : t("noEngagement")}
         </div>
       </div>
     );
@@ -59,10 +58,8 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
     <div className="container mx-auto py-6">
       <FadeInAnimation duration={0.3}>
         <div className="mb-8">
-          <h1 className="text-foreground text-2xl font-bold">Fans</h1>
-          <p className="text-muted-foreground mt-1">
-            Track your community growth and engagement
-          </p>
+          <h1 className="text-foreground text-2xl font-bold">{t("title")}</h1>
+          <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
         </div>
       </FadeInAnimation>
 
@@ -70,8 +67,8 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Suspense fallback={<MetricCardSkeleton />}>
           <ClientMetricCard
-            title="Total Fans"
-            value={formatNumber(finalEngagement.totalFans)}
+            title={t("totalFans")}
+            value={formatNumber(finalEngagement.totalFans, locale)}
             change={finalEngagement.fanGrowth.percentage}
             icon="Users"
             delay={0}
@@ -79,8 +76,8 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
         </Suspense>
         <Suspense fallback={<MetricCardSkeleton />}>
           <ClientMetricCard
-            title="Active Buyers"
-            value={formatNumber(finalEngagement.totalBuyers)}
+            title={t("activeBuyers")}
+            value={formatNumber(finalEngagement.totalBuyers, locale)}
             change={finalEngagement.purchaseRate.change}
             icon="UserCheck"
             delay={0.05}
@@ -88,7 +85,7 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
         </Suspense>
         <Suspense fallback={<MetricCardSkeleton />}>
           <ClientMetricCard
-            title="Engagement Rate"
+            title={t("engagementRate")}
             value={`${finalEngagement.engagementRate.value}%`}
             change={finalEngagement.engagementRate.change}
             icon="Heart"
@@ -112,19 +109,22 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
 export default function FansPageContent({
   initialEngagement,
 }: FansPageContentProps) {
+  const t = useTranslations("Fans");
+  const tCommon = useTranslations("Common");
+
   return (
     <Suspense
       fallback={
         <div className="container mx-auto py-6">
           <FadeInAnimation duration={0.3}>
             <div className="mb-8">
-              <h1 className="text-foreground text-2xl font-bold">Fans</h1>
-              <p className="text-muted-foreground mt-1">
-                Loading fan engagement data...
-              </p>
+              <h1 className="text-foreground text-2xl font-bold">
+                {t("title")}
+              </h1>
+              <p className="text-muted-foreground mt-1">{t("loading")}</p>
             </div>
           </FadeInAnimation>
-          <div className="p-4">Loading...</div>
+          <div className="p-4">{tCommon("loading")}</div>
         </div>
       }
     >

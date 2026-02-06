@@ -11,12 +11,14 @@ import {
   getCachedReleases,
   getCachedSales,
 } from "@/lib/actions";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatNumber } from "@/lib/utils";
 import { Release } from "@/types";
 import { Suspense } from "react";
+import { getLocale, getTranslations } from "next-intl/server";
 
 // Separate components for each section to enable streaming
 async function RevenueSection() {
+  const t = await getTranslations("Overview");
   let sales;
   try {
     sales = await getCachedSales("30d");
@@ -26,17 +28,18 @@ async function RevenueSection() {
 
   return (
     <div className="bg-card rounded-xl border p-6">
-      <h2 className="mb-4 text-lg font-semibold">Revenue</h2>
+      <h2 className="mb-4 text-lg font-semibold">{t("revenue")}</h2>
       {sales ? (
         <RevenueChart initialSalesData={sales} />
       ) : (
-        <p>No sales data available</p>
+        <p>{t("noSalesData")}</p>
       )}
     </div>
   );
 }
 
 async function FanEngagementSection() {
+  const t = await getTranslations("Overview");
   let engagement;
   try {
     engagement = await getCachedEngagement();
@@ -45,7 +48,7 @@ async function FanEngagementSection() {
   }
 
   if (!engagement) {
-    return <div>No engagement data available</div>;
+    return <div>{t("noEngagementData")}</div>;
   }
 
   return <FanGrowthChart engagementData={engagement} />;
@@ -76,6 +79,8 @@ async function TopFansSection() {
 
 // Main content component
 async function HomePageContent() {
+  const t = await getTranslations("Overview");
+  const locale = await getLocale();
   let releasesData, sales, engagement;
   try {
     [releasesData, sales, engagement] = await Promise.all([
@@ -95,14 +100,14 @@ async function HomePageContent() {
 
   // Mock dashboard stats based on our data
   const mockDashboardStats = {
-    totalRevenue: formatCurrency(totalRevenue).replace("$", ""),
+    totalRevenue: formatCurrency(totalRevenue, locale).replace(/[^0-9.,\s]/g, "").trim(),
     revenueChange: revenueChange.percentage,
-    totalFans: engagement?.totalFans || 0,
+    totalFans: formatNumber(engagement?.totalFans || 0, locale),
     fanChange: engagement?.fanGrowth.percentage || 0,
-    activeBuyers: engagement?.totalBuyers || 0,
+    activeBuyers: formatNumber(engagement?.totalBuyers || 0, locale),
     buyerChange: engagement?.purchaseRate.change || 0,
     avgOrderValue: engagement
-      ? (totalRevenue / engagement.totalBuyers / 100).toFixed(2)
+      ? new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(totalRevenue / engagement.totalBuyers / 100)
       : "0.00",
     orderValueChange: 2.1,
   };
@@ -112,10 +117,8 @@ async function HomePageContent() {
       {/* Page Header */}
       <FadeInAnimation duration={0.3}>
         <div className="mb-8">
-          <h1 className="text-foreground text-2xl font-bold">Overview</h1>
-          <p className="text-muted-foreground mt-1">
-            Your dashboard for direct-to-fan performance
-          </p>
+          <h1 className="text-foreground text-2xl font-bold">{t("title")}</h1>
+          <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
         </div>
       </FadeInAnimation>
 
@@ -123,7 +126,7 @@ async function HomePageContent() {
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Suspense fallback={<MetricCardSkeleton />}>
           <ClientMetricCard
-            title="Total Revenue"
+            title={t("totalRevenue")}
             value={mockDashboardStats.totalRevenue}
             change={mockDashboardStats.revenueChange}
             icon="DollarSign"
@@ -133,8 +136,8 @@ async function HomePageContent() {
         </Suspense>
         <Suspense fallback={<MetricCardSkeleton />}>
           <ClientMetricCard
-            title="Total Fans"
-            value={mockDashboardStats.totalFans.toString()}
+            title={t("totalFans")}
+            value={mockDashboardStats.totalFans}
             change={mockDashboardStats.fanChange}
             icon="Users"
             delay={0.05}
@@ -142,8 +145,8 @@ async function HomePageContent() {
         </Suspense>
         <Suspense fallback={<MetricCardSkeleton />}>
           <ClientMetricCard
-            title="Active Buyers"
-            value={mockDashboardStats.activeBuyers.toString()}
+            title={t("activeBuyers")}
+            value={mockDashboardStats.activeBuyers}
             change={mockDashboardStats.buyerChange}
             icon="ShoppingCart"
             delay={0.1}
@@ -151,7 +154,7 @@ async function HomePageContent() {
         </Suspense>
         <Suspense fallback={<MetricCardSkeleton />}>
           <ClientMetricCard
-            title="Avg. Order Value"
+            title={t("avgOrderValue")}
             value={mockDashboardStats.avgOrderValue}
             change={mockDashboardStats.orderValueChange}
             icon="TrendingUp"
@@ -174,12 +177,12 @@ async function HomePageContent() {
       {/* Bottom Section - Recent Releases on left, Top Fans on right */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <Suspense fallback={<div>Loading releases...</div>}>
+          <Suspense fallback={<div>{t("loadingReleases")}</div>}>
             <ReleasesSection releases={releasesData || []} />
           </Suspense>
         </div>
         <div>
-          <Suspense fallback={<div>Loading top fans...</div>}>
+          <Suspense fallback={<div>{t("loadingTopFans")}</div>}>
             <TopFansSection />
           </Suspense>
         </div>
@@ -189,19 +192,23 @@ async function HomePageContent() {
 }
 
 export default async function HomePageStreaming() {
+  const t = await getTranslations("Overview");
+
   return (
     <Suspense
       fallback={
         <div className="container mx-auto py-6">
           <FadeInAnimation duration={0.3}>
             <div className="mb-8">
-              <h1 className="text-foreground text-2xl font-bold">Overview</h1>
+              <h1 className="text-foreground text-2xl font-bold">
+                {t("title")}
+              </h1>
               <p className="text-muted-foreground mt-1">
-                Loading dashboard data...
+                {t("loadingDashboard")}
               </p>
             </div>
           </FadeInAnimation>
-          <div className="p-4">Loading...</div>
+          <div className="p-4">{t("loadingDashboard")}</div>
         </div>
       }
     >

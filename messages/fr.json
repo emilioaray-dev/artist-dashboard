@@ -1,0 +1,106 @@
+{
+  "Common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "viewAll": "Voir tout",
+    "noData": "Aucune donnée disponible",
+    "noCover": "Pas de couverture",
+    "addRelease": "Ajouter une sortie",
+    "saveChanges": "Enregistrer les modifications",
+    "savePreferences": "Enregistrer les préférences",
+    "goHome": "Retour à l'accueil",
+    "collapse": "Réduire",
+    "showingDataFor": "Données de revenus affichées du {start} au {end}",
+    "loadingChartData": "Chargement des données du graphique..."
+  },
+  "Navigation": {
+    "overview": "Aperçu",
+    "releases": "Sorties",
+    "fans": "Fans",
+    "settings": "Paramètres"
+  },
+  "Overview": {
+    "title": "Aperçu",
+    "subtitle": "Votre tableau de bord de performance directe aux fans",
+    "loadingDashboard": "Chargement des données du tableau de bord...",
+    "revenue": "Revenus",
+    "totalRevenue": "Revenu total",
+    "totalFans": "Total des fans",
+    "activeBuyers": "Acheteurs actifs",
+    "avgOrderValue": "Valeur moy. de commande",
+    "noSalesData": "Aucune donnée de vente disponible",
+    "noEngagementData": "Aucune donnée d'engagement disponible",
+    "loadingReleases": "Chargement des sorties...",
+    "loadingTopFans": "Chargement des meilleurs fans..."
+  },
+  "Releases": {
+    "title": "Sorties",
+    "subtitle": "Gérez et suivez vos sorties exclusives",
+    "loading": "Chargement des sorties...",
+    "errorLoading": "Erreur lors du chargement des sorties",
+    "noReleases": "Aucune sortie pour le moment",
+    "noReleasesDescription": "Lorsque vous ajouterez de nouvelles sorties, elles apparaîtront ici",
+    "recentReleases": "Sorties récentes",
+    "status": {
+      "draft": "BROUILLON",
+      "scheduled": "PROGRAMMÉE",
+      "live": "EN LIGNE",
+      "archived": "ARCHIVÉE"
+    }
+  },
+  "Fans": {
+    "title": "Fans",
+    "subtitle": "Suivez la croissance et l'engagement de votre communauté",
+    "loading": "Chargement des données d'engagement des fans...",
+    "errorLoading": "Erreur lors du chargement des données d'engagement des fans",
+    "noEngagement": "Aucune donnée d'engagement disponible",
+    "errorFanData": "Erreur lors du chargement des données des fans",
+    "totalFans": "Total des fans",
+    "activeBuyers": "Acheteurs actifs",
+    "engagementRate": "Taux d'engagement",
+    "topFans": "Meilleurs fans",
+    "topFansSubtitle": "Vos supporters les plus précieux",
+    "noFansData": "Aucune donnée de fans disponible",
+    "purchases": "{count, plural, =0 {0 achat} one {1 achat} other {# achats}}",
+    "fanGrowth": "Croissance des fans",
+    "fanGrowthSubtitle": "Total des fans vs acheteurs actifs"
+  },
+  "Settings": {
+    "title": "Paramètres",
+    "accountInfo": "Informations du compte",
+    "email": "E-mail",
+    "displayName": "Nom d'affichage",
+    "preferences": "Préférences",
+    "emailNotifications": "Notifications par e-mail",
+    "theme": "Thème",
+    "themeLight": "Clair",
+    "themeDark": "Sombre",
+    "themeSystem": "Système",
+    "selectTheme": "Sélectionner le thème",
+    "language": "Langue"
+  },
+  "Errors": {
+    "somethingWrong": "Une erreur est survenue",
+    "unexpectedError": "Une erreur inattendue s'est produite.",
+    "pageNotFound": "Page introuvable",
+    "pageNotFoundDescription": "La page que vous recherchez n'existe pas.",
+    "tryAgain": "Réessayer",
+    "goHome": "Retour à l'accueil"
+  },
+  "Formats": {
+    "timeRange7d": "7 jours",
+    "timeRange30d": "30 jours",
+    "timeRange90d": "90 jours",
+    "grossRevenue": "Revenu brut",
+    "netRevenue": "Revenu net",
+    "directToFan": "Direct aux fans",
+    "digital": "Numérique",
+    "physical": "Physique",
+    "bundles": "Lots",
+    "totalFans": "Total des fans",
+    "activeFans": "Fans actifs"
+  }
+}

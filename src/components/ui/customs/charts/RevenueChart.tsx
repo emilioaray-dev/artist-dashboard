@@ -21,6 +21,7 @@ import { CHART_COLORS, TIME_RANGES } from "@/lib/constants";
 import { DailySales, SalesSummary } from "@/types";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { useLocale, useTranslations } from "next-intl";
 
 type RevenueChartProps = {
   initialSalesData: SalesSummary;
@@ -31,6 +32,10 @@ type RevenueChartProps = {
  * Uses shadcn/ui AreaChart with Gross vs Net lines
  */
 export function RevenueChart({ initialSalesData }: RevenueChartProps) {
+  const locale = useLocale();
+  const t = useTranslations("Formats");
+  const tCommon = useTranslations("Common");
+  const tOverview = useTranslations("Overview");
   const [selectedRange, setSelectedRange] = useState<"7d" | "30d" | "90d">(
     "30d",
   );
@@ -78,24 +83,33 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
     : [];
 
   const chartConfig = {
-    gross: CHART_COLORS.gross,
-    net: CHART_COLORS.net,
-    direct_to_fan: CHART_COLORS.direct_to_fan,
-    digital: CHART_COLORS.digital,
-    physical: CHART_COLORS.physical,
-    bundles: CHART_COLORS.bundles,
+    gross: { ...CHART_COLORS.gross, label: t("grossRevenue") },
+    net: { ...CHART_COLORS.net, label: t("netRevenue") },
+    direct_to_fan: { ...CHART_COLORS.direct_to_fan, label: t("directToFan") },
+    digital: { ...CHART_COLORS.digital, label: t("digital") },
+    physical: { ...CHART_COLORS.physical, label: t("physical") },
+    bundles: { ...CHART_COLORS.bundles, label: t("bundles") },
+  };
+
+  const timeRangeLabels: Record<string, string> = {
+    "7d": t("timeRange7d"),
+    "30d": t("timeRange30d"),
+    "90d": t("timeRange90d"),
   };
 
   return (
     <Card>
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
-          <CardTitle>Revenue</CardTitle>
+          <CardTitle>{tOverview("revenue")}</CardTitle>
           <CardDescription>
             {isLoading ? (
               <Skeleton className="h-4 w-[250px]" />
             ) : (
-              `Showing revenue data for ${currentSalesData.periodStart || ""} to ${currentSalesData.periodEnd || ""}`
+              tCommon("showingDataFor", {
+                start: currentSalesData.periodStart || "",
+                end: currentSalesData.periodEnd || "",
+              })
             )}
           </CardDescription>
         </div>
@@ -111,7 +125,7 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                 value={range.value}
                 disabled={isLoading}
               >
-                {range.label}
+                {timeRangeLabels[range.value] || range.label}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -120,7 +134,7 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         {isLoading ? (
           <div className="flex h-[250px] items-center justify-center">
-            <p>Loading chart data...</p>
+            <p>{tCommon("loadingChartData")}</p>
           </div>
         ) : (
           <ChartContainer
@@ -141,7 +155,7 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                 axisLine={false}
                 tickMargin={8}
                 tickFormatter={(value) => {
-                  return new Date(value).toLocaleDateString("en-US", {
+                  return new Date(value).toLocaleDateString(locale, {
                     month: "short",
                     day: "numeric",
                   });

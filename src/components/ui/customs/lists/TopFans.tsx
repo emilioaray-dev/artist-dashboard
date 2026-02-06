@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/core/card";
 import { formatCurrency } from "@/lib/utils";
 import { Fan } from "@/types";
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 
 type TopFansProps = {
   fans: Fan[];
@@ -22,11 +23,14 @@ const RANK_COLORS = [
  * total spent on the right.
  */
 export function TopFans({ fans, className }: TopFansProps) {
+  const locale = useLocale();
+  const t = useTranslations("Fans");
+
   return (
     <div className={className}>
-      <h2 className="mb-1 text-lg font-semibold">Top Fans</h2>
+      <h2 className="mb-1 text-lg font-semibold">{t("topFans")}</h2>
       <p className="text-muted-foreground mb-4 text-sm">
-        Your most valuable supporters
+        {t("topFansSubtitle")}
       </p>
       <Card>
         <CardContent className="p-6">
@@ -65,17 +69,17 @@ export function TopFans({ fans, className }: TopFansProps) {
                     {fan.displayName}
                   </p>
                   <p className="text-muted-foreground text-xs">
-                    {fan.purchaseCount} purchases
+                    {t("purchases", { count: fan.purchaseCount })}
                   </p>
                 </div>
                 <span className="text-primary flex-shrink-0 text-sm font-semibold">
-                  {formatCurrency(fan.totalSpent)}
+                  {formatCurrency(fan.totalSpent, locale)}
                 </span>
               </div>
             ))}
             {fans.length === 0 && (
               <div className="py-8 text-center">
-                <p className="text-muted-foreground">No fans data available</p>
+                <p className="text-muted-foreground">{t("noFansData")}</p>
               </div>
             )}
           </div>

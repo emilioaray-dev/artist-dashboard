@@ -12,10 +12,8 @@ export function cn(...inputs: ClassValue[]) {
 
 /**
  * Formats a number with commas as thousands separators
- * @param num The number to format
- * @returns Formatted number as string
  */
-export function formatNumber(num: number): string {
+export function formatNumber(num: number, locale = "en"): string {
   if (num >= 1_000_000) {
     const millions = num / 1_000_000;
     return millions % 1 === 0 ? `${millions}M` : `${millions.toFixed(1)}M`;
@@ -24,17 +22,15 @@ export function formatNumber(num: number): string {
     const thousands = num / 1_000;
     return thousands % 1 === 0 ? `${thousands}K` : `${thousands.toFixed(1)}K`;
   }
-  return num.toLocaleString();
+  return num.toLocaleString(locale);
 }
 
 /**
  * Formats a number in cents to currency format
- * @param cents The amount in cents
- * @returns Formatted currency string
  */
-export function formatCurrency(cents: number): string {
+export function formatCurrency(cents: number, locale = "en"): string {
   const dollars = cents / 100;
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 0,
@@ -44,12 +40,10 @@ export function formatCurrency(cents: number): string {
 
 /**
  * Formats a date string to a readable format
- * @param dateString The date string to format
- * @returns Formatted date string
  */
-export function formatDate(dateString: string): string {
+export function formatDate(dateString: string, locale = "en"): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -58,21 +52,21 @@ export function formatDate(dateString: string): string {
 
 /**
  * Formats a percentage value
- * @param value The percentage value
- * @returns Formatted percentage string
  */
-export function formatPercentage(value: number): string {
-  return `${value.toFixed(1)}%`;
+export function formatPercentage(value: number, locale = "en"): string {
+  return new Intl.NumberFormat(locale, {
+    style: "percent",
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(value / 100);
 }
 
 /**
- * Converts a date string to a formatted date string
- * @param dateStr The date string to format
- * @returns Formatted date string
+ * Converts a date string to a short formatted date string
  */
-export function formatDateRange(dateStr: string): string {
+export function formatDateRange(dateStr: string, locale = "en"): string {
   const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
   });

@@ -1,17 +1,27 @@
 "use client";
 
+import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { NAV_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/core/button";
+import { useTranslations } from "next-intl";
 
 export function MobileBottomNav() {
   const pathname = usePathname();
+  const t = useTranslations("Navigation");
+
+  const navTranslationKeys: Record<string, string> = {
+    Overview: "overview",
+    Releases: "releases",
+    Fans: "fans",
+    Settings: "settings",
+  };
 
   return (
     <div className="bg-surface/80 fixed right-0 bottom-0 left-0 border-t p-2 backdrop-blur-xl md:hidden">
       <div className="flex justify-around">
+        <LanguageSelector compact className="h-12 w-12 justify-center px-0" />
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
           const isActive =
@@ -35,7 +45,7 @@ export function MobileBottomNav() {
                 )}
               >
                 <Icon className="size-4" />
-                <span>{item.title}</span>
+                <span>{t(navTranslationKeys[item.title])}</span>
               </Button>
             </Link>
           );

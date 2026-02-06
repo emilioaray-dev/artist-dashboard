@@ -7,6 +7,7 @@ import { FadeIn } from "@/components/motion/FadeIn";
 import { EmptyState } from "@/components/ui/customs/feedback/EmptyState";
 import { Button } from "@/components/ui/core/button";
 import { Music } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type ReleasesGridProps = {
   releases: Release[];
@@ -17,15 +18,18 @@ type ReleasesGridProps = {
  * StaggerContainer wrapping FadeIn children
  */
 export function ReleasesGrid({ releases }: ReleasesGridProps) {
+  const t = useTranslations("Releases");
+  const tCommon = useTranslations("Common");
+
   if (!releases || releases.length === 0) {
     return (
       <EmptyState
-        title="No releases yet"
-        description="When you add new releases, they'll appear here"
+        title={t("noReleases")}
+        description={t("noReleasesDescription")}
         action={
           <Button>
             <Music className="mr-2 size-4" />
-            Add Release
+            {tCommon("addRelease")}
           </Button>
         }
       />
@@ -35,9 +39,9 @@ export function ReleasesGrid({ releases }: ReleasesGridProps) {
   return (
     <StaggerContainer>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {releases.map((release) => (
+        {releases.map((release, index) => (
           <FadeIn key={release.id}>
-            <ReleaseCard release={release} />
+            <ReleaseCard release={release} priority={index < 3} />
           </FadeIn>
         ))}
       </div>

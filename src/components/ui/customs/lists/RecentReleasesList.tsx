@@ -5,8 +5,9 @@ import { STATUS_COLORS } from "@/lib/constants";
 import { cn, formatCurrency, formatDate } from "@/lib/utils";
 import { Release } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { AudioWaveform } from "@/components/audio/AudioWaveform";
+import { useLocale, useTranslations } from "next-intl";
 
 type RecentReleasesListProps = {
   releases: Release[];
@@ -21,6 +22,10 @@ export function RecentReleasesList({
   releases,
   className,
 }: RecentReleasesListProps) {
+  const locale = useLocale();
+  const t = useTranslations("Releases");
+  const tCommon = useTranslations("Common");
+
   // Calculate revenue trend (simplified for mock data)
   const getRevenueTrend = (revenue: number) => {
     return revenue > 2000000 ? "up" : "down";
@@ -30,12 +35,12 @@ export function RecentReleasesList({
     <div className={className}>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Recent Releases</h2>
+          <h2 className="text-lg font-semibold">{t("recentReleases")}</h2>
           <Link
             href="/releases"
             className={cn(buttonVariants({ variant: "ghost" }), "text-sm")}
           >
-            View all
+            {tCommon("viewAll")}
           </Link>
         </div>
 
@@ -68,7 +73,7 @@ export function RecentReleasesList({
                     ) : (
                       <div className="bg-muted flex size-full items-center justify-center">
                         <span className="text-muted-foreground text-xs">
-                          No cover
+                          {tCommon("noCover")}
                         </span>
                       </div>
                     )}
@@ -83,17 +88,17 @@ export function RecentReleasesList({
                           STATUS_COLORS[release.status],
                         )}
                       >
-                        {release.status.toUpperCase()}
+                        {t(`status.${release.status}`)}
                       </span>
                     </div>
 
                     <p className="text-muted-foreground mt-1 text-xs">
-                      {formatDate(release.releaseDate)}
+                      {formatDate(release.releaseDate, locale)}
                     </p>
 
                     <div className="mt-2 flex items-center justify-between">
                       <span className="font-medium">
-                        {formatCurrency(release.totalRevenue)}
+                        {formatCurrency(release.totalRevenue, locale)}
                       </span>
                       <span className={cn("text-xs font-medium", trendColor)}>
                         {trendIcon}{" "}

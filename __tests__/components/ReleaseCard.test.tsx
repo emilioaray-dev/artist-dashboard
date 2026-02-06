@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { ReleaseCard } from "@/components/ui/customs/cards/ReleaseCard";
 import { Release, ReleaseStatus, ReleaseType } from "@/types";
+import { renderWithIntl } from "../test-utils";
 
 describe("ReleaseCard", () => {
   const mockRelease: Release = {
@@ -29,7 +30,7 @@ describe("ReleaseCard", () => {
   };
 
   it("renders all fields correctly", () => {
-    render(<ReleaseCard release={mockRelease} />);
+    renderWithIntl(<ReleaseCard release={mockRelease} />);
 
     // Check title
     expect(screen.getByText(mockRelease.title)).toBeInTheDocument();
@@ -42,7 +43,7 @@ describe("ReleaseCard", () => {
   });
 
   it("shows correct status badge", () => {
-    render(<ReleaseCard release={mockRelease} />);
+    renderWithIntl(<ReleaseCard release={mockRelease} />);
 
     // Check for the status badge with correct text (uppercase)
     // Use getAllByText since there might be multiple LIVE elements
@@ -51,7 +52,7 @@ describe("ReleaseCard", () => {
   });
 
   it("displays waveform component", () => {
-    const { container } = render(<ReleaseCard release={mockRelease} />);
+    const { container } = renderWithIntl(<ReleaseCard release={mockRelease} />);
 
     // Check if the audio waveform container is present
     const waveformContainer = container.querySelector(
@@ -70,7 +71,7 @@ describe("ReleaseCard", () => {
       totalRevenue: 5250000, // $52,500
     };
 
-    render(<ReleaseCard release={releaseWithHighRevenue} />);
+    renderWithIntl(<ReleaseCard release={releaseWithHighRevenue} />);
 
     // Check if the formatted revenue is displayed
     expect(screen.getByText("$52,500")).toBeInTheDocument();
