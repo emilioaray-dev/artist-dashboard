@@ -17,11 +17,11 @@
 
 **Purpose**: Install next-intl and create the i18n configuration backbone
 
-- [ ] T001 Install next-intl v4.x dependency via `npm install next-intl`
-- [ ] T002 Create locale routing config with supported locales (en, es, fr, pt), defaultLocale (en), and localePrefix 'as-needed' in `src/i18n/routing.ts`
-- [ ] T003 [P] Create per-request i18n config with message loading and format definitions (short date, chartDate, currency, compact, percent) in `src/i18n/request.ts`
-- [ ] T004 [P] Create locale-aware navigation exports (Link, redirect, usePathname, useRouter) in `src/i18n/navigation.ts`
-- [ ] T005 Wrap Next.js config with createNextIntlPlugin in `next.config.ts`
+- [X] T001 Install next-intl v4.x dependency via `npm install next-intl`
+- [X] T002 Create locale routing config with supported locales (en, es, fr, pt), defaultLocale (en), and localePrefix 'as-needed' in `src/i18n/routing.ts`
+- [X] T003 [P] Create per-request i18n config with message loading and format definitions (short date, chartDate, currency, compact, percent) in `src/i18n/request.ts`
+- [X] T004 [P] Create locale-aware navigation exports (Link, redirect, usePathname, useRouter) in `src/i18n/navigation.ts`
+- [X] T005 Wrap Next.js config with createNextIntlPlugin in `next.config.ts`
 
 ---
 
@@ -31,17 +31,17 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Create proxy.ts for locale detection and redirect (Accept-Language → cookie → default) in `src/proxy.ts`
-- [ ] T007 Refactor root layout to minimal shell (fonts, globals.css only, no sidebar/providers) in `src/app/layout.tsx`
-- [ ] T008 Create locale layout with NextIntlClientProvider, html lang attribute, and generateStaticParams for 4 locales in `src/app/[locale]/layout.tsx`
-- [ ] T009 Move client-layout.tsx under locale segment in `src/app/[locale]/client-layout.tsx` and update navigation imports to use locale-aware versions from `src/i18n/navigation.ts`
-- [ ] T010 Move home page and streaming components: `src/app/page.tsx` → `src/app/[locale]/page.tsx` and `src/app/_components/` → `src/app/[locale]/_components/`
-- [ ] T011 [P] Move fans route: `src/app/fans/` → `src/app/[locale]/fans/` (page.tsx, loading.tsx, _components/)
-- [ ] T012 [P] Move releases route: `src/app/releases/` → `src/app/[locale]/releases/` (page.tsx, loading.tsx, _components/)
-- [ ] T013 [P] Move settings route: `src/app/settings/` → `src/app/[locale]/settings/` (page.tsx, loading.tsx, _components/)
-- [ ] T014 Move error/loading files under locale segment: `src/app/error.tsx`, `src/app/not-found.tsx`, `src/app/loading.tsx`, `src/app/template.tsx` → `src/app/[locale]/`
-- [ ] T015 Create English translation file with all namespaces (Common, Navigation, Overview, Releases, Fans, Settings, Errors, Formats) using ICU plural syntax for countable items (fan counts, stream counts) in `messages/en.json`
-- [ ] T016 Verify build completes and all existing routes render correctly at root path (English) after migration
+- [X] T006 Create proxy.ts for locale detection and redirect (Accept-Language → cookie → default) in `src/proxy.ts`
+- [X] T007 Refactor root layout to minimal shell (fonts, globals.css only, no sidebar/providers) in `src/app/layout.tsx`
+- [X] T008 Create locale layout with NextIntlClientProvider, html lang attribute, and generateStaticParams for 4 locales in `src/app/[locale]/layout.tsx`
+- [X] T009 Move client-layout.tsx under locale segment in `src/app/[locale]/client-layout.tsx` and update navigation imports to use locale-aware versions from `src/i18n/navigation.ts`
+- [X] T010 Move home page and streaming components: `src/app/page.tsx` → `src/app/[locale]/page.tsx` and `src/app/_components/` → `src/app/[locale]/_components/`
+- [X] T011 [P] Move fans route: `src/app/fans/` → `src/app/[locale]/fans/` (page.tsx, loading.tsx, _components/)
+- [X] T012 [P] Move releases route: `src/app/releases/` → `src/app/[locale]/releases/` (page.tsx, loading.tsx, _components/)
+- [X] T013 [P] Move settings route: `src/app/settings/` → `src/app/[locale]/settings/` (page.tsx, loading.tsx, _components/)
+- [X] T014 Move error/loading files under locale segment: `src/app/error.tsx`, `src/app/not-found.tsx`, `src/app/loading.tsx`, `src/app/template.tsx` → `src/app/[locale]/`
+- [X] T015 Create English translation file with all namespaces (Common, Navigation, Overview, Releases, Fans, Settings, Errors, Formats) using ICU plural syntax for countable items (fan counts, stream counts) in `messages/en.json`
+- [X] T016 Verify build completes and all existing routes render correctly at root path (English) after migration
 
 **Checkpoint**: Foundation ready — all pages render under `[locale]/`, next-intl configured, English translations loaded. User story implementation can now begin.
 
@@ -55,24 +55,24 @@
 
 ### Implementation for User Story 1
 
-- [ ] T017 [US1] Create Spanish translation file with all namespaces (~120-140 keys), using ICU plural syntax for countable items, in `messages/es.json`
-- [ ] T018 [P] [US1] Create French translation file with all namespaces (~120-140 keys), using ICU plural syntax for countable items, in `messages/fr.json`
-- [ ] T019 [P] [US1] Create Portuguese translation file with all namespaces (~120-140 keys), using ICU plural syntax for countable items, in `messages/pt.json`
-- [ ] T020 [US1] Translate Sidebar navigation labels (Overview, Releases, Fans, Settings) using useTranslations('Navigation') in `src/components/layout/Sidebar.tsx`
-- [ ] T021 [P] [US1] Translate MobileBottomNav labels using useTranslations('Navigation') in `src/components/layout/MobileBottomNav.tsx`
-- [ ] T022 [US1] Translate Overview page headings and subheadings — pass translated strings from Server Component to `src/app/[locale]/_components/HomePageStreaming.tsx`
-- [ ] T023 [US1] Translate MetricCard labels (Total Revenue, Total Fans, Active Buyers, Engagement Rate) — accept translated label props in `src/components/ui/customs/cards/MetricCard.tsx` and `src/components/ui/customs/cards/ClientMetricCard.tsx`
-- [ ] T024 [US1] Translate RevenueChart title and legend labels in `src/components/ui/customs/charts/RevenueChart.tsx`
-- [ ] T025 [P] [US1] Translate FanGrowthChart title and legend labels in `src/components/ui/customs/charts/FanGrowthChart.tsx`
-- [ ] T026 [US1] Translate TopFans heading and column headers in `src/components/ui/customs/lists/TopFans.tsx`
-- [ ] T027 [P] [US1] Translate RecentReleasesList heading and status labels in `src/components/ui/customs/lists/RecentReleasesList.tsx`
-- [ ] T028 [US1] Translate Releases page headings, ReleaseCard status badges, and empty states in `src/app/[locale]/releases/_components/ReleasesPageContent.tsx` and `src/components/ui/customs/cards/ReleaseCard.tsx`
-- [ ] T029 [P] [US1] Translate ReleasesGrid filter/sort labels in `src/components/ui/customs/lists/ReleasesGrid.tsx`
-- [ ] T030 [US1] Translate Fans page headings, metric labels, and fan list headers in `src/app/[locale]/fans/_components/FansPageContent.tsx`
-- [ ] T031 [US1] Translate Settings page form labels (Account Information, Preferences, Email, Display Name, Theme) in `src/app/[locale]/settings/_components/SettingsPageClient.tsx`
-- [ ] T032 [US1] Translate error page messages and boundary fallbacks in `src/app/[locale]/error.tsx` and `src/app/[locale]/not-found.tsx`
-- [ ] T033 [US1] Translate loading states and skeleton placeholder text in `src/components/ui/customs/feedback/EmptyState.tsx`
-- [ ] T034 [US1] Verify proxy.ts detects Accept-Language header and redirects to correct locale prefix for es/fr/pt; unsupported languages default to English at root
+- [X] T017 [US1] Create Spanish translation file with all namespaces (~120-140 keys), using ICU plural syntax for countable items, in `messages/es.json`
+- [X] T018 [P] [US1] Create French translation file with all namespaces (~120-140 keys), using ICU plural syntax for countable items, in `messages/fr.json`
+- [X] T019 [P] [US1] Create Portuguese translation file with all namespaces (~120-140 keys), using ICU plural syntax for countable items, in `messages/pt.json`
+- [X] T020 [US1] Translate Sidebar navigation labels (Overview, Releases, Fans, Settings) using useTranslations('Navigation') in `src/components/layout/Sidebar.tsx`
+- [X] T021 [P] [US1] Translate MobileBottomNav labels using useTranslations('Navigation') in `src/components/layout/MobileBottomNav.tsx`
+- [X] T022 [US1] Translate Overview page headings and subheadings — pass translated strings from Server Component to `src/app/[locale]/_components/HomePageStreaming.tsx`
+- [X] T023 [US1] Translate MetricCard labels (Total Revenue, Total Fans, Active Buyers, Engagement Rate) — accept translated label props in `src/components/ui/customs/cards/MetricCard.tsx` and `src/components/ui/customs/cards/ClientMetricCard.tsx`
+- [X] T024 [US1] Translate RevenueChart title and legend labels in `src/components/ui/customs/charts/RevenueChart.tsx`
+- [X] T025 [P] [US1] Translate FanGrowthChart title and legend labels in `src/components/ui/customs/charts/FanGrowthChart.tsx`
+- [X] T026 [US1] Translate TopFans heading and column headers in `src/components/ui/customs/lists/TopFans.tsx`
+- [X] T027 [P] [US1] Translate RecentReleasesList heading and status labels in `src/components/ui/customs/lists/RecentReleasesList.tsx`
+- [X] T028 [US1] Translate Releases page headings, ReleaseCard status badges, and empty states in `src/app/[locale]/releases/_components/ReleasesPageContent.tsx` and `src/components/ui/customs/cards/ReleaseCard.tsx`
+- [X] T029 [P] [US1] Translate ReleasesGrid filter/sort labels in `src/components/ui/customs/lists/ReleasesGrid.tsx`
+- [X] T030 [US1] Translate Fans page headings, metric labels, and fan list headers in `src/app/[locale]/fans/_components/FansPageContent.tsx`
+- [X] T031 [US1] Translate Settings page form labels (Account Information, Preferences, Email, Display Name, Theme) in `src/app/[locale]/settings/_components/SettingsPageClient.tsx`
+- [X] T032 [US1] Translate error page messages and boundary fallbacks in `src/app/[locale]/error.tsx` and `src/app/[locale]/not-found.tsx`
+- [X] T033 [US1] Translate loading states and skeleton placeholder text in `src/components/ui/customs/feedback/EmptyState.tsx`
+- [X] T034 [US1] Verify proxy.ts detects Accept-Language header and redirects to correct locale prefix for es/fr/pt; unsupported languages default to English at root
 
 **Checkpoint**: All 4 pages display correctly translated text in en, es, fr, pt. Browser language detection works.
 
@@ -86,12 +86,12 @@
 
 ### Implementation for User Story 2
 
-- [ ] T035 [US2] Create LanguageSelector dropdown component showing current locale code (e.g., "EN ▾") expanding to 4 options with native names (English, Espanol, Francais, Portugues) in `src/components/layout/LanguageSelector.tsx`
-- [ ] T036 [US2] Integrate LanguageSelector into desktop Sidebar in `src/components/layout/Sidebar.tsx`
-- [ ] T037 [US2] Integrate LanguageSelector into MobileBottomNav (accessible from navigation area) in `src/components/layout/MobileBottomNav.tsx`
-- [ ] T038 [US2] Implement locale switching using next-intl's useRouter with `router.replace(pathname, { locale })` — URL updates to new locale prefix without full page reload
-- [ ] T039 [US2] Verify NEXT_LOCALE cookie is set on language switch and persists preference across browser sessions
-- [ ] T040 [US2] Verify `/en/` prefix redirects to `/` (removes superfluous prefix for default locale)
+- [X] T035 [US2] Create LanguageSelector dropdown component showing current locale code (e.g., "EN ▾") expanding to 4 options with native names (English, Espanol, Francais, Portugues) in `src/components/layout/LanguageSelector.tsx`
+- [X] T036 [US2] Integrate LanguageSelector into desktop Sidebar in `src/components/layout/Sidebar.tsx`
+- [X] T037 [US2] Integrate LanguageSelector into MobileBottomNav (accessible from navigation area) in `src/components/layout/MobileBottomNav.tsx`
+- [X] T038 [US2] Implement locale switching using next-intl's useRouter with `router.replace(pathname, { locale })` — URL updates to new locale prefix without full page reload
+- [X] T039 [US2] Verify NEXT_LOCALE cookie is set on language switch and persists preference across browser sessions
+- [X] T040 [US2] Verify `/en/` prefix redirects to `/` (removes superfluous prefix for default locale)
 
 **Checkpoint**: Language selector functional on desktop and mobile. Switching updates URL, all text, and persists across sessions.
 
@@ -105,13 +105,13 @@
 
 ### Implementation for User Story 3
 
-- [ ] T041 [US3] Update formatCurrency, formatNumber, formatDate, formatPercentage helpers to accept locale parameter and use Intl formatters in `src/lib/utils.ts`
-- [ ] T042 [US3] Apply locale-aware date formatting to RevenueChart X-axis labels and tooltips using useFormatter() in `src/components/ui/customs/charts/RevenueChart.tsx`
-- [ ] T043 [P] [US3] Apply locale-aware date formatting to FanGrowthChart X-axis labels and tooltips in `src/components/ui/customs/charts/FanGrowthChart.tsx`
-- [ ] T044 [US3] Apply locale-aware number formatting (thousand separators) to MetricCard values in `src/components/ui/customs/cards/MetricCard.tsx` and `src/components/ui/customs/cards/ClientMetricCard.tsx`
-- [ ] T045 [US3] Apply locale-aware currency formatting to TopFans revenue values in `src/components/ui/customs/lists/TopFans.tsx`
-- [ ] T046 [P] [US3] Apply locale-aware formatting to RecentReleasesList date and stream count values in `src/components/ui/customs/lists/RecentReleasesList.tsx`
-- [ ] T047 [US3] Verify chart tooltip content updates format when language changes (dates, numbers, currency)
+- [X] T041 [US3] Update formatCurrency, formatNumber, formatDate, formatPercentage helpers to accept locale parameter and use Intl formatters in `src/lib/utils.ts`
+- [X] T042 [US3] Apply locale-aware date formatting to RevenueChart X-axis labels and tooltips using useFormatter() in `src/components/ui/customs/charts/RevenueChart.tsx`
+- [X] T043 [P] [US3] Apply locale-aware date formatting to FanGrowthChart X-axis labels and tooltips in `src/components/ui/customs/charts/FanGrowthChart.tsx`
+- [X] T044 [US3] Apply locale-aware number formatting (thousand separators) to MetricCard values in `src/components/ui/customs/cards/MetricCard.tsx` and `src/components/ui/customs/cards/ClientMetricCard.tsx`
+- [X] T045 [US3] Apply locale-aware currency formatting to TopFans revenue values in `src/components/ui/customs/lists/TopFans.tsx`
+- [X] T046 [P] [US3] Apply locale-aware formatting to RecentReleasesList date and stream count values in `src/components/ui/customs/lists/RecentReleasesList.tsx`
+- [X] T047 [US3] Verify chart tooltip content updates format when language changes (dates, numbers, currency)
 
 **Checkpoint**: All data formatting (dates, numbers, currency) adapts correctly per locale across all charts, metric cards, and lists.
 
@@ -125,9 +125,9 @@
 
 ### Implementation for User Story 4
 
-- [ ] T048 [US4] Add Language dropdown to Preferences card in Settings page (alongside Theme) showing all 4 languages by native name in `src/app/[locale]/settings/_components/SettingsPageClient.tsx`
-- [ ] T049 [US4] Wire Settings language dropdown to same locale switching logic as sidebar selector (router.replace + cookie update)
-- [ ] T050 [US4] Verify Settings page itself updates to selected language including the language option labels
+- [X] T048 [US4] Add Language dropdown to Preferences card in Settings page (alongside Theme) showing all 4 languages by native name in `src/app/[locale]/settings/_components/SettingsPageClient.tsx`
+- [X] T049 [US4] Wire Settings language dropdown to same locale switching logic as sidebar selector (router.replace + cookie update)
+- [X] T050 [US4] Verify Settings page itself updates to selected language including the language option labels
 
 **Checkpoint**: Settings page language preference works identically to sidebar selector, providing a discoverable configuration location.
 
@@ -137,14 +137,14 @@
 
 **Purpose**: Verify overall quality, fix edge cases, update tests and documentation
 
-- [ ] T051 Verify translation fallback: remove a key from es.json → confirm English string displays as fallback
-- [ ] T052 Verify no text truncation or layout breakage across all 4 languages on all 4 pages (responsive layouts)
-- [ ] T053 Update existing unit tests to work with i18n provider wrapping (add NextIntlClientProvider to test utilities) in `vitest.setup.ts`
-- [ ] T054 Update existing E2E tests to account for locale-prefixed URLs in `e2e/*.spec.ts`
-- [ ] T055 Verify build completes with all 4 locale variants generating correctly (`npm run build`)
-- [ ] T056 Run full test suite: `npm test` — all existing tests pass
-- [ ] T057 Run quickstart.md validation: execute all 6 integration scenarios from `specs/002-i18n-multi-language/quickstart.md`
-- [ ] T058 Update CLAUDE.md with i18n file structure (messages/, src/i18n/, [locale]/ routing)
+- [X] T051 Verify translation fallback: remove a key from es.json → confirm English string displays as fallback
+- [X] T052 Verify no text truncation or layout breakage across all 4 languages on all 4 pages (responsive layouts)
+- [X] T053 Update existing unit tests to work with i18n provider wrapping (add NextIntlClientProvider to test utilities) in `vitest.setup.ts`
+- [X] T054 Update existing E2E tests to account for locale-prefixed URLs in `e2e/*.spec.ts`
+- [X] T055 Verify build completes with all 4 locale variants generating correctly (`npm run build`)
+- [X] T056 Run full test suite: `npm test` — all existing tests pass
+- [X] T057 Run quickstart.md validation: execute all 6 integration scenarios from `specs/002-i18n-multi-language/quickstart.md`
+- [X] T058 Update CLAUDE.md with i18n file structure (messages/, src/i18n/, [locale]/ routing)
 
 ---
 
