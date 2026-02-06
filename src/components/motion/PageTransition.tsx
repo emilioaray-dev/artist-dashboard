@@ -11,9 +11,5 @@ type PageTransitionProps = {
  * Provides fade + slide-up animation on enter/exit
  */
 export function PageTransition({ children }: PageTransitionProps) {
-  return (
-    <AnimatePresence mode="wait">
-      {children}
-    </AnimatePresence>
-  );
+  return <AnimatePresence mode="wait">{children}</AnimatePresence>;
 }

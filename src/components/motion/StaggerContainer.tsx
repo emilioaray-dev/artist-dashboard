@@ -11,7 +11,10 @@ type StaggerContainerProps = {
  * Parent motion.div with staggerChildren variant for configurable delay
  * Used to create staggered entrance animations for lists of items
  */
-export function StaggerContainer({ children, className }: StaggerContainerProps) {
+export function StaggerContainer({
+  children,
+  className,
+}: StaggerContainerProps) {
   return (
     <motion.div
       className={className}
