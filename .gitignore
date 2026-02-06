@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+__tests__/
+__mocks__/
 
 # next.js
 /.next/
@@ -23,6 +25,9 @@
 # misc
 .DS_Store
 *.pem
+*.tmp
+*.swp
+Thumbs.db
 
 # debug
 npm-debug.log*
@@ -32,6 +37,10 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
@@ -39,6 +48,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+*.iml
 
 # playwright
 /test-results/
@@ -50,3 +64,7 @@ next-env.d.ts
 # Playwright
 node_modules/
 /playwright/.auth/
+
+# Jest
+jest.config.ts
+jest.setup.ts
