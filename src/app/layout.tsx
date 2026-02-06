@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { MotionProvider } from "@/components/motion/MotionProvider";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { SidebarProvider } from "@/contexts/SidebarContext";
-import { MainLayout } from "@/components/layout/client/MainLayout";
-import { AudioPlayer } from "@/components/audio/AudioPlayer";
+import ClientLayout from "./client-layout";
 
-const geistSans = Geist({
+const inter = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
@@ -30,19 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background`}
+        className={`${inter.variable} ${jetbrainsMono.variable} bg-background min-h-screen font-sans antialiased`}
       >
-        <MotionProvider>
-          <SidebarProvider>
-            <div className="flex min-h-screen flex-col">
-              <div className="flex flex-1">
-                <Sidebar />
-                <MainLayout>{children}</MainLayout>
-              </div>
-              <AudioPlayer />
-            </div>
-          </SidebarProvider>
-        </MotionProvider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
