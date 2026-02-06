@@ -11,7 +11,7 @@ export function generateWaveformData(
   seed: string,
   count: number = 40,
   min: number = 10,
-  max: number = 100
+  max: number = 100,
 ): number[] {
   // Create a numeric seed from the string
   let hash = 0;
@@ -25,16 +25,16 @@ export function generateWaveformData(
   hash = Math.abs(hash);
 
   const result: number[] = [];
-  
+
   for (let i = 0; i < count; i++) {
     // Linear congruential generator formula
     hash = (hash * 1103515245 + 12345) & 0x7fffffff;
-    
+
     // Generate a random value between min and max
     const randomValue = min + (hash % (max - min + 1));
     result.push(randomValue);
   }
-  
+
   return result;
 }
 
@@ -61,7 +61,7 @@ function createSeedFromId(releaseId: string): number {
  */
 export function getWaveformDataForRelease(
   releaseId: string,
-  count: number = 40
+  count: number = 40,
 ): number[] {
   const seed = createSeedFromId(releaseId);
   return generateWaveformData(seed.toString(), count);
