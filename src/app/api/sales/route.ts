@@ -5,16 +5,16 @@ export async function GET(request: NextRequest) {
   try {
     // Extract the range query parameter
     const url = new URL(request.url);
-    const rangeParam = url.searchParams.get('range');
-    
+    const rangeParam = url.searchParams.get("range");
+
     // Validate the range parameter
-    const validRanges = ['7d', '30d', '90d'];
-    const range = validRanges.includes(rangeParam || '') 
-      ? (rangeParam as '7d' | '30d' | '90d') 
-      : '30d'; // Default to 30d if invalid or not provided
-    
+    const validRanges = ["7d", "30d", "90d"];
+    const range = validRanges.includes(rangeParam || "")
+      ? (rangeParam as "7d" | "30d" | "90d")
+      : "30d"; // Default to 30d if invalid or not provided
+
     const salesResponse = await dataService.getSales(range);
-    
+
     return Response.json(salesResponse, {
       status: salesResponse.status,
       headers: {
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error fetching sales:", error);
-    
+
     return Response.json(
       {
         error: {
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
   }
 }

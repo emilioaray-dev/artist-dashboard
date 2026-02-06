@@ -3,10 +3,10 @@
  * These represent the different ways artists can monetize their content directly with fans.
  */
 export type Channel =
-  | "direct_to_fan"   // Direct purchases from fans (primary revenue)
-  | "digital"         // Digital downloads and streaming
-  | "physical"        // Physical merchandise and vinyl
-  | "bundles";        // Bundle packages combining multiple products
+  | "direct_to_fan" // Direct purchases from fans (primary revenue)
+  | "digital" // Digital downloads and streaming
+  | "physical" // Physical merchandise and vinyl
+  | "bundles"; // Bundle packages combining multiple products
 
 /**
  * Channel display information for UI rendering.
@@ -102,7 +102,7 @@ export interface SalesSummary {
     trend: "up" | "down" | "stable";
   };
   /** Time range for the data (for internal use) */
-  periodRange?: '7d' | '30d' | '90d';
+  periodRange?: "7d" | "30d" | "90d";
 }
 
 /**

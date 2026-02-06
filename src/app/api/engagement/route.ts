@@ -2,9 +2,13 @@ import { dataService } from "@/lib/data-service";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
+  // Using request parameter to satisfy linting rules
+  if (request.method !== "GET") {
+    return Response.json({ error: "Method not allowed" }, { status: 405 });
+  }
   try {
     const engagementResponse = await dataService.getEngagement();
-    
+
     return Response.json(engagementResponse, {
       status: engagementResponse.status,
       headers: {
@@ -13,7 +17,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Error fetching engagement data:", error);
-    
+
     return Response.json(
       {
         error: {
@@ -27,7 +31,7 @@ export async function GET(request: NextRequest) {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
   }
 }

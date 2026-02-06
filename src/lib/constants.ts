@@ -1,12 +1,12 @@
-import { Channel } from "@/types";
-import { 
-  LayoutDashboard, 
-  Disc3, 
-  Users, 
+import { Channel, ReleaseStatus } from "@/types";
+import {
+  ArrowRight,
+  Disc3,
+  LayoutDashboard,
   Settings,
-  TrendingUp,
   TrendingDown,
-  ArrowRight
+  TrendingUp,
+  Users,
 } from "lucide-react";
 
 /**
@@ -71,7 +71,7 @@ export const DESIGN_TOKENS = {
   positive: "#10B981", // green
   negative: "#F43F5E", // red
   textPrimary: "#FAFAFA",
-  textSecondary: "#A1A1AA",
+  textSecondary: "#D4D4D8",
 
   // Typography scale
   headingXL: "32px", // Page titles
@@ -83,6 +83,42 @@ export const DESIGN_TOKENS = {
   // Spacing
   sectionPadding: "24px 32px",
   cardGap: "16px",
+};
+
+/**
+ * Status badge colors for releases (with improved contrast for white text)
+ */
+export const STATUS_COLORS: Record<ReleaseStatus, string> = {
+  draft: "bg-gray-600", // Darker gray for better contrast
+  scheduled: "bg-blue-600", // Darker blue for better contrast
+  live: "bg-green-700", // Darker green for better contrast
+  archived: "bg-gray-800", // Darker gray for better contrast
+};
+
+/**
+ * Chart color configuration using channel colors
+ */
+export const CHART_COLORS = {
+  gross: { label: "Gross Revenue", color: CHANNEL_INFO.direct_to_fan.color },
+  net: { label: "Net Revenue", color: CHANNEL_INFO.physical.color },
+  direct_to_fan: {
+    label: CHANNEL_INFO.direct_to_fan.name,
+    color: CHANNEL_INFO.direct_to_fan.color,
+  },
+  digital: {
+    label: CHANNEL_INFO.digital.name,
+    color: CHANNEL_INFO.digital.color,
+  },
+  physical: {
+    label: CHANNEL_INFO.physical.name,
+    color: CHANNEL_INFO.physical.color,
+  },
+  bundles: {
+    label: CHANNEL_INFO.bundles.name,
+    color: CHANNEL_INFO.bundles.color,
+  },
+  totalFans: { label: "Total Fans", color: CHANNEL_INFO.direct_to_fan.color },
+  activeFans: { label: "Active Fans", color: CHANNEL_INFO.physical.color },
 };
 
 /**
