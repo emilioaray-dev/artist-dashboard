@@ -63,32 +63,37 @@ src/
 
 ## Key Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Run production build |
-| `npm run lint` | Run ESLint |
-| `npm test` | Run unit tests (Jest) |
+| Command            | Description                |
+| ------------------ | -------------------------- |
+| `npm run dev`      | Start development server   |
+| `npm run build`    | Build for production       |
+| `npm run start`    | Run production build       |
+| `npm run lint`     | Run ESLint                 |
+| `npm test`         | Run unit tests (Jest)      |
 | `npm run test:e2e` | Run E2E tests (Playwright) |
 
 ## Development Workflow
 
 ### 1. Start with Types → Mock Data → API Routes
+
 Define interfaces, create mock data, wire API routes.
 
 ### 2. Build Motion Primitives
+
 Create `MotionProvider`, `StaggerContainer`, `FadeIn` — used across all pages.
 
 ### 3. Build Components with Animation
+
 Each component includes its animations from the start. Use `StaggerContainer` for lists, `FadeIn` for sections.
 
 ### 4. Test Responsive Design
+
 - Mobile: 375px
 - Tablet: 768px
 - Desktop: 1280px
 
 ### 5. Document AI Usage Incrementally
+
 Update `docs/AI_USAGE.md` after each major phase.
 
 ## Verification Checklist

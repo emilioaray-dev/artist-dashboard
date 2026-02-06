@@ -69,11 +69,11 @@
 
 ### Data Service Layer
 
-- [ ] T015 Update data service in src/lib/data-service.ts: Ensure getReleases returns releases with Unsplash coverArtUrl, getSales returns daily data with both gross and net (net = gross * 0.85), getEngagement returns topFans with Unsplash avatarUrl
-- [ ] T016 [P] Rewrite mock releases in src/__mocks__/releases.ts: 4 releases matching reference titles (Midnight Sessions Vol. 3, Electric Dreams, Acoustic Sessions, Summer Vibes Bundle), status values "live"/"upcoming"/"ended", Unsplash CDN cover art URLs (?w=400&h=400&fit=crop), conversionRate field, realistic revenue
-- [ ] T017 [P] Rewrite mock sales in src/__mocks__/sales.ts: 30 days of daily data with gross (800+random*1200 base, +400 spike last 7d) and net (gross*0.85). Support 7d/30d/90d slicing.
-- [ ] T018 [P] Rewrite mock engagement in src/__mocks__/engagement.ts: Starting from 12400 base fans, daily growth 20-80, active rate 15-25% of total. 30-day history for chart.
-- [ ] T019 [P] Rewrite mock fans in src/__mocks__/fans.ts: 5 top fans matching reference names (Alex Rivera, Jordan Kim, Sam Chen, Morgan Taylor, Riley Quinn), Unsplash portrait avatar URLs, totalSpent $389-$847, purchaseCount 9-23, joinedDate
+- [ ] T015 Update data service in src/lib/data-service.ts: Ensure getReleases returns releases with Unsplash coverArtUrl, getSales returns daily data with both gross and net (net = gross \* 0.85), getEngagement returns topFans with Unsplash avatarUrl
+- [ ] T016 [P] Rewrite mock releases in src/**mocks**/releases.ts: 4 releases matching reference titles (Midnight Sessions Vol. 3, Electric Dreams, Acoustic Sessions, Summer Vibes Bundle), status values "live"/"upcoming"/"ended", Unsplash CDN cover art URLs (?w=400&h=400&fit=crop), conversionRate field, realistic revenue
+- [ ] T017 [P] Rewrite mock sales in src/**mocks**/sales.ts: 30 days of daily data with gross (800+random*1200 base, +400 spike last 7d) and net (gross*0.85). Support 7d/30d/90d slicing.
+- [ ] T018 [P] Rewrite mock engagement in src/**mocks**/engagement.ts: Starting from 12400 base fans, daily growth 20-80, active rate 15-25% of total. 30-day history for chart.
+- [ ] T019 [P] Rewrite mock fans in src/**mocks**/fans.ts: 5 top fans matching reference names (Alex Rivera, Jordan Kim, Sam Chen, Morgan Taylor, Riley Quinn), Unsplash portrait avatar URLs, totalSpent $389-$847, purchaseCount 9-23, joinedDate
 
 ### API Routes
 
@@ -100,16 +100,16 @@
 ### Implementation for User Story 2
 
 - [ ] T026 [P] [US2] Create StatCard in src/components/dashboard/StatCard.tsx (Client Component matching reference layout: top row has icon h-10 w-10 rounded-lg bg-muted on LEFT + change badge bg-success/10 or bg-destructive/10 with TrendingUp/Down icon and % on RIGHT. Label text below. Large value text-2xl font-semibold at bottom with optional $ prefix. Motion m.div with stagger delay prop)
-- [ ] T027 [P] [US2] Create RevenueChart in src/components/dashboard/RevenueChart.tsx (Client Component: Recharts AreaChart with SVG defs linearGradient fills (5% opacity top → 0% bottom), Gross vs Net as OVERLAPPING areas (NO stackId), net = gross*0.85 showing meaningful difference, time range tab bar 7d/30d/90d using shadcn Tabs, custom-styled dark tooltip component, clickable legend with colored dots, responsive)
+- [ ] T027 [P] [US2] Create RevenueChart in src/components/dashboard/RevenueChart.tsx (Client Component: Recharts AreaChart with SVG defs linearGradient fills (5% opacity top → 0% bottom), Gross vs Net as OVERLAPPING areas (NO stackId), net = gross\*0.85 showing meaningful difference, time range tab bar 7d/30d/90d using shadcn Tabs, custom-styled dark tooltip component, clickable legend with colored dots, responsive)
 - [ ] T028 [P] [US2] Create FanGrowthChart in src/components/dashboard/FanGrowthChart.tsx (Client Component: Recharts AreaChart with Total vs Active fans OVERLAPPING (NO stackId), SVG gradient fills, amber for Total + green for Active, custom tooltip, legend with colored dots, responsive)
 - [ ] T029 [P] [US2] Create RecentReleases in src/components/dashboard/RecentReleases.tsx (cover thumbnail h-16 w-16 rounded-lg with hover scale-105, title truncated, status Badge with color coding live=green/upcoming=amber/ended=gray, type + date, revenue + trend with TrendingUp icon. Each item links to /releases/[id]. StaggerContainer + FadeIn animation. "View all" link to /releases)
-- [ ] T030 [P] [US2] Create TopFans in src/components/dashboard/TopFans.tsx (shadcn/ui Avatar + AvatarImage (Unsplash URL) + AvatarFallback (first letter). Top 3 fans show numbered ranking badge h-5 w-5 rounded-full bg-primary positioned absolute -bottom-1 -right-1. Display name, purchase count, total spent text-primary right-aligned. StaggerContainer + FadeIn with delay 0.5+index*0.1)
+- [ ] T030 [P] [US2] Create TopFans in src/components/dashboard/TopFans.tsx (shadcn/ui Avatar + AvatarImage (Unsplash URL) + AvatarFallback (first letter). Top 3 fans show numbered ranking badge h-5 w-5 rounded-full bg-primary positioned absolute -bottom-1 -right-1. Display name, purchase count, total spent text-primary right-aligned. StaggerContainer + FadeIn with delay 0.5+index\*0.1)
 - [ ] T031 [US2] Build Overview page in src/app/page.tsx + src/app/components/HomePageClient.tsx: Header "Overview" + subtitle. 4 StatCards in StaggerContainer (grid-cols-1 sm:grid-cols-2 lg:grid-cols-4): Total Revenue ($, DollarSign), Total Fans (Users), Active Buyers (ShoppingCart), Avg Order Value ($, TrendingUp). RevenueChart + FanGrowthChart in 2-col grid. RecentReleases (2/3) + TopFans (1/3) bottom section. Fetch from /api/sales + /api/engagement in parallel.
 
 ### Unit Tests for User Story 2
 
-- [ ] T032 [P] [US2] Write unit test for StatCard in __tests__/components/StatCard.test.tsx (renders icon, value, change badge, correct colors for positive/negative)
-- [ ] T033 [P] [US2] Write unit test for RevenueChart in __tests__/components/RevenueChart.test.tsx (renders chart, time range tabs switch, legend visible)
+- [ ] T032 [P] [US2] Write unit test for StatCard in **tests**/components/StatCard.test.tsx (renders icon, value, change badge, correct colors for positive/negative)
+- [ ] T033 [P] [US2] Write unit test for RevenueChart in **tests**/components/RevenueChart.test.tsx (renders chart, time range tabs switch, legend visible)
 
 **Checkpoint**: Overview page complete — interactive charts with stat cards matching reference
 
@@ -125,13 +125,13 @@
 
 - [ ] T034 [P] [US1] Update AudioWaveform in src/components/releases/AudioWaveform.tsx (verify: SVG bars with m.rect, play/pause toggle with aria-label, focus ring on button, uses seeded waveform data. Only one waveform active at a time — add onPlay callback prop)
 - [ ] T035 [P] [US1] Rewrite ReleaseCard in src/components/releases/ReleaseCard.tsx (cover art with next/image from Unsplash URL, aspect-square, gradient overlay from-black/50 to-transparent, image zoom scale-105 on hover 300ms, status badge overlay positioned bottom-left with backdrop-blur, title h3 font-semibold, type + date, revenue + conversion trend, AudioWaveform below. Card hover: .card-hover + .glow-primary amber glow border. Entire card is Link to /releases/[id])
-- [ ] T036 [US1] Build Releases page in src/app/releases/page.tsx + client component: Header "Releases" + subtitle, fetch from /api/releases, responsive grid (grid-cols-1 sm:grid-cols-2 lg:grid-cols-3), StaggerContainer wrapping FadeIn cards with delay 0.3+index*0.1, SectionSkeleton loading state, EmptyState fallback
+- [ ] T036 [US1] Build Releases page in src/app/releases/page.tsx + client component: Header "Releases" + subtitle, fetch from /api/releases, responsive grid (grid-cols-1 sm:grid-cols-2 lg:grid-cols-3), StaggerContainer wrapping FadeIn cards with delay 0.3+index\*0.1, SectionSkeleton loading state, EmptyState fallback
 - [ ] T037 [US1] Configure next.config.ts to allow Unsplash images: Add images.remotePatterns for images.unsplash.com domain
 
 ### Unit Tests for User Story 1
 
-- [ ] T038 [P] [US1] Write unit test for AudioWaveform in __tests__/components/AudioWaveform.test.tsx (renders SVG bars, toggles play/pause, has aria-label)
-- [ ] T039 [P] [US1] Write unit test for ReleaseCard in __tests__/components/ReleaseCard.test.tsx (renders cover art, status badge, title, waveform, links to detail)
+- [ ] T038 [P] [US1] Write unit test for AudioWaveform in **tests**/components/AudioWaveform.test.tsx (renders SVG bars, toggles play/pause, has aria-label)
+- [ ] T039 [P] [US1] Write unit test for ReleaseCard in **tests**/components/ReleaseCard.test.tsx (renders cover art, status badge, title, waveform, links to detail)
 
 **Checkpoint**: Releases page complete — grid with animated waveform cards and Unsplash images
 
@@ -149,7 +149,7 @@
 
 ### Unit Tests for User Story 3
 
-- [ ] T041 [P] [US3] Write unit test for TopFans in __tests__/components/TopFans.test.tsx (renders avatars, ranking badges for top 3, purchase count, total spent)
+- [ ] T041 [P] [US3] Write unit test for TopFans in **tests**/components/TopFans.test.tsx (renders avatars, ranking badges for top 3, purchase count, total spent)
 
 **Checkpoint**: Fans page complete — reuses components from Overview
 
@@ -168,7 +168,7 @@
 
 ### Unit Tests for User Story 4
 
-- [ ] T044 [P] [US4] Write unit test for ReleaseDetailClient in __tests__/components/ReleaseDetailClient.test.tsx (renders cover art, badges, stat cards, chart, back link)
+- [ ] T044 [P] [US4] Write unit test for ReleaseDetailClient in **tests**/components/ReleaseDetailClient.test.tsx (renders cover art, badges, stat cards, chart, back link)
 
 **Checkpoint**: Release detail page complete — demonstrates Next.js dynamic routes
 
@@ -257,6 +257,7 @@ Phase 8 (Polish + AI Docs + Deploy) ──────────────�
 ## Parallel Opportunities
 
 ### Phase 1 (4 parallel tracks):
+
 ```
 Track A: T003 (types)
 Track B: T004 (utils)
@@ -265,6 +266,7 @@ Track D: T006 (waveform — no changes)
 ```
 
 ### Phase 2 (3 parallel tracks after motion primitives):
+
 ```
 Track A: T008-T011 (motion primitives, all parallel)
 Track B: T016-T019 (mock data, all parallel) → T015 (data service) → T020-T022 (API routes)
@@ -273,6 +275,7 @@ Then sequential: T012 (Sidebar) → T013 (layout) → T014 (template)
 ```
 
 ### Phase 3-7 (parallel user stories):
+
 ```
 Track A: US2 — T026-T033 (Overview — build first, creates shared components)
 Track B: US1 — T034-T039 (Releases — can start same time as US2)
@@ -307,17 +310,17 @@ After US1: US4 — T042-T044 (Release Detail — needs release card navigation)
 
 ## Task Summary
 
-| Phase | Tasks | Parallel | Description |
-|-------|-------|----------|-------------|
-| Setup | 7 | 4 | Dependencies + types + HSL tokens |
-| Foundation | 18 | 10 | Motion + Sidebar + API + Unsplash Data + Shared |
-| US2: Overview | 8 | 6 | StatCards + Charts + RecentReleases + TopFans |
-| US1: Releases | 6 | 3 | Release grid + waveform + Unsplash images |
-| US3: Fans | 2 | 1 | Fans page (reuses US2 components) |
-| US4: Release Detail | 3 | 1 | Dynamic route + stats + chart |
-| US5: Settings | 2 | 0 | Profile + notifications + toast |
-| Polish | 9 | 4 | A11y + docs + deploy |
-| **Total** | **55** | **29** | |
+| Phase               | Tasks  | Parallel | Description                                     |
+| ------------------- | ------ | -------- | ----------------------------------------------- |
+| Setup               | 7      | 4        | Dependencies + types + HSL tokens               |
+| Foundation          | 18     | 10       | Motion + Sidebar + API + Unsplash Data + Shared |
+| US2: Overview       | 8      | 6        | StatCards + Charts + RecentReleases + TopFans   |
+| US1: Releases       | 6      | 3        | Release grid + waveform + Unsplash images       |
+| US3: Fans           | 2      | 1        | Fans page (reuses US2 components)               |
+| US4: Release Detail | 3      | 1        | Dynamic route + stats + chart                   |
+| US5: Settings       | 2      | 0        | Profile + notifications + toast                 |
+| Polish              | 9      | 4        | A11y + docs + deploy                            |
+| **Total**           | **55** | **29**   |                                                 |
 
 ---
 

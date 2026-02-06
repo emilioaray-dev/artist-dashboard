@@ -17,7 +17,7 @@ A modern dashboard for music artists to track releases, sales analytics, and fan
 
 ```bash
 # Clone the repository
-git clone https://github.com/[your-username]/artist-dashboard.git
+git clone https://github.com/emilioaray-dev/artist-dashboard.git
 cd artist-dashboard
 
 # Install dependencies
@@ -31,126 +31,136 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 
 ### Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
+| Command            | Description                 |
+| ------------------ | --------------------------- |
+| `npm run dev`      | Start development server    |
+| `npm run build`    | Build for production        |
+| `npm run start`    | Start production server     |
+| `npm run lint`     | Run ESLint                  |
+| `npm test`         | Run unit tests (watch mode) |
+| `npm run test:run` | Run unit tests (single run) |
+| `npm run test:e2e` | Run Playwright E2E tests    |
 
 ## Technology Choices
 
 ### Core Stack
 
-| Technology | Version | Why |
-|------------|---------|-----|
-| **Next.js** | 16.1.6 | App Router for modern React patterns, Server Components, built-in optimizations |
-| **React** | 19.2.3 | Latest features including React Compiler for automatic memoization |
-| **TypeScript** | 5.x | Type safety, better DX, self-documenting code |
-| **Tailwind CSS** | 4.x | Utility-first CSS, rapid prototyping, excellent responsive design support |
+| Technology       | Version | Why                                                                         |
+| ---------------- | ------- | --------------------------------------------------------------------------- |
+| **Next.js**      | 16.1.6  | App Router for modern React patterns, Server Components, Suspense streaming |
+| **React**        | 19.2.3  | Latest features including React Compiler for automatic memoization          |
+| **TypeScript**   | 5.x     | Type safety, better DX, self-documenting code                               |
+| **Tailwind CSS** | 4.x     | Utility-first CSS, rapid prototyping, excellent responsive design support   |
 
 ### Additional Libraries
 
-| Library | Purpose | Why This Choice |
-|---------|---------|-----------------|
-| **shadcn/ui** | UI Components | Recommended by EVEN, accessible, customizable, Tailwind-native |
-| **Recharts** | Data Visualization | Declarative, composable, great React integration |
-| **Lucide React** | Icons | Consistent, lightweight, tree-shakeable |
-| **Zustand** | State Management | Lightweight, simple API; used if cross-component state required |
+| Library          | Purpose            | Why This Choice                                                               |
+| ---------------- | ------------------ | ----------------------------------------------------------------------------- |
+| **shadcn/ui**    | UI Components      | Recommended by EVEN, accessible, customizable, Tailwind-native                |
+| **Recharts**     | Data Visualization | Declarative, composable, great React integration                              |
+| **Lucide React** | Icons              | Consistent, lightweight, tree-shakeable                                       |
+| **Motion**       | Animations         | Lightweight animation library, smooth page transitions and micro-interactions |
+| **Zustand**      | State Management   | Lightweight, simple API; used for global audio player state                   |
+| **SWR**          | Data Fetching      | Client-side caching, revalidation, and deduplication for API calls            |
 
 ### Architecture Decisions
 
 1. **App Router over Pages Router**: Leverages React Server Components for better performance and the latest Next.js patterns.
 
-2. **shadcn/ui over full component libraries**: Provides ownership of component code, easier customization, no black-box dependencies.
+2. **Server Components + Suspense Streaming**: Pages use async server components with Suspense boundaries for progressive loading — data streams in as it resolves.
 
-3. **Recharts over Chart.js**: More React-idiomatic API, easier to customize with Tailwind, better TypeScript support.
+3. **shadcn/ui over full component libraries**: Provides ownership of component code, easier customization, no black-box dependencies.
 
-4. **Zustand for state management**: Minimal boilerplate compared to Redux, no providers required, TypeScript-first design.
+4. **Recharts over Chart.js**: More React-idiomatic API, easier to customize with Tailwind, better TypeScript support.
+
+5. **Zustand for state management**: Minimal boilerplate compared to Redux, no providers required, TypeScript-first design. Used for the global audio player.
 
 ## Features Implemented
 
 ### Core Requirements
 
-- [x] **Recent Releases** - Grid/list view of music releases with cover art, title, release date, and streaming stats
-- [x] **Sales Analytics** - Interactive charts showing revenue trends and platform breakdown
-- [x] **Fan Engagement** - Metrics dashboard showing follower growth, engagement rates, and platform breakdown
-- [x] **Responsive Design** - Mobile-first approach with responsive layouts
-- [x] **Interactive Data Visualization** - Charts with tooltips and interactive elements
-- [x] **Mock Data** - Comprehensive mock data for all dashboard sections
+- [x] **Recent Releases** - Grid view of music releases with cover art, title, type, status badges, and audio waveform player
+- [x] **Sales Analytics** - Interactive Revenue chart with time range tabs (7d/30d/90d), gross vs net revenue with channel breakdown
+- [x] **Fan Engagement** - Fan Growth chart (total fans vs active buyers), Top Fans section with ranked avatars, metric cards for engagement rate
 
 ### Technical Features
 
-- [x] Responsive design (mobile-first)
-- [x] Loading states and skeletons
-- [x] Error boundaries
-- [x] Accessible components (WCAG 2.1 AA)
-- [x] TypeScript strict mode
-- [x] Clean, organized code structure
+- [x] Responsive design with sidebar (desktop) and bottom navigation (mobile)
+- [x] Loading states with skeleton components for every section
+- [x] Error boundaries and Suspense fallbacks
+- [x] Accessible components with jsx-a11y enforcement
+- [x] TypeScript strict mode throughout
+- [x] Clean, organized code with clear separation of concerns
 
-### Nice-to-Haves (Implemented)
+### Nice-to-Haves (All Implemented)
 
-- [x] Tailwind CSS
-- [x] shadcn/ui component library
-- [x] State management (Zustand)
-- [x] Loading states and skeletons
-- [x] Accessibility considerations
-- [ ] Testing (unit, integration, or E2E) - Planned
-- [ ] Animations or micro-interactions - Planned
+- [x] Tailwind CSS v4 with custom dark theme and oklch color tokens
+- [x] shadcn/ui component library (Card, Tabs, Skeleton, Chart, Button, Input, Select, Switch, Label)
+- [x] State management (Zustand for audio player)
+- [x] Testing — 56 unit tests (Vitest + React Testing Library) + 25 E2E tests (Playwright)
+- [x] Animations and micro-interactions (FadeIn, SlideIn, PageTransition via Motion)
+- [x] Error handling and loading states (Suspense boundaries, skeleton loaders, error fallbacks)
+- [x] Accessibility (jsx-a11y ESLint rules, semantic HTML, keyboard navigation, ARIA labels)
 
 ## Project Structure
 
 ```
 src/
-├── app/                    # Next.js App Router
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Dashboard home
-│   └── globals.css         # Global styles
-├── components/
-│   ├── ui/                 # shadcn/ui components
-│   ├── dashboard/          # Dashboard-specific components
-│   │   ├── RecentReleases/
-│   │   ├── SalesAnalytics/
-│   │   └── FanEngagement/
-│   └── shared/             # Shared components (Header, etc.)
-├── lib/
-│   ├── utils.ts            # Utility functions
-│   └── constants.ts        # Platform colors, names, and icons
-├── data/
-│   └── mock/               # Mock data for development
-└── types/
-    └── index.ts            # TypeScript interfaces
+├── app/                              # Next.js App Router
+│   ├── layout.tsx                    # Root layout (Inter font, dark theme)
+│   ├── client-layout.tsx             # Client layout (sidebar, bottom nav, audio player)
+│   ├── template.tsx                  # Page transition wrapper
+│   ├── page.tsx                      # Overview page (/)
+│   ├── globals.css                   # Tailwind v4 theme + oklch tokens
+│   ├── _components/                  # Private route components (home page)
+│   ├── releases/_components/         # Private route components (/releases)
+│   ├── fans/_components/             # Private route components (/fans)
+│   ├── settings/_components/         # Private route components (/settings)
+│   └── api/                          # API routes (releases, sales, engagement)
+├── components/                       # Shared components (single global folder)
+│   ├── ui/core/                      # shadcn/ui primitives (generated, don't modify)
+│   ├── ui/customs/cards/             # Card widgets (MetricCard, ClientMetricCard, ReleaseCard)
+│   ├── ui/customs/charts/            # Data visualization (FanGrowthChart, RevenueChart)
+│   ├── ui/customs/feedback/          # Loading states, skeletons, empty states
+│   ├── ui/customs/lists/             # List/grid compositions (TopFans, ReleasesGrid, RecentReleasesList)
+│   ├── layout/                       # Sidebar, MobileBottomNav, MainLayout
+│   ├── motion/                       # FadeIn, SlideIn, PageTransition, MotionProvider
+│   └── audio/                        # AudioPlayer, AudioWaveform, DynamicAudioPlayer
+├── hooks/                            # Custom hooks (useApiData, useSidebar)
+├── lib/                              # Utils, API client, data-service, constants, SWR provider
+├── store/                            # Zustand player store
+├── __mocks__/                        # Mock data (releases, sales, engagement, fans)
+└── types/                            # TypeScript interfaces
 ```
 
 ## Assumptions Made
 
 1. **Single Artist View**: Dashboard shows data for one artist (the logged-in user). Multi-artist management would be a future feature.
 
-2. **Mock Data**: All data is mocked. In production, this would connect to EVEN's API.
+2. **Mock Data**: All data is mocked via API routes. In production, this would connect to EVEN's real backend API.
 
-3. **Time Period**: Default analytics view shows last 30 days. Assumed this is the most common use case.
+3. **Time Period**: Default analytics view shows last 30 days. Users can switch between 7d, 30d, and 90d.
 
 4. **Currency**: All monetary values in USD. Internationalization would be future work.
 
-5. **Platform Focus**: Prioritized Spotify, Apple Music, YouTube Music, and Amazon Music as primary platforms based on market share.
+5. **Dark Theme**: Dashboard uses a dark theme as default, matching the EVEN Backstage aesthetic.
 
 ## What I'd Do With More Time
 
-### Immediate Priorities (Next 4-6 hours)
+### Immediate Priorities
 
-1. **Unit Tests**: Add tests for key components using React Testing Library
-2. **E2E Tests**: Playwright tests for critical user journeys
-3. **Animations**: Add micro-interactions and loading animations
-4. **Additional Features**: Date range filters, detailed drill-down views
+1. **Deploy to Vercel**: Set up CI/CD pipeline with automatic deployments
+2. **More E2E Coverage**: Add tests for chart interactions, audio player, error states
+3. **Performance Optimization**: Implement image optimization with next/image for cover art, lazy loading for off-screen charts
 
 ### Future Enhancements
 
-1. **Authentication**: NextAuth.js integration
-2. **Data Persistence**: Database integration for user preferences
-3. **Notifications**: Alert system for milestone achievements
-4. **Export Features**: PDF reports, CSV data export
-5. **Internationalization**: Multi-language support
-6. **Performance Monitoring**: Vercel Analytics integration
+1. **Authentication**: NextAuth.js integration with role-based access
+2. **Real-time Data**: WebSocket or SSE for live sales/engagement updates
+3. **Data Persistence**: Database integration for user preferences and saved views
+4. **Export Features**: PDF reports, CSV data export for analytics
+5. **Internationalization**: Multi-language support with next-intl
+6. **Performance Monitoring**: Vercel Analytics and Web Vitals tracking
 
 ## AI Usage Documentation
 
@@ -175,19 +185,10 @@ specs/
     └── quickstart.md    # Quick start guide
 ```
 
-### Development Best Practices
-
-- **Testing**: Each feature will have corresponding unit tests before committing
-- **Build Process**: `npm run build` will be executed before each commit to ensure zero errors and warnings
-- **Code Quality**: All code will pass ESLint and TypeScript checks
-- **Accessibility**: Components will follow accessibility best practices (WCAG 2.1 AA)
-- **Performance**: Implementation will consider Core Web Vitals targets
-
 ### Branch Strategy
 
 - `main` - Production-ready code
-- `feat/001-artist-dashboard-initial-setup` - Initial setup branch
-- `feature/[task-id]-description` - Feature branches
+- `feature/001-artist-dashboard` - Main feature development branch
 
 ## License
 
@@ -195,4 +196,4 @@ This project was created as part of a job application and is not licensed for pu
 
 ---
 
-Built with care for EVEN by [Your Name]
+Built with care for EVEN by Celsius Aray

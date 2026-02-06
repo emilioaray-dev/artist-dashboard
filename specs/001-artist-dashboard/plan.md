@@ -22,18 +22,18 @@ Build a premium Music Artist Dashboard for EVEN Backstage adapted from the refer
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 > Note: Constitution is in template state. Applying reasonable defaults based on modern frontend best practices.
 
-| Principle | Status | Notes |
-|-----------|--------|-------|
-| Component-First | PASS | All UI built as reusable React components in `src/components/` |
-| Type Safety | PASS | TypeScript strict mode, explicit interfaces for all data |
-| Accessibility | PASS | FR-032 keyboard a11y, FR-036 prefers-reduced-motion, WCAG 2.1 AA |
-| Performance | PASS | Core Web Vitals targets, LazyMotion for bundle optimization |
-| Responsive Design | PASS | Mobile-first approach, FR-029 mandates full responsiveness |
-| Animation-First | PASS | Motion integrated from Phase 2, not an afterthought |
+| Principle         | Status | Notes                                                            |
+| ----------------- | ------ | ---------------------------------------------------------------- |
+| Component-First   | PASS   | All UI built as reusable React components in `src/components/`   |
+| Type Safety       | PASS   | TypeScript strict mode, explicit interfaces for all data         |
+| Accessibility     | PASS   | FR-032 keyboard a11y, FR-036 prefers-reduced-motion, WCAG 2.1 AA |
+| Performance       | PASS   | Core Web Vitals targets, LazyMotion for bundle optimization      |
+| Responsive Design | PASS   | Mobile-first approach, FR-029 mandates full responsiveness       |
+| Animation-First   | PASS   | Motion integrated from Phase 2, not an afterthought              |
 
 ## Project Structure
 
@@ -115,6 +115,7 @@ src/
 ```
 
 **Key Architecture Decisions**:
+
 - **Settings page added**: Matches reference UI, completes SaaS product feel with profile + notification toggles
 - **Release detail page added**: /releases/[id] with dynamic routing, stats, and revenue chart — demonstrates Next.js dynamic routes
 - **StatCard renamed from MetricCard**: Matches reference layout (icon + change badge top row, label, value)
@@ -130,17 +131,17 @@ src/
 
 > Adapted from reference UI (even-artist-hub). Added Release Detail and Settings pages. Updated visual patterns (StatCard, chart gradients, Unsplash images, HSL tokens).
 
-| Aspect | Decision | Rationale |
-|--------|----------|-----------|
-| State Management | React useState + SidebarContext | Chart toggles are local state. Sidebar collapse via React Context (simpler than Zustand for one use case). |
-| Data Fetching | API Routes + Service Layer | Reverse proxy pattern with service abstraction (per user decision) |
-| Styling | Tailwind + shadcn/ui + HSL tokens | Premium SaaS visual identity matching reference. HSL format for shadcn compatibility. |
-| Charts | Recharts + SVG gradients + custom tooltips | Interactive with time range tabs, overlapping areas (not stacked), premium gradient fills |
-| Animation | Motion (LazyMotion + m components ~5KB) | Page transitions, staggered entrances. Use `m` not `motion` inside LazyMotion. |
-| Waveform | Custom SVG + Motion | <1KB, seeded random data, play/pause animation — our differentiator |
-| Images | Unsplash CDN URLs | No local files needed. ?w=400&h=400&fit=crop for consistency |
-| Component Strategy | Server Components default, Client for interactivity + animation | Motion requires "use client" |
-| AI Documentation | Incremental per phase | AI_USAGE.md updated after each major phase while context is fresh |
+| Aspect             | Decision                                                        | Rationale                                                                                                  |
+| ------------------ | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| State Management   | React useState + SidebarContext                                 | Chart toggles are local state. Sidebar collapse via React Context (simpler than Zustand for one use case). |
+| Data Fetching      | API Routes + Service Layer                                      | Reverse proxy pattern with service abstraction (per user decision)                                         |
+| Styling            | Tailwind + shadcn/ui + HSL tokens                               | Premium SaaS visual identity matching reference. HSL format for shadcn compatibility.                      |
+| Charts             | Recharts + SVG gradients + custom tooltips                      | Interactive with time range tabs, overlapping areas (not stacked), premium gradient fills                  |
+| Animation          | Motion (LazyMotion + m components ~5KB)                         | Page transitions, staggered entrances. Use `m` not `motion` inside LazyMotion.                             |
+| Waveform           | Custom SVG + Motion                                             | <1KB, seeded random data, play/pause animation — our differentiator                                        |
+| Images             | Unsplash CDN URLs                                               | No local files needed. ?w=400&h=400&fit=crop for consistency                                               |
+| Component Strategy | Server Components default, Client for interactivity + animation | Motion requires "use client"                                                                               |
+| AI Documentation   | Incremental per phase                                           | AI_USAGE.md updated after each major phase while context is fresh                                          |
 
 ## Design System Tokens
 

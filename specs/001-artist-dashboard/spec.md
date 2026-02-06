@@ -19,7 +19,7 @@
 
 - Q: Reference UI adaptation from even-artist-hub? → A: Adapt the complete UI/UX from the Vite reference project (example/even-artist-hub) to our Next.js 16 project. Key patterns to match: StatCard layout (icon + change badge top row, label middle, value bottom), SVG gradient chart fills, Unsplash CDN images for cover art and avatars, Release Detail page (/releases/[id]), Settings page, Top Fans with avatar ranking badges, card hover glow effects, HSL-based color tokens. Keep our audio waveform differentiator (not in reference). Adapt framer-motion patterns to motion/react API.
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - View Recent Releases (Priority: P1)
 
@@ -117,11 +117,12 @@ As a music artist, I want to manage my profile information and notification pref
 - What happens when a release ID in the URL doesn't match any release? Display a "Release not found" message with a link back to the releases grid.
 - What happens when the artist saves settings? Show a toast notification confirming success (no actual persistence — mock only).
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
 **Recent Releases**
+
 - **FR-001**: System MUST display releases in a responsive grid layout (3 columns on lg desktop, 2 on sm tablet, 1 on mobile)
 - **FR-002**: Each release card MUST show: cover art image (aspect-square with gradient overlay from-black/50 to-transparent), status badge overlaid on image, release title, type + release date, total revenue, and conversion/trend percentage
 - **FR-003**: Releases MUST be sorted by release date (newest first)
@@ -136,6 +137,7 @@ As a music artist, I want to manage my profile information and notification pref
 - **FR-052**: Release card hover MUST apply image zoom (scale-105, 300ms transition) and amber glow border effect
 
 **Sales Analytics**
+
 - **FR-006**: System MUST display an area chart showing daily revenue with Gross vs Net overlapping areas (NOT stacked — Gross and Net are different views of the same data)
 - **FR-007**: Revenue chart MUST display a clickable legend with color-coded dots (Gross: primary/amber, Net: chart-2/lighter amber) allowing show/hide of series
 - **FR-008**: Charts MUST be interactive with custom-styled tooltips (dark theme, formatted currency, date) matching the premium aesthetic — NOT default Recharts tooltips
@@ -144,9 +146,10 @@ As a music artist, I want to manage my profile information and notification pref
 - **FR-042**: Revenue chart MUST include a time range tab bar (7d / 30d / 90d) that filters the displayed data
 - **FR-043**: Revenue chart areas MUST use SVG linear gradients (defs + linearGradient, 5% opacity top to 0% bottom) for premium fill effect — not flat fillOpacity
 - **FR-044**: Time range and channel toggle state MUST be managed in React client state (no URL params required)
-- **FR-053**: Net revenue MUST be calculated as gross * 0.85 (15% platform fee) to show meaningful difference between Gross and Net lines
+- **FR-053**: Net revenue MUST be calculated as gross \* 0.85 (15% platform fee) to show meaningful difference between Gross and Net lines
 
 **Fan Engagement**
+
 - **FR-011**: System MUST display total fan count across channels
 - **FR-012**: System MUST display fan growth percentage (30-day change)
 - **FR-013**: System MUST display engagement rate and purchase rate metrics
@@ -154,6 +157,7 @@ As a music artist, I want to manage my profile information and notification pref
 - **FR-015**: System MUST display a fan growth chart (Total fans vs Active buyers as overlapping areas — NOT stacked) with SVG gradient fills and custom tooltips
 
 **Release Detail Page**
+
 - **FR-054**: System MUST provide a release detail page at /releases/[id] with dynamic routing
 - **FR-055**: Release detail MUST show: back navigation link ("Back to Overview"), large cover art (h-48 w-48 with shadow), status + type badges, title (h1 text-3xl), release date, and action buttons (Share, View Live)
 - **FR-056**: Release detail MUST display 3 stat cards: Total Revenue, Units Sold, Conversion Rate
@@ -161,18 +165,21 @@ As a music artist, I want to manage my profile information and notification pref
 - **FR-058**: If release ID is not found, system MUST show a "Release not found" message with link back to releases
 
 **Settings Page**
+
 - **FR-059**: System MUST provide a Settings page at /settings with Profile and Notifications sections
 - **FR-060**: Profile section MUST display editable fields for Artist Name and Email using shadcn/ui Input + Label
 - **FR-061**: Notifications section MUST display toggle switches (shadcn/ui Switch) for: Sales Alerts, New Fans, Weekly Reports
 - **FR-062**: Save Changes button MUST show a success toast notification (shadcn/ui Sonner/Toast)
 
 **Data Layer**
+
 - **FR-016**: System MUST use API Routes as reverse proxy to data service layer (even with mock data)
 - **FR-017**: API Routes MUST return appropriate HTTP status codes (200, 404, 500)
 - **FR-018**: API Routes MUST handle errors gracefully and return meaningful error messages
 - **FR-020**: Data service layer MUST abstract data sources and allow easy migration from mock to real data
 
 **Animation & Motion Design**
+
 - **FR-033**: System MUST use Motion (motion/react) for all entrance animations and page transitions
 - **FR-034**: Metric cards MUST animate with staggered fade+slide-up (delays: 0, 0.05, 0.1, 0.15s). Release cards MUST stagger at 0.3s + index*0.1s. Top fans at 0.5s + index*0.1s — matching reference timing
 - **FR-035**: Key metric values (revenue, fan count, trends) MUST include subtle micro-interactions on first render
@@ -180,16 +187,19 @@ As a music artist, I want to manage my profile information and notification pref
 - **FR-037**: Animations MUST serve UX clarity (guide attention, signal state changes) — not decorative complexity
 
 **Architecture & Design Principles**
+
 - **FR-021**: All components MUST follow SOLID principles (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion)
 - **FR-022**: Project structure MUST follow Next.js App Router conventions (organize routes without affecting URL path)
 - **FR-023**: Components MUST be organized by feature domain (not by type) following Next.js recommended structure
 - **FR-024**: Server Components SHOULD be used by default, Client Components ONLY when interactivity is required
 
 **Code Quality**
+
 - **FR-025**: All code MUST be written in TypeScript with strict mode enabled
 - **FR-027**: Type definitions MUST be explicit and comprehensive (no implicit 'any' types)
 
 **AI Usage Documentation (Required Deliverable)**
+
 - **FR-045**: AI_USAGE.md MUST be updated incrementally after each major phase or component, not batch-written at the end
 - **FR-046**: Each log entry MUST follow the assignment template: Goal, AI Tool Used, Prompt/Approach, Result (used as-is or modified + why), Learning
 - **FR-047**: Document MUST include 3-5 significant interactions with thoughtful reflection (quality over quantity)
@@ -197,6 +207,7 @@ As a music artist, I want to manage my profile information and notification pref
 - **FR-049**: Reflection questions (AI Strategy, Code Ownership, Productivity Impact, Quality Assurance) MUST be answered at project close
 
 **UI Component Patterns (matching reference)**
+
 - **FR-063**: MetricCard/StatCard layout MUST follow reference pattern: top row has icon (h-10 w-10 rounded-lg bg-muted) on left + change badge (bg-success/10 or bg-destructive/10 with TrendingUp/Down icon and %) on right. Label text below icons. Large value (text-2xl font-semibold) at bottom with optional $ prefix
 - **FR-064**: TopFans component MUST display avatar images (from Unsplash CDN) with shadcn/ui Avatar + AvatarFallback. Top 3 fans MUST show a numbered ranking badge (h-5 w-5, rounded-full bg-primary) positioned absolute on avatar
 - **FR-065**: Recent Releases list on Overview MUST show cover thumbnail (h-16 w-16 rounded-lg with hover scale-105), title, status badge, type + date, and revenue + trend. Each item links to /releases/[id]
@@ -204,6 +215,7 @@ As a music artist, I want to manage my profile information and notification pref
 - **FR-067**: Custom CSS utilities MUST be defined: .text-gradient (amber gradient text via bg-clip-text), .glow-primary (box-shadow 0 0 20px primary/15%), .card-hover (transition + border-primary/30 + glow on hover)
 
 **General**
+
 - **FR-029**: Dashboard MUST be fully responsive (mobile-first design)
 - **FR-030**: Dashboard MUST show appropriate loading states for all sections using shadcn/ui Skeleton components
 - **FR-031**: Dashboard MUST use mock data through API Routes (no direct imports in UI components)
@@ -214,14 +226,14 @@ As a music artist, I want to manage my profile information and notification pref
 ### Key Entities
 
 - **Release**: Represents an exclusive music release (single, EP, album, exclusive) with cover art (Unsplash URL), title, release date, type, status (live/upcoming/ended), sales count, revenue, conversion rate, and sales by channel
-- **SalesData**: Daily revenue records with date, gross amount, net amount (gross * 0.85), per channel
+- **SalesData**: Daily revenue records with date, gross amount, net amount (gross \* 0.85), per channel
 - **EngagementMetrics**: Aggregated fan metrics including fan counts, growth rates, engagement rates, purchase rates
 - **FanData**: Daily fan count records (total fans, active fans) for chart
 - **TopFan**: Fan profile with name, avatar (Unsplash URL), totalSpent, purchaseCount, joinedDate
 - **Channel**: Sales channel identifier (Direct to Fan, Digital, Physical, Bundles)
 - **DashboardStats**: Summary metrics for Overview: totalRevenue, revenueChange, totalFans, fanChange, activeBuyers, buyerChange, avgOrderValue, orderValueChange
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 
