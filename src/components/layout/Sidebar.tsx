@@ -1,16 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/core/button";
+import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { useSidebar } from "@/hooks/useSidebar";
 import { NAV_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { Link, usePathname } from "@/i18n/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export function Sidebar() {
   const pathname = usePathname();
   const { collapsed, toggle } = useSidebar();
+  const t = useTranslations("Navigation");
+  const tCommon = useTranslations("Common");
+
+  const navTranslationKeys: Record<string, string> = {
+    Overview: "overview",
+    Releases: "releases",
+    Fans: "fans",
+    Settings: "settings",
+  };
 
   return (
     <aside
@@ -57,12 +67,22 @@ export function Sidebar() {
               )}
             >
               <Icon className="size-5" />
-              {!collapsed && <span>{item.title}</span>}
+              {!collapsed && <span>{t(navTranslationKeys[item.title])}</span>}
             </Link>
           );
         })}
       </nav>
       <div className="border-t p-3">
+        {!collapsed && (
+          <div className="mb-2">
+            <LanguageSelector />
+          </div>
+        )}
+        {collapsed && (
+          <div className="mb-2 flex justify-center">
+            <LanguageSelector compact />
+          </div>
+        )}
         <Button
           variant="ghost"
           size="sm"
@@ -77,7 +97,7 @@ export function Sidebar() {
           ) : (
             <>
               <ChevronLeft className="mr-2 h-4 w-4" />
-              <span>Collapse</span>
+              <span>{tCommon("collapse")}</span>
             </>
           )}
         </Button>
