@@ -22,6 +22,12 @@
     "fans": "Fans",
     "settings": "Settings"
   },
+  "Languages": {
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "pt": "Portuguese"
+  },
   "Overview": {
     "title": "Overview",
     "subtitle": "Your dashboard for direct-to-fan performance",
@@ -89,6 +95,25 @@
     "pageNotFoundDescription": "The page you're looking for doesn't exist.",
     "tryAgain": "Try again",
     "goHome": "Go home"
+  },
+  "Landing": {
+    "tryDemo": "Try Demo",
+    "noLoginRequired": "No login required. Explore the dashboard.",
+    "socialProof": "Join {count} artists getting EVEN",
+    "heroTitle1": "SELL MUSIC",
+    "heroTitle2": "TO YOUR FANS",
+    "heroSubtitle": "Make money from every sale, release early before streaming and get paid instantly.",
+    "featureReleaseTitle": "Release Early",
+    "featureReleaseDesc": "Give early access before your music hits streaming.",
+    "featurePaidTitle": "Get Paid Daily",
+    "featurePaidDesc": "Automatic payouts every day you earn.",
+    "featureChartsTitle": "Get on the Charts",
+    "featureChartsDesc": "Report all eligible sales to Luminate automatically.",
+    "featureCommunityTitle": "More Than Music",
+    "featureCommunityDesc": "Build a home for all of your creative projects.",
+    "footerText": "EVEN Backstage Demo · Take-home Assignment",
+    "metaTitle": "EVEN Backstage | Sell Music Direct to Fans",
+    "metaDescription": "Sell music directly to your fans. Release early, get paid daily, and grow your audience with EVEN Backstage."
   },
   "Formats": {
     "timeRange7d": "7 Days",

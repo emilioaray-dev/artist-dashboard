@@ -22,6 +22,12 @@
     "fans": "Fans",
     "settings": "Configuración"
   },
+  "Languages": {
+    "en": "Inglés",
+    "es": "Español",
+    "fr": "Francés",
+    "pt": "Portugués"
+  },
   "Overview": {
     "title": "Resumen",
     "subtitle": "Tu panel de rendimiento directo al fan",
@@ -89,6 +95,25 @@
     "pageNotFoundDescription": "La página que buscas no existe.",
     "tryAgain": "Intentar de nuevo",
     "goHome": "Ir al inicio"
+  },
+  "Landing": {
+    "tryDemo": "Probar Demo",
+    "noLoginRequired": "Sin inicio de sesión. Explora el panel.",
+    "socialProof": "Únete a {count} artistas en EVEN",
+    "heroTitle1": "VENDE MÚSICA",
+    "heroTitle2": "A TUS FANS",
+    "heroSubtitle": "Gana dinero con cada venta, lanza antes del streaming y cobra al instante.",
+    "featureReleaseTitle": "Lanza Primero",
+    "featureReleaseDesc": "Da acceso anticipado antes de que tu música llegue al streaming.",
+    "featurePaidTitle": "Cobra a Diario",
+    "featurePaidDesc": "Pagos automáticos cada día que generas ingresos.",
+    "featureChartsTitle": "Entra en los Charts",
+    "featureChartsDesc": "Reporta todas las ventas elegibles a Luminate automáticamente.",
+    "featureCommunityTitle": "Más que Música",
+    "featureCommunityDesc": "Construye un hogar para todos tus proyectos creativos.",
+    "footerText": "EVEN Backstage Demo · Proyecto de Demostración",
+    "metaTitle": "EVEN Backstage | Vende Música Directo a tus Fans",
+    "metaDescription": "Vende música directamente a tus fans. Lanza antes, cobra a diario y haz crecer tu audiencia con EVEN Backstage."
   },
   "Formats": {
     "timeRange7d": "7 días",

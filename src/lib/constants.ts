@@ -37,7 +37,7 @@ export const CHANNEL_INFO: Record<Channel, { name: string; color: string }> = {
 export const NAV_ITEMS = [
   {
     title: "Overview",
-    href: "/",
+    href: "/overview",
     icon: LayoutDashboard,
   },
   {

@@ -142,6 +142,11 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    scrollbar-color: oklch(0.769 0.174 70.7 / 50%) oklch(0.145 0 0);
+    scrollbar-width: thin;
+  }
+  html {
+    scrollbar-gutter: stable;
   }
   body {
     @apply bg-background text-foreground;

@@ -17,17 +17,17 @@
 
 **Purpose**: Route group restructuring and i18n setup — move existing dashboard pages into `(dashboard)` route group and create `(landing)` route group scaffold.
 
-- [ ] T001 Create `(dashboard)` route group directory and move existing dashboard pages: `src/app/[locale]/fans/` → `src/app/[locale]/(dashboard)/fans/`, `src/app/[locale]/releases/` → `src/app/[locale]/(dashboard)/releases/`, `src/app/[locale]/settings/` → `src/app/[locale]/(dashboard)/settings/`
-- [ ] T002 Move dashboard home page and components: `src/app/[locale]/page.tsx` → `src/app/[locale]/(dashboard)/overview/page.tsx`, `src/app/[locale]/_components/` → `src/app/[locale]/(dashboard)/_components/`
-- [ ] T003 Move dashboard layout: convert `src/app/[locale]/client-layout.tsx` into `src/app/[locale]/(dashboard)/layout.tsx` (wrapping with existing SWRProvider, MotionProvider, SidebarProvider, Sidebar, MobileBottomNav, AudioPlayer, AccessibilityChecker)
-- [ ] T004 Update `NAV_ITEMS` Overview href from `/` to `/overview` in `src/lib/constants.ts`
-- [ ] T005 Create `(landing)` route group scaffold: `src/app/[locale]/(landing)/layout.tsx` (minimal layout with MotionProvider, no sidebar/nav) and empty `src/app/[locale]/(landing)/page.tsx`
-- [ ] T006 Add hero background image asset to `public/images/hero-bg.jpg`
-- [ ] T007 [P] Add `Landing` namespace with all translation keys to `messages/en.json`
-- [ ] T008 [P] Add `Landing` namespace with Spanish translations to `messages/es.json`
-- [ ] T009 [P] Add `Landing` namespace with French translations to `messages/fr.json`
-- [ ] T010 [P] Add `Landing` namespace with Portuguese translations to `messages/pt.json`
-- [ ] T011 Verify build succeeds and existing dashboard routes work at new paths (`/overview`, `/releases`, `/fans`, `/settings`) by running `npm run build`
+- [x] T001 Create `(dashboard)` route group directory and move existing dashboard pages: `src/app/[locale]/fans/` → `src/app/[locale]/(dashboard)/fans/`, `src/app/[locale]/releases/` → `src/app/[locale]/(dashboard)/releases/`, `src/app/[locale]/settings/` → `src/app/[locale]/(dashboard)/settings/`
+- [x] T002 Move dashboard home page and components: `src/app/[locale]/page.tsx` → `src/app/[locale]/(dashboard)/overview/page.tsx`, `src/app/[locale]/_components/` → `src/app/[locale]/(dashboard)/_components/`
+- [x] T003 Move dashboard layout: convert `src/app/[locale]/client-layout.tsx` into `src/app/[locale]/(dashboard)/layout.tsx` (wrapping with existing SWRProvider, MotionProvider, SidebarProvider, Sidebar, MobileBottomNav, AudioPlayer, AccessibilityChecker)
+- [x] T004 Update `NAV_ITEMS` Overview href from `/` to `/overview` in `src/lib/constants.ts`
+- [x] T005 Create `(landing)` route group scaffold: `src/app/[locale]/(landing)/layout.tsx` (minimal layout with MotionProvider, no sidebar/nav) and empty `src/app/[locale]/(landing)/page.tsx`
+- [x] T006 Add hero background image asset to `public/images/hero-bg.jpg`
+- [x] T007 [P] Add `Landing` namespace with all translation keys to `messages/en.json`
+- [x] T008 [P] Add `Landing` namespace with Spanish translations to `messages/es.json`
+- [x] T009 [P] Add `Landing` namespace with French translations to `messages/fr.json`
+- [x] T010 [P] Add `Landing` namespace with Portuguese translations to `messages/pt.json`
+- [x] T011 Verify build succeeds and existing dashboard routes work at new paths (`/overview`, `/releases`, `/fans`, `/settings`) by running `npm run build`
 
 **Checkpoint**: Route groups established, dashboard functional at new paths, landing page scaffold ready, all translations added.
 
@@ -41,11 +41,11 @@
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create LandingHeader component (fixed top navbar with logo "E" + "EVEN BACKSTAGE" text, "Try Demo" button with ArrowRight icon linking to `/overview`) in `src/app/[locale]/(landing)/_components/LandingHeader.tsx`
-- [ ] T013 [P] [US1] Create LandingHero component (full-viewport hero section with background image via Next.js Image, two gradient overlays, social proof pill with pulsing amber dot, h1 headline "SELL MUSIC" / "TO YOUR FANS" in primary, subheadline, "Try Demo" CTA button, helper text) in `src/app/[locale]/(landing)/_components/LandingHero.tsx`
-- [ ] T014 [US1] Assemble landing page server component: import LandingHeader + LandingHero, add `generateMetadata` with title, description, Open Graph (og:title, og:description, og:image, og:type), and Twitter card meta tags, use `getTranslations("Landing")` in `src/app/[locale]/(landing)/page.tsx`
-- [ ] T015 [US1] Verify responsive behavior: hero headline scales `text-5xl` → `text-7xl`, CTA has minimum 44x44px touch target, content readable at 320px width
-- [ ] T016 [US1] Verify all 4 locales render correctly: load `/`, `/es/`, `/fr/`, `/pt/` and confirm translated hero text
+- [x] T012 [P] [US1] Create LandingHeader component (fixed top navbar with logo "E" + "EVEN BACKSTAGE" text, "Try Demo" button with ArrowRight icon linking to `/overview`) in `src/app/[locale]/(landing)/_components/LandingHeader.tsx`
+- [x] T013 [P] [US1] Create LandingHero component (full-viewport hero section with background image via Next.js Image, two gradient overlays, social proof pill with pulsing amber dot, h1 headline "SELL MUSIC" / "TO YOUR FANS" in primary, subheadline, "Try Demo" CTA button, helper text) in `src/app/[locale]/(landing)/_components/LandingHero.tsx`
+- [x] T014 [US1] Assemble landing page server component: import LandingHeader + LandingHero, add `generateMetadata` with title, description, Open Graph (og:title, og:description, og:image, og:type), and Twitter card meta tags, use `getTranslations("Landing")` in `src/app/[locale]/(landing)/page.tsx`
+- [x] T015 [US1] Verify responsive behavior: hero headline scales `text-5xl` → `text-7xl`, CTA has minimum 44x44px touch target, content readable at 320px width
+- [x] T016 [US1] Verify all 4 locales render correctly: load `/`, `/es/`, `/fr/`, `/pt/` and confirm translated hero text
 
 **Checkpoint**: Landing page at `/` shows header + hero with full above-the-fold experience. "Try Demo" navigates to dashboard. All 4 locales work.
 
@@ -59,9 +59,9 @@
 
 ### Implementation for User Story 2
 
-- [ ] T017 [US2] Create LandingFeatures component (responsive grid `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`, 4 feature cards with Lucide icons — Music, DollarSign, ChartColumn, Users — each with `rounded-xl border border-border/60 bg-card/60 p-6 backdrop-blur-sm`, hover effect `hover:border-primary/40 hover:bg-card`, scroll-triggered animation using `motion/react` `whileInView` with `initial={{ opacity: 0, y: 20 }}` → `whileInView={{ opacity: 1, y: 0 }}`) in `src/app/[locale]/(landing)/_components/LandingFeatures.tsx`
-- [ ] T018 [US2] Integrate LandingFeatures into the landing page below the hero section in `src/app/[locale]/(landing)/page.tsx`
-- [ ] T019 [US2] Verify feature card translations render in all 4 locales and animations trigger on scroll
+- [x] T017 [US2] Create LandingFeatures component (responsive grid `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`, 4 feature cards with Lucide icons — Music, DollarSign, ChartColumn, Users — each with `rounded-xl border border-border/60 bg-card/60 p-6 backdrop-blur-sm`, hover effect `hover:border-primary/40 hover:bg-card`, scroll-triggered animation using `motion/react` `whileInView` with `initial={{ opacity: 0, y: 20 }}` → `whileInView={{ opacity: 1, y: 0 }}`) in `src/app/[locale]/(landing)/_components/LandingFeatures.tsx`
+- [x] T018 [US2] Integrate LandingFeatures into the landing page below the hero section in `src/app/[locale]/(landing)/page.tsx`
+- [x] T019 [US2] Verify feature card translations render in all 4 locales and animations trigger on scroll
 
 **Checkpoint**: Full landing page with hero + feature cards. Scroll animations work. Responsive grid adapts across breakpoints.
 
@@ -75,8 +75,8 @@
 
 ### Implementation for User Story 3
 
-- [ ] T020 [US3] Create LandingFooter component (full-width `border-t border-border/40 py-8`, centered `text-sm text-muted-foreground` text within `max-w-7xl` container, translated via `Landing.footerText`) in `src/app/[locale]/(landing)/_components/LandingFooter.tsx`
-- [ ] T021 [US3] Integrate LandingFooter into the landing page below the features section in `src/app/[locale]/(landing)/page.tsx`
+- [x] T020 [US3] Create LandingFooter component (full-width `border-t border-border/40 py-8`, centered `text-sm text-muted-foreground` text within `max-w-7xl` container, translated via `Landing.footerText`) in `src/app/[locale]/(landing)/_components/LandingFooter.tsx`
+- [x] T021 [US3] Integrate LandingFooter into the landing page below the features section in `src/app/[locale]/(landing)/page.tsx`
 
 **Checkpoint**: Complete landing page with header, hero, features, and footer. All sections visible and translated.
 
@@ -86,11 +86,11 @@
 
 **Purpose**: Final verification, lint, tests, and build validation across all sections and locales.
 
-- [ ] T022 Update existing unit tests if any import paths changed due to route group restructuring (check `__tests__/` for broken imports)
-- [ ] T023 Run `npm run lint` and fix any linting issues in new and moved files
-- [ ] T024 Run `npm test` and ensure all existing tests pass with route group changes
-- [ ] T025 Run `npm run build` and verify production build succeeds with no errors
-- [ ] T026 Visual verification: compare landing page against prototype at even-artist-hub.vercel.app using Chrome DevTools screenshots across all 4 locales
+- [x] T022 Update existing unit tests if any import paths changed due to route group restructuring (check `__tests__/` for broken imports)
+- [x] T023 Run `npm run lint` and fix any linting issues in new and moved files
+- [x] T024 Run `npm test` and ensure all existing tests pass with route group changes
+- [x] T025 Run `npm run build` and verify production build succeeds with no errors
+- [x] T026 Visual verification: compare landing page against prototype at even-artist-hub.vercel.app using Chrome DevTools screenshots across all 4 locales
 
 ---
 
