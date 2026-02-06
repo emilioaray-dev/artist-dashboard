@@ -15,10 +15,10 @@ Represents a sales channel in the EVEN direct-to-fan platform.
  * These represent the different ways artists can monetize their content directly with fans.
  */
 type Channel =
-  | "direct_to_fan"   // Direct purchases from fans (primary revenue)
-  | "digital"         // Digital downloads and streaming
-  | "physical"        // Physical merchandise and vinyl
-  | "bundles";        // Bundle packages combining multiple products
+  | "direct_to_fan" // Direct purchases from fans (primary revenue)
+  | "digital" // Digital downloads and streaming
+  | "physical" // Physical merchandise and vinyl
+  | "bundles"; // Bundle packages combining multiple products
 
 /**
  * Channel display information for UI rendering.
@@ -80,6 +80,7 @@ interface Release {
 ```
 
 **Validation Rules**:
+
 - `id`: Non-empty string
 - `title`: Non-empty string, max 200 characters
 - `releaseDate`: Valid ISO date
@@ -90,6 +91,7 @@ interface Release {
 - `revenueByChannel`: All values non-negative integers (cents)
 
 **Example**:
+
 ```typescript
 const release: Release = {
   id: "rel_001",
@@ -104,14 +106,14 @@ const release: Release = {
     direct_to_fan: 1500,
     digital: 600,
     physical: 250,
-    bundles: 150
+    bundles: 150,
   },
   revenueByChannel: {
-    direct_to_fan: 2999700,  // $29,997.00
-    digital: 1199880,        // $11,998.80
-    physical: 499950,        // $4,999.50
-    bundles: 299970          // $2,999.70
-  }
+    direct_to_fan: 2999700, // $29,997.00
+    digital: 1199880, // $11,998.80
+    physical: 499950, // $4,999.50
+    bundles: 299970, // $2,999.70
+  },
 };
 ```
 
@@ -167,6 +169,7 @@ interface SalesSummary {
 ```
 
 **Validation Rules**:
+
 - `date`: Valid ISO date within the reporting period
 - `revenue`: Non-negative integer (cents)
 - `sales`: Non-negative integer
@@ -174,17 +177,19 @@ interface SalesSummary {
 - `salesByChannel`: All values non-negative integers
 
 **Display Formatting**:
+
 - Convert cents to dollars for display: `revenue / 100`
 - Format as currency: `$1,234.56`
 - Large amounts abbreviated: `$45.2K`, `$1.2M`
 
 **Example**:
+
 ```typescript
 const salesSummary: SalesSummary = {
-  totalRevenue: 4523456,  // $45,234.56
+  totalRevenue: 4523456, // $45,234.56
   totalSales: 1850,
-  grossRevenue: 5028284,  // $50,282.84
-  netRevenue: 4523456,    // $45,234.56 (after 10% platform fee)
+  grossRevenue: 5028284, // $50,282.84
+  netRevenue: 4523456, // $45,234.56 (after 10% platform fee)
   periodStart: "2026-01-05",
   periodEnd: "2026-02-04",
   dailyData: [
@@ -196,14 +201,14 @@ const salesSummary: SalesSummary = {
         direct_to_fan: 90140,
         digital: 37558,
         physical: 15023,
-        bundles: 7513
+        bundles: 7513,
       },
       salesByChannel: {
         direct_to_fan: 37,
         digital: 15,
         physical: 6,
-        bundles: 4
-      }
+        bundles: 4,
+      },
     },
     // ... 29 more days
   ],
@@ -211,12 +216,12 @@ const salesSummary: SalesSummary = {
     direct_to_fan: 2714073,
     digital: 1131864,
     physical: 452345,
-    bundles: 225174
+    bundles: 225174,
   },
   revenueChange: {
     percentage: 12.5,
-    trend: "up"
-  }
+    trend: "up",
+  },
 };
 ```
 
@@ -289,6 +294,7 @@ interface EngagementMetrics {
 ```
 
 **Validation Rules**:
+
 - `totalFans`: Non-negative integer
 - `fanGrowth.percentage`: Number with max 1 decimal place
 - `engagementRate.value`: Number between 0 and 100
@@ -296,12 +302,14 @@ interface EngagementMetrics {
 - `trend`: One of "up", "down", "stable"
 
 **Business Logic**:
+
 - `trend = "up"` when growth > 0
 - `trend = "down"` when growth < 0
 - `trend = "stable"` when growth is 0 or within ±0.5%
 - `purchaseRate = (totalBuyers / totalFans) * 100`
 
 **Example**:
+
 ```typescript
 const engagement: EngagementMetrics = {
   totalFans: 125000,
@@ -310,24 +318,24 @@ const engagement: EngagementMetrics = {
   fanGrowth: {
     absolute: 12500,
     percentage: 11.1,
-    trend: "up"
+    trend: "up",
   },
   engagementRate: {
-    value: 36.0,  // 45000 active / 125000 total
+    value: 36.0, // 45000 active / 125000 total
     trend: "up",
-    change: 2.3
+    change: 2.3,
   },
   purchaseRate: {
-    value: 8.5,   // 10625 buyers / 125000 total
+    value: 8.5, // 10625 buyers / 125000 total
     trend: "up",
-    change: 0.8
+    change: 0.8,
   },
   fanHistory: [
     { date: "2026-01-05", count: 112500, activeFans: 40500 },
     { date: "2026-01-06", count: 113200, activeFans: 40752 },
     // ... more days
-    { date: "2026-02-04", count: 125000, activeFans: 45000 }
-  ]
+    { date: "2026-02-04", count: 125000, activeFans: 45000 },
+  ],
 };
 ```
 

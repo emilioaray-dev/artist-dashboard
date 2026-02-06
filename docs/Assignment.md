@@ -31,7 +31,6 @@ You'll create a dashboard that displays:
 ● Any additional features that showcase your skills
 We want to see YOUR interpretation of what makes a great artist dashboard.
 
-
 # 📋 Technical Requirements
 
 ## Must Have
@@ -44,6 +43,7 @@ We want to see YOUR interpretation of what makes a great artist dashboard.
 ● ✅ Mock data is fine (no need for real APIs)
 ● ✅ Clean, readable code with good structure
 ```
+
 ## Nice to Have (Choose what resonates with you)
 
 ```
@@ -55,6 +55,7 @@ We want to see YOUR interpretation of what makes a great artist dashboard.
 ● Error handling and loading states
 ● Accessibility considerations
 ```
+
 # 🤖 AI-Assisted Development - Required Section
 
 ⚠ This is important: We actively encourage and expect the use of AI tools in modern
@@ -65,10 +66,10 @@ development.
 Along with your code, please provide a document (Markdown, PDF, or in your README) that
 includes:
 
-
 ```
 None
 ```
+
 ## 1. AI Tools Usage Log
 
 Document your AI interaction throughout the project:
@@ -100,7 +101,6 @@ Document your AI interaction throughout the project:
 ● How did you decide when to use AI vs. code from scratch?
 ● Were there any tasks where AI wasn't helpful? Why?
 
-
 **b) Code Ownership:**
 ● How did you ensure you understood all AI-generated code?
 ● Describe one piece of AI-generated code you significantly modified and why.
@@ -131,7 +131,6 @@ We want to understand:
 Note: Using AI heavily is NOT a negative. We want to see strategic, thoughtful
 usage.
 
-
 # 📦 Deliverables
 
 Please submit:
@@ -142,6 +141,7 @@ Please submit:
 ● Clean, organized code
 ● Clear commit history (doesn't need to be perfect, but should tell a story)
 ```
+
 ## 2. 📄 README.md that includes:
 
 ```
@@ -151,6 +151,7 @@ Please submit:
 ● Features you implemented
 ● What you'd do with more time
 ```
+
 ## 3. 🤖 AI Usage Documentation (can be in README or separate file)
 
 ```
@@ -158,6 +159,7 @@ Please submit:
 ● Answers to reflection questions
 ● One detailed example
 ```
+
 ## 4. 🌐 Live Demo
 
 ```
@@ -190,6 +192,7 @@ Please submit:
 ● Ask questions - Email us if anything is unclear (shows communication skills)
 ● Have fun - This should be enjoyable!
 ```
+
 ## Don'ts ❌
 
 ```
@@ -202,7 +205,6 @@ build)
 ```
 
 # 📊 Evaluation Criteria
-
 
 # 🤔 Frequently Asked Questions
 
@@ -225,7 +227,6 @@ not autocomplete suggestions. Use your judgment.
 **Q: What if AI gave me bad suggestions?**
 A: PERFECT! Document that. We want to see your critical thinking.
 
-
 # 📬 Submission
 
 **When you're ready, please email:**
@@ -243,13 +244,13 @@ A: PERFECT! Document that. We want to see your critical thinking.
 ● Day 8-10: We review and get back to you
 ● Next step: Final interview (if selected)
 ```
+
 # 🎵 About EVEN
 
 While you're working on this, feel free to check out:
 ● EVEN - See what we're building
 ● EVEN Backstage - See how artists use our platform
 We're excited to see what you build!
-
 
 # 💬 Questions?
 
@@ -259,4 +260,3 @@ Good luck, and have fun! 🚀
 Remember: This is a conversation starter, not a final exam. We want to work with
 someone who thinks critically, communicates well, and loves building great products.
 Show us who you are as a developer!
-

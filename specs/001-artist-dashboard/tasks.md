@@ -1,207 +1,215 @@
 # Tasks: EVEN Backstage Dashboard
 
 **Input**: Design documents from `/specs/001-artist-dashboard/`
-**Prerequisites**: plan.md, spec.md, data-model.md, research.md, quickstart.md
+**Design Reference**: example/even-artist-hub (Vite + React 18 reference) — UI/UX adapted to Next.js 16 + React 19
+**Prerequisites**: plan.md (updated 2026-02-05), spec.md (with reference UI adaptation clarifications), data-model.md, research.md, quickstart.md
 
-**Tests**: Unit tests (Jest + React Testing Library) and E2E tests (Playwright) included.
+**Tests**: Unit tests (Vitest + React Testing Library) included per spec requirements.
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+**Organization**: Tasks are grouped by user story. Each story delivers an independently testable increment. Motion animations are integrated per-component. Reference UI patterns (StatCard layout, SVG gradient charts, Unsplash images, HSL tokens) applied from the start.
 
-## Format: `[ID] [P?] [Story] Description`
+## Format: `[ID] [P?] [Story?] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
+- **[Story]**: Which user story this task belongs to (US1, US2, US3, US4, US5)
 - Include exact file paths in descriptions
 
 ## Path Conventions
 
-- **Project type**: Next.js App Router (frontend only)
+- **Project type**: Next.js App Router (frontend with API Routes)
 - **Source**: `src/` at repository root
 - **Components**: `src/components/`
 - **Types**: `src/types/`
 - **Mock data**: `src/__mocks__/`
 - **Services**: `src/lib/`
 - **API Routes**: `src/app/api/`
-- **Unit tests**: `__tests__/` (colocated or root)
-- **E2E tests**: `e2e/`
 
 ---
 
 ## Phase 1: Setup (Shared Infrastructure)
 
-**Purpose**: Project initialization, dependencies, testing frameworks, and base configuration
+**Purpose**: Install new dependencies, define types, HSL design tokens, and base configuration. Existing setup (shadcn/ui, lucide-react, motion, vitest) is already in place — focus on what needs to change.
 
-### Core Dependencies
+### Dependencies
 
-- [ ] T001 Initialize shadcn/ui with `npx shadcn@latest init` (base color: slate, CSS variables: yes)
-- [ ] T002 Add shadcn/ui components: `npx shadcn@latest add card skeleton button chart`
-- [ ] T003 Install additional dependencies: `npm install lucide-react zustand`
-
-### Testing Setup
-
-- [ ] T004 Setup Jest and React Testing Library: `npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom @types/jest ts-node`
-- [ ] T005 Create Jest config in jest.config.ts and jest.setup.ts
-- [ ] T006 Setup Playwright: `npm init playwright@latest` (TypeScript, e2e folder, GitHub Actions: no)
-- [ ] T007 Add test scripts to package.json: `"test": "jest"`, `"test:e2e": "playwright test"`
+- [ ] T001 Add shadcn/ui components needed for reference UI: `npx shadcn@latest add avatar badge switch input label separator sonner` in project root
+- [ ] T002 Remove zustand from package.json: `npm uninstall zustand` (SidebarContext used instead)
 
 ### Base Code Structure
 
-- [ ] T008 [P] Create TypeScript interfaces in src/types/index.ts (Channel, Release, SalesData, EngagementMetrics, ApiResponse)
-- [ ] T009 [P] Create utility functions in src/lib/utils.ts (cn helper, formatNumber, formatCurrency, formatDate)
-- [ ] T010 [P] Create channel constants in src/lib/constants.ts (channel colors, names, icons for Direct to Fan, Digital, Physical, Bundles)
+- [ ] T003 [P] Update TypeScript interfaces in src/types/index.ts: Update ReleaseStatus to "live" | "upcoming" | "ended", add ReleaseType "exclusive", add conversionRate to Release, add TopFan interface with avatarUrl (Unsplash URL) and joinedDate, add DashboardStats interface for Overview page
+- [ ] T004 [P] Update utility functions in src/lib/utils.ts: Ensure formatCurrency converts cents to dollars correctly, add formatConversionRate helper
+- [ ] T005 [P] Update constants in src/lib/constants.ts: Add Settings nav item (Lucide Settings icon, /settings href), update CHANNEL_INFO colors to HSL values matching reference, add HSL chart gradient color constants
+- [ ] T006 [P] Keep waveform generator in src/lib/waveform.ts (already correct — no changes needed)
+
+### Design Tokens (HSL System)
+
+- [ ] T007 Rewrite src/app/globals.css with HSL-based design tokens matching reference: --background: 220 15% 8%, --primary: 42 100% 50%, --muted: 220 15% 18%, --success: 142 70% 45%, --destructive: 0 84.2% 60.2%, sidebar tokens, chart-1 through chart-5. Add custom utilities: .text-gradient, .glow-primary, .card-hover. Add .text-success, .text-positive, .text-negative utility classes. Remove duplicate :root/.dark blocks — single :root only.
 
 ---
 
 ## Phase 2: Foundational (Blocking Prerequisites)
 
-**Purpose**: API Routes, Service Layer, and shared components that ALL user stories depend on
+**Purpose**: Motion primitives, Sidebar (with Settings link), API Routes, Data Service Layer, Unsplash mock data — ALL pages depend on these
 
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
+**CRITICAL**: No user story work can begin until this phase is complete
+
+### Motion Primitives
+
+- [ ] T008 [P] Update MotionProvider in src/components/motion/MotionProvider.tsx (LazyMotion with domAnimation + MotionConfig reducedMotion="user" — already correct, verify `m` component export)
+- [ ] T009 [P] Update PageTransition in src/components/motion/PageTransition.tsx (AnimatePresence mode="wait", children must receive key prop from template.tsx for actual page transitions to work)
+- [ ] T010 [P] Update StaggerContainer in src/components/motion/StaggerContainer.tsx (parent m.div with initial="hidden" animate="visible" exit="hidden", staggerChildren: 0.1 — already correct pattern)
+- [ ] T011 [P] Update FadeIn in src/components/motion/FadeIn.tsx (child m.div with variants hidden/visible — verify it works with StaggerContainer parent context)
+
+### Layout
+
+- [ ] T012 Update Sidebar in src/components/layout/Sidebar.tsx: Add Settings nav item (4 items: Overview with LayoutDashboard, Releases with Disc3, Fans with Users, Settings with Settings icon). Keep collapsible behavior. Active state with primary/amber highlight matching reference.
+- [ ] T013 Update root layout in src/app/layout.tsx (verify MotionProvider + SidebarProvider + Sidebar + MainLayout structure — should be correct already)
+- [ ] T014 Update template.tsx in src/app/template.tsx (pass unique key to PageTransition children for AnimatePresence to detect page changes)
 
 ### Data Service Layer
 
-- [ ] T011 Create data service interface in src/lib/data-service.ts (abstract data source with TSDoc)
-- [ ] T012 [P] Create mock releases data in src/__mocks__/releases.ts (8-10 sample releases with channel breakdown)
-- [ ] T013 [P] Create mock sales data in src/__mocks__/sales.ts (30 days of daily revenue by channel)
-- [ ] T014 [P] Create mock engagement data in src/__mocks__/engagement.ts (fan metrics + purchase rate + history)
-- [ ] T015 Implement data service with mock data in src/lib/data-service.ts
+- [ ] T015 Update data service in src/lib/data-service.ts: Ensure getReleases returns releases with Unsplash coverArtUrl, getSales returns daily data with both gross and net (net = gross \* 0.85), getEngagement returns topFans with Unsplash avatarUrl
+- [ ] T016 [P] Rewrite mock releases in src/**mocks**/releases.ts: 4 releases matching reference titles (Midnight Sessions Vol. 3, Electric Dreams, Acoustic Sessions, Summer Vibes Bundle), status values "live"/"upcoming"/"ended", Unsplash CDN cover art URLs (?w=400&h=400&fit=crop), conversionRate field, realistic revenue
+- [ ] T017 [P] Rewrite mock sales in src/**mocks**/sales.ts: 30 days of daily data with gross (800+random*1200 base, +400 spike last 7d) and net (gross*0.85). Support 7d/30d/90d slicing.
+- [ ] T018 [P] Rewrite mock engagement in src/**mocks**/engagement.ts: Starting from 12400 base fans, daily growth 20-80, active rate 15-25% of total. 30-day history for chart.
+- [ ] T019 [P] Rewrite mock fans in src/**mocks**/fans.ts: 5 top fans matching reference names (Alex Rivera, Jordan Kim, Sam Chen, Morgan Taylor, Riley Quinn), Unsplash portrait avatar URLs, totalSpent $389-$847, purchaseCount 9-23, joinedDate
 
-### API Routes (Reverse Proxy Pattern)
+### API Routes
 
-- [ ] T016 Create API route for releases in src/app/api/releases/route.ts (GET with error handling, simulated delay)
-- [ ] T017 [P] Create API route for sales in src/app/api/sales/route.ts (GET with error handling, simulated delay)
-- [ ] T018 [P] Create API route for engagement in src/app/api/engagement/route.ts (GET with error handling, simulated delay)
-- [ ] T019 Create API client functions in src/lib/api.ts (fetchReleases, fetchSales, fetchEngagement with typed responses)
+- [ ] T020 Update API route for releases in src/app/api/releases/route.ts (GET returns Release[] with Unsplash URLs, add GET by ID: /api/releases?id=rel_001)
+- [ ] T021 [P] Update API route for sales in src/app/api/sales/route.ts (GET with ?range=7d|30d|90d, returns SalesSummary with gross+net daily data)
+- [ ] T022 [P] Update API route for engagement in src/app/api/engagement/route.ts (GET returns EngagementMetrics with topFans including avatarUrl)
+- [ ] T023 Update API client in src/lib/api.ts: Add fetchRelease(id) for single release, ensure fetchSales returns gross+net data
 
 ### Shared Components
 
-- [ ] T020 Create EmptyState component in src/components/shared/EmptyState.tsx (with TSDoc)
-- [ ] T021 [P] Create SectionSkeleton component in src/components/shared/SectionSkeleton.tsx (with TSDoc)
-- [ ] T022 [P] Create ErrorState component in src/components/shared/ErrorState.tsx (with retry button, TSDoc)
-- [ ] T023 Create DashboardHeader component in src/components/dashboard/Header.tsx (with TSDoc)
-- [ ] T024 Update root layout in src/app/layout.tsx (metadata, fonts, providers)
+- [ ] T024 [P] Create EmptyState in src/components/shared/EmptyState.tsx (centered icon + message + optional CTA, with FadeIn animation)
+- [ ] T025 [P] Create SectionSkeleton in src/components/shared/SectionSkeleton.tsx (configurable skeleton using shadcn/ui Skeleton matching card/chart/metric shapes)
 
-**Checkpoint**: Foundation ready - user story implementation can now begin
+**Checkpoint**: Foundation ready — user story implementation can now begin in parallel
 
 ---
 
-## Phase 3: User Story 1 - Recent Releases (Priority: P1) 🎯 MVP
+## Phase 3: User Story 2 — Analyze Sales Performance (Priority: P1) MVP
 
-**Goal**: Display a responsive grid of exclusive releases with cover art, title, date, sales count, and revenue
+**Goal**: Artist sees Overview page with 4 stat cards (matching reference layout), interactive revenue chart with SVG gradients + time range tabs, fan growth chart, recent releases list, and top fans — all with staggered entrance animations
 
-**Independent Test**: Load dashboard → verify release cards display in responsive grid with all required info from API
-
-### Implementation for User Story 1
-
-- [ ] T025 [P] [US1] Create ReleaseCard component in src/components/dashboard/RecentReleases/ReleaseCard.tsx (Server Component with TSDoc)
-- [ ] T026 [P] [US1] Create ReleaseCardSkeleton component in src/components/dashboard/RecentReleases/ReleaseCardSkeleton.tsx
-- [ ] T027 [US1] Create ReleasesGrid component in src/components/dashboard/RecentReleases/ReleasesGrid.tsx (Server Component, fetches from API)
-- [ ] T028 [US1] Create barrel export in src/components/dashboard/RecentReleases/index.tsx
-- [ ] T029 [US1] Add RecentReleases section to dashboard page in src/app/page.tsx (with Suspense boundary)
-
-### Unit Tests for User Story 1
-
-- [ ] T030 [P] [US1] Write unit test for ReleaseCard in __tests__/components/ReleaseCard.test.tsx
-- [ ] T031 [P] [US1] Write unit test for ReleasesGrid in __tests__/components/ReleasesGrid.test.tsx
-- [ ] T032 [US1] Write unit test for formatNumber and formatCurrency utilities in __tests__/lib/utils.test.ts
-
-**Checkpoint**: User Story 1 complete - dashboard shows releases grid with tests passing
-
----
-
-## Phase 4: User Story 2 - Sales Analytics (Priority: P1)
-
-**Goal**: Display interactive charts showing revenue trends and channel breakdown (Direct to Fan focus)
-
-**Independent Test**: Load dashboard → verify revenue chart displays with tooltips and channel breakdown chart
+**Independent Test**: Load / (overview) → 4 stat cards animate in with stagger, revenue chart displays with Gross vs Net overlapping areas and gradient fills, time range tabs switch data, tooltips show formatted values, recent releases show thumbnails with status badges, top fans show avatars with ranking badges
 
 ### Implementation for User Story 2
 
-- [ ] T033 [P] [US2] Create RevenueChart component in src/components/dashboard/SalesAnalytics/RevenueChart.client.tsx (Client Component, AreaChart)
-- [ ] T034 [P] [US2] Create ChannelBreakdown component in src/components/dashboard/SalesAnalytics/ChannelBreakdown.client.tsx (Client Component, BarChart)
-- [ ] T035 [P] [US2] Create SalesSummaryCard component in src/components/dashboard/SalesAnalytics/SalesSummaryCard.tsx (gross vs net revenue)
-- [ ] T036 [US2] Create SalesAnalytics section component in src/components/dashboard/SalesAnalytics/index.tsx (Server Component container)
-- [ ] T037 [US2] Add SalesAnalytics section to dashboard page in src/app/page.tsx (with Suspense boundary)
+- [ ] T026 [P] [US2] Create StatCard in src/components/dashboard/StatCard.tsx (Client Component matching reference layout: top row has icon h-10 w-10 rounded-lg bg-muted on LEFT + change badge bg-success/10 or bg-destructive/10 with TrendingUp/Down icon and % on RIGHT. Label text below. Large value text-2xl font-semibold at bottom with optional $ prefix. Motion m.div with stagger delay prop)
+- [ ] T027 [P] [US2] Create RevenueChart in src/components/dashboard/RevenueChart.tsx (Client Component: Recharts AreaChart with SVG defs linearGradient fills (5% opacity top → 0% bottom), Gross vs Net as OVERLAPPING areas (NO stackId), net = gross\*0.85 showing meaningful difference, time range tab bar 7d/30d/90d using shadcn Tabs, custom-styled dark tooltip component, clickable legend with colored dots, responsive)
+- [ ] T028 [P] [US2] Create FanGrowthChart in src/components/dashboard/FanGrowthChart.tsx (Client Component: Recharts AreaChart with Total vs Active fans OVERLAPPING (NO stackId), SVG gradient fills, amber for Total + green for Active, custom tooltip, legend with colored dots, responsive)
+- [ ] T029 [P] [US2] Create RecentReleases in src/components/dashboard/RecentReleases.tsx (cover thumbnail h-16 w-16 rounded-lg with hover scale-105, title truncated, status Badge with color coding live=green/upcoming=amber/ended=gray, type + date, revenue + trend with TrendingUp icon. Each item links to /releases/[id]. StaggerContainer + FadeIn animation. "View all" link to /releases)
+- [ ] T030 [P] [US2] Create TopFans in src/components/dashboard/TopFans.tsx (shadcn/ui Avatar + AvatarImage (Unsplash URL) + AvatarFallback (first letter). Top 3 fans show numbered ranking badge h-5 w-5 rounded-full bg-primary positioned absolute -bottom-1 -right-1. Display name, purchase count, total spent text-primary right-aligned. StaggerContainer + FadeIn with delay 0.5+index\*0.1)
+- [ ] T031 [US2] Build Overview page in src/app/page.tsx + src/app/components/HomePageClient.tsx: Header "Overview" + subtitle. 4 StatCards in StaggerContainer (grid-cols-1 sm:grid-cols-2 lg:grid-cols-4): Total Revenue ($, DollarSign), Total Fans (Users), Active Buyers (ShoppingCart), Avg Order Value ($, TrendingUp). RevenueChart + FanGrowthChart in 2-col grid. RecentReleases (2/3) + TopFans (1/3) bottom section. Fetch from /api/sales + /api/engagement in parallel.
 
 ### Unit Tests for User Story 2
 
-- [ ] T038 [P] [US2] Write unit test for SalesSummaryCard in __tests__/components/SalesSummaryCard.test.tsx
-- [ ] T039 [P] [US2] Write unit test for API route sales endpoint in __tests__/api/sales.test.ts
-- [ ] T040 [US2] Write unit test for RevenueChart renders without errors in __tests__/components/RevenueChart.test.tsx
+- [ ] T032 [P] [US2] Write unit test for StatCard in **tests**/components/StatCard.test.tsx (renders icon, value, change badge, correct colors for positive/negative)
+- [ ] T033 [P] [US2] Write unit test for RevenueChart in **tests**/components/RevenueChart.test.tsx (renders chart, time range tabs switch, legend visible)
 
-**Checkpoint**: User Stories 1 AND 2 complete with tests passing
+**Checkpoint**: Overview page complete — interactive charts with stat cards matching reference
 
 ---
 
-## Phase 5: User Story 3 - Fan Engagement (Priority: P2)
+## Phase 4: User Story 1 — View Recent Releases (Priority: P1)
 
-**Goal**: Display fan metrics (total fans, buyers, engagement rate, purchase rate) with trend indicators and growth chart
+**Goal**: Artist sees responsive grid of exclusive releases with cover art (Unsplash), gradient overlay, status badges, waveform visualizer, and staggered entrance animations. Cards link to detail page.
 
-**Independent Test**: Load dashboard → verify metric cards display with trends and fan growth chart renders
+**Independent Test**: Load /releases → grid displays release cards with Unsplash images, gradient overlay, status badges, waveform animates on click, cards stagger in, grid adapts across breakpoints, clicking card navigates to /releases/[id]
+
+### Implementation for User Story 1
+
+- [ ] T034 [P] [US1] Update AudioWaveform in src/components/releases/AudioWaveform.tsx (verify: SVG bars with m.rect, play/pause toggle with aria-label, focus ring on button, uses seeded waveform data. Only one waveform active at a time — add onPlay callback prop)
+- [ ] T035 [P] [US1] Rewrite ReleaseCard in src/components/releases/ReleaseCard.tsx (cover art with next/image from Unsplash URL, aspect-square, gradient overlay from-black/50 to-transparent, image zoom scale-105 on hover 300ms, status badge overlay positioned bottom-left with backdrop-blur, title h3 font-semibold, type + date, revenue + conversion trend, AudioWaveform below. Card hover: .card-hover + .glow-primary amber glow border. Entire card is Link to /releases/[id])
+- [ ] T036 [US1] Build Releases page in src/app/releases/page.tsx + client component: Header "Releases" + subtitle, fetch from /api/releases, responsive grid (grid-cols-1 sm:grid-cols-2 lg:grid-cols-3), StaggerContainer wrapping FadeIn cards with delay 0.3+index\*0.1, SectionSkeleton loading state, EmptyState fallback
+- [ ] T037 [US1] Configure next.config.ts to allow Unsplash images: Add images.remotePatterns for images.unsplash.com domain
+
+### Unit Tests for User Story 1
+
+- [ ] T038 [P] [US1] Write unit test for AudioWaveform in **tests**/components/AudioWaveform.test.tsx (renders SVG bars, toggles play/pause, has aria-label)
+- [ ] T039 [P] [US1] Write unit test for ReleaseCard in **tests**/components/ReleaseCard.test.tsx (renders cover art, status badge, title, waveform, links to detail)
+
+**Checkpoint**: Releases page complete — grid with animated waveform cards and Unsplash images
+
+---
+
+## Phase 5: User Story 3 — Monitor Fan Engagement (Priority: P2)
+
+**Goal**: Artist sees fan metrics with trend indicators, fan growth chart (overlapping areas), and top fans ranking with avatar badges — all with staggered entrance animations
+
+**Independent Test**: Load /fans → 3 stat cards with trends, fan growth chart renders with overlapping amber/green areas, top fans list displays with avatar images and ranking badges
 
 ### Implementation for User Story 3
 
-- [ ] T041 [P] [US3] Create MetricCard component in src/components/dashboard/FanEngagement/MetricCard.tsx (with trend indicator)
-- [ ] T042 [P] [US3] Create FanChart component in src/components/dashboard/FanEngagement/FanChart.client.tsx (Client Component, LineChart)
-- [ ] T043 [US3] Create FanEngagement section component in src/components/dashboard/FanEngagement/index.tsx (Server Component container)
-- [ ] T044 [US3] Add FanEngagement section to dashboard page in src/app/page.tsx (with Suspense boundary)
+- [ ] T040 [US3] Build Fans page in src/app/fans/page.tsx + src/app/fans/components/FansPageClient.tsx: Header "Fans" + subtitle. 3 StatCards in StaggerContainer (grid-cols-1 sm:grid-cols-3): Total Fans (Users icon), Active Buyers (UserCheck icon), Engagement Rate (Heart icon, value as %). FanGrowthChart (2/3) + TopFans (1/3) side by side. Fetch from /api/engagement. Reuse StatCard, FanGrowthChart, TopFans from Phase 3.
 
 ### Unit Tests for User Story 3
 
-- [ ] T045 [P] [US3] Write unit test for MetricCard in __tests__/components/MetricCard.test.tsx
-- [ ] T046 [P] [US3] Write unit test for trend indicator logic in __tests__/components/MetricCard.test.tsx
-- [ ] T047 [US3] Write unit test for FanChart renders without errors in __tests__/components/FanChart.test.tsx
+- [ ] T041 [P] [US3] Write unit test for TopFans in **tests**/components/TopFans.test.tsx (renders avatars, ranking badges for top 3, purchase count, total spent)
 
-**Checkpoint**: All user stories complete with unit tests passing
+**Checkpoint**: Fans page complete — reuses components from Overview
 
 ---
 
-## Phase 6: E2E Tests (Playwright)
+## Phase 6: User Story 4 — View Release Details (Priority: P2)
 
-**Purpose**: End-to-end tests verifying complete user journeys
+**Goal**: Artist clicks a release card and sees detailed analytics with large cover art, status/type badges, 3 stat cards, and a "Revenue Over Time" chart
 
-- [ ] T048 [P] Write E2E test: Dashboard loads with all sections in e2e/dashboard.spec.ts
-- [ ] T049 [P] Write E2E test: Recent Releases grid displays correctly in e2e/releases.spec.ts
-- [ ] T050 [P] Write E2E test: Sales Analytics charts are interactive in e2e/sales.spec.ts
-- [ ] T051 [P] Write E2E test: Fan Engagement metrics display with trends in e2e/engagement.spec.ts
-- [ ] T052 Write E2E test: Responsive design works on mobile viewport in e2e/responsive.spec.ts
-- [ ] T053 Run all E2E tests and verify passing: `npm run test:e2e`
+**Independent Test**: Navigate to /releases/[id] → see back link, large cover art, badges, 3 stat cards (Total Revenue, Units Sold, Conversion Rate), revenue chart
 
-**Checkpoint**: All E2E tests passing - full user journeys verified
+### Implementation for User Story 4
+
+- [ ] T042 [P] [US4] Create ReleaseDetailClient in src/app/releases/[id]/components/ReleaseDetailClient.tsx (Client Component: back link "← Back to Overview" using Link to /releases, cover art h-48 w-48 rounded-xl with shadow, status Badge + type Badge, title h1 text-3xl bold, release date, Share + View Live buttons. 3 StatCards: Total Revenue, Units Sold, Conversion Rate. "Revenue Over Time" AreaChart with amber gradient fill showing generated daily revenue data for this release. Motion entrance animations. Handle release not found with message + link back.)
+- [ ] T043 [US4] Create Release Detail page in src/app/releases/[id]/page.tsx (Server Component: extract id from params, fetch release from /api/releases?id=X, pass to ReleaseDetailClient)
+
+### Unit Tests for User Story 4
+
+- [ ] T044 [P] [US4] Write unit test for ReleaseDetailClient in **tests**/components/ReleaseDetailClient.test.tsx (renders cover art, badges, stat cards, chart, back link)
+
+**Checkpoint**: Release detail page complete — demonstrates Next.js dynamic routes
 
 ---
 
-## Phase 7: Polish & Cross-Cutting Concerns
+## Phase 7: User Story 5 — Manage Account Settings (Priority: P3)
 
-**Purpose**: Final improvements, animations, accessibility, and deployment preparation
+**Goal**: Artist manages profile and notification preferences
 
-### Animations & Micro-interactions
+**Independent Test**: Navigate to /settings → see profile fields and notification toggles, save shows toast
 
-- [ ] T054 [P] Add fade-in animation to dashboard sections on load in src/app/globals.css
-- [ ] T055 [P] Add hover scale effect to ReleaseCard in src/components/dashboard/RecentReleases/ReleaseCard.tsx
-- [ ] T056 [P] Add smooth chart tooltip transitions in chart components
-- [ ] T057 [P] Add skeleton pulse animation enhancement in src/components/shared/SectionSkeleton.tsx
-- [ ] T058 [P] Add trend indicator animation (subtle bounce) to MetricCard
+### Implementation for User Story 5
+
+- [ ] T045 [US5] Create SettingsPageClient in src/app/settings/components/SettingsPageClient.tsx (Client Component: Profile section with Card containing Artist Name + Email using shadcn Input + Label. Notifications section with Card containing 3 Switch toggles: Sales Alerts ("Get notified when you make a sale"), New Fans ("Get notified when someone joins your community"), Weekly Reports ("Receive weekly performance summaries"). Save Changes + Cancel buttons. Save triggers Sonner toast success notification. Motion staggered entrance on sections.)
+- [ ] T046 [US5] Create Settings page in src/app/settings/page.tsx (Server Component wrapper rendering SettingsPageClient)
+
+**Checkpoint**: Settings page complete — full SaaS product feel
+
+---
+
+## Phase 8: Polish & Cross-Cutting Concerns
+
+**Purpose**: Final visual polish, accessibility, documentation, deployment
 
 ### Accessibility
 
-- [ ] T059 [P] Add keyboard navigation and focus states to all interactive elements
-- [ ] T060 [P] Verify color contrast meets WCAG 2.1 AA (4.5:1 ratio)
-- [ ] T061 [P] Add aria-labels to charts and interactive elements
+- [ ] T047 [P] Add keyboard navigation and visible focus states to Sidebar, chart tabs, waveform play/pause, and all interactive elements
+- [ ] T048 [P] Verify color contrast meets WCAG 2.1 AA (4.5:1 ratio) across all HSL design tokens
+- [ ] T049 [P] Add aria-labels to charts (aria-label on SVG/container), waveform controls, stat cards, and navigation
 
-### Documentation & Code Quality
+### Documentation & AI Usage
 
-- [ ] T062 [P] Verify all public functions have TSDoc/JSDoc documentation
-- [ ] T063 [P] Run TypeScript strict mode validation: `npx tsc --noEmit`
-- [ ] T064 [P] Update README.md with final feature list and screenshots
-- [ ] T065 [P] Complete docs/AI_USAGE.md with all AI interaction logs and reflection answers
+- [ ] T050 [P] Finalize AI_USAGE.md with all interaction logs from Phases 2-7 and reflection question answers (docs/AI_USAGE.md)
+- [ ] T051 [P] Update README.md with feature list, tech choices, setup instructions, screenshots, "what I'd do with more time" (README.md)
 
 ### Final Validation & Deployment
 
-- [ ] T066 Test full responsive design across breakpoints (320px, 768px, 1024px, 1280px)
-- [ ] T067 Run all tests: `npm test && npm run test:e2e`
-- [ ] T068 Run production build and verify no errors: `npm run build`
-- [ ] T069 Deploy to Vercel and verify live demo
+- [ ] T052 Test responsive design across breakpoints (320px, 375px, 768px, 1024px, 1280px)
+- [ ] T053 Run production build and verify no errors: `npm run build`
+- [ ] T054 Deploy to Vercel and verify live demo
+- [ ] T055 Run quickstart.md verification checklist
 
 ---
 
@@ -210,167 +218,124 @@
 ### Phase Dependencies
 
 ```
-Phase 1 (Setup) ──────────────────────────────────────────────►
+Phase 1 (Setup) ─────────────────────────────────────────────────►
                     │
                     ▼
-Phase 2 (Foundational) ───────────────────────────────────────►
+Phase 2 (Foundation: Motion + Sidebar + API + Unsplash Data) ────►
                     │
-        ┌───────────┼───────────┐
-        ▼           ▼           ▼
-Phase 3 (US1)   Phase 4 (US2)   Phase 5 (US3)  ← Can run in parallel
-        │           │           │
-        └───────────┼───────────┘
+        ┌───────────┼───────────┬───────────┬───────────┐
+        ▼           ▼           ▼           ▼           ▼
+Phase 3 (US2)   Phase 4 (US1)  Phase 5 (US3)  Phase 6 (US4)  Phase 7 (US5)
+Overview        Releases       Fans           Rel.Detail     Settings
+        │           │           │           │           │
+        └───────────┼───────────┴───────────┴───────────┘
                     ▼
-Phase 6 (E2E Tests) ──────────────────────────────────────────►
-                    │
-                    ▼
-Phase 7 (Polish) ─────────────────────────────────────────────►
+Phase 8 (Polish + AI Docs + Deploy) ────────────────────────────►
 ```
 
 ### User Story Dependencies
 
-- **User Story 1 (P1)**: Depends only on Phase 2. No dependencies on other stories.
-- **User Story 2 (P1)**: Depends only on Phase 2. Independent of US1 and US3.
-- **User Story 3 (P2)**: Depends only on Phase 2. Independent of US1 and US2.
+- **US2 (Overview)**: Depends on Phase 2. Creates StatCard, RevenueChart, FanGrowthChart, RecentReleases, TopFans. START HERE — creates shared components.
+- **US1 (Releases)**: Depends on Phase 2. Creates ReleaseCard, AudioWaveform. Independent of US2.
+- **US3 (Fans)**: Depends on Phase 2. Reuses StatCard, FanGrowthChart, TopFans from US2. Build after US2.
+- **US4 (Release Detail)**: Depends on Phase 2 + US1 (for navigation from release cards). Reuses StatCard from US2.
+- **US5 (Settings)**: Depends on Phase 2. Fully independent — can build any time after foundation.
 
 ### Within Each User Story
 
-1. Parallel component creation (cards, charts) - marked [P]
-2. Section container component (Server Component)
-3. Integration into main page (with Suspense)
-4. Unit tests for components
+- Components (parallel where marked [P]) → Page assembly → Unit tests (parallel)
+
+### AI Documentation Touchpoints
+
+- After Phase 2: Log Motion primitives + data layer decisions
+- After Phase 3/4: Log component implementation + chart patterns
+- After Phase 5/6/7: Log remaining pages
+- Phase 8: Finalize reflection questions
 
 ---
 
-## Parallel Execution Examples
+## Parallel Opportunities
 
-### Phase 1 Parallel Tasks
+### Phase 1 (4 parallel tracks):
 
-```bash
-# Can run simultaneously after T001-T007:
-T008: "Create TypeScript interfaces in src/types/index.ts"
-T009: "Create utility functions in src/lib/utils.ts"
-T010: "Create channel constants in src/lib/constants.ts"
+```
+Track A: T003 (types)
+Track B: T004 (utils)
+Track C: T005 (constants)
+Track D: T006 (waveform — no changes)
 ```
 
-### Phase 2 Parallel Tasks
+### Phase 2 (3 parallel tracks after motion primitives):
 
-```bash
-# Can run simultaneously after T011:
-T012: "Create mock releases data in src/__mocks__/releases.ts"
-T013: "Create mock sales data in src/__mocks__/sales.ts"
-T014: "Create mock engagement data in src/__mocks__/engagement.ts"
-
-# API Routes can run in parallel after T015:
-T016: "Create API route for releases"
-T017: "Create API route for sales"
-T018: "Create API route for engagement"
+```
+Track A: T008-T011 (motion primitives, all parallel)
+Track B: T016-T019 (mock data, all parallel) → T015 (data service) → T020-T022 (API routes)
+Track C: T024-T025 (shared components, parallel)
+Then sequential: T012 (Sidebar) → T013 (layout) → T014 (template)
 ```
 
-### User Story + Tests Parallel Tasks
+### Phase 3-7 (parallel user stories):
 
-```bash
-# US1 parallel components:
-T025: "Create ReleaseCard component"
-T026: "Create ReleaseCardSkeleton component"
-
-# US1 parallel tests (after implementation):
-T030: "Write unit test for ReleaseCard"
-T031: "Write unit test for ReleasesGrid"
-
-# E2E tests (all parallel):
-T048-T051: All E2E test files can be written in parallel
+```
+Track A: US2 — T026-T033 (Overview — build first, creates shared components)
+Track B: US1 — T034-T039 (Releases — can start same time as US2)
+Track C: US5 — T045-T046 (Settings — fully independent)
+After US2: US3 — T040-T041 (Fans — reuses US2 components)
+After US1: US4 — T042-T044 (Release Detail — needs release card navigation)
 ```
 
 ---
 
 ## Implementation Strategy
 
-### MVP First (User Story 1 Only) - Recommended for Time Constraint
-
-1. Complete Phase 1: Setup (T001-T010)
-2. Complete Phase 2: Foundational (T011-T024)
-3. Complete Phase 3: User Story 1 + Tests (T025-T032)
-4. **STOP and VALIDATE**: Run unit tests
-5. Add key E2E test (T048-T049)
-6. Add animations (T054-T055) and accessibility (T059-T061)
-7. Complete documentation (T064-T065)
-8. Complete deployment tasks (T066-T069)
-
-**Result**: Working dashboard with releases section + tests + animations + a11y
-
-### Full Implementation
+### MVP First (US2: Overview Page)
 
 1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational
-3. Complete Phase 3: User Story 1 + Tests → **Checkpoint: MVP ready**
-4. Complete Phase 4: User Story 2 + Tests → **Checkpoint: +Analytics**
-5. Complete Phase 5: User Story 3 + Tests → **Checkpoint: Full feature**
-6. Complete Phase 6: E2E Tests → **Checkpoint: All tests passing**
-7. Complete Phase 7: Polish → **Checkpoint: Production ready**
+2. Complete Phase 2: Foundation
+3. Complete Phase 3: US2 (Overview with charts)
+4. **STOP and VALIDATE**: Overview page works independently — stat cards, charts, recent releases, top fans all display correctly matching reference
+5. This creates the shared components (StatCard, charts, TopFans) reused by other stories
 
----
+### Recommended Order (reference UI fidelity)
 
-## Notes
-
-- [P] tasks = different files, no dependencies - can run in parallel
-- [US#] label maps task to specific user story for traceability
-- Each user story is independently completable and testable
-- Commit after each task or logical group
-- Stop at any checkpoint to validate independently
-- All chart components require `"use client"` directive
-- Server Components used by default, Client Components only for interactivity
-- All code must include TSDoc/JSDoc documentation
-- **Run tests frequently**: `npm test` after each phase
-
-### Architecture Reminders
-
-- **API Routes** serve as reverse proxy to data service layer (FR-016 to FR-020)
-- **SOLID Principles** must be followed in all components (FR-021)
-- **Server Components** by default, Client Components only when needed (FR-024)
-- **TSDoc/JSDoc** on all public functions (FR-026)
-- **TypeScript strict mode** - no implicit any (FR-027)
-
-### AI Documentation Reminder (REQUIRED)
-
-**After each major feature, update `docs/AI_USAGE.md`:**
-1. Add new entry under "AI Tools Usage Log" using the template
-2. Document: Goal, Tool Used, Prompt/Approach, Result, Learning
-3. Be specific about what you modified from AI suggestions
-4. Complete reflection questions before final submission
+1. Phase 1 → Phase 2 → Foundation ready
+2. US2 (Overview) → Shared components + charts done
+3. US1 (Releases + Waveform) → Signature differentiator visible
+4. US3 (Fans) → Quick — reuses US2 components
+5. US4 (Release Detail) → Demonstrates dynamic routing
+6. US5 (Settings) → Completes SaaS feel
+7. Phase 8 (Polish + Deploy) → Ship it
 
 ---
 
 ## Task Summary
 
-| Phase | Tasks | Parallel | Description |
-|-------|-------|----------|-------------|
-| Setup | 10 | 3 | Dependencies + test frameworks |
-| Foundational | 14 | 8 | API Routes + Service Layer + shared components |
-| US1 - Releases | 8 | 4 | Implementation + unit tests |
-| US2 - Sales | 8 | 4 | Implementation + unit tests |
-| US3 - Engagement | 7 | 4 | Implementation + unit tests |
-| E2E Tests | 6 | 4 | Playwright tests |
-| Polish | 16 | 11 | Animations + a11y + docs + deploy |
-| **Total** | **69** | **38** |
+| Phase               | Tasks  | Parallel | Description                                     |
+| ------------------- | ------ | -------- | ----------------------------------------------- |
+| Setup               | 7      | 4        | Dependencies + types + HSL tokens               |
+| Foundation          | 18     | 10       | Motion + Sidebar + API + Unsplash Data + Shared |
+| US2: Overview       | 8      | 6        | StatCards + Charts + RecentReleases + TopFans   |
+| US1: Releases       | 6      | 3        | Release grid + waveform + Unsplash images       |
+| US3: Fans           | 2      | 1        | Fans page (reuses US2 components)               |
+| US4: Release Detail | 3      | 1        | Dynamic route + stats + chart                   |
+| US5: Settings       | 2      | 0        | Profile + notifications + toast                 |
+| Polish              | 9      | 4        | A11y + docs + deploy                            |
+| **Total**           | **55** | **29**   |                                                 |
 
-## Requirements Coverage
+---
 
-| Requirement | Status | Tasks |
-|-------------|--------|-------|
-| Next.js 16+ App Router | ✅ | Built-in |
-| TypeScript strict | ✅ | T008, T063 |
-| Tailwind CSS | ✅ | Built-in |
-| shadcn/ui | ✅ | T001-T002 |
-| API Routes (reverse proxy) | ✅ | T016-T019 |
-| Service Layer | ✅ | T011, T015 |
-| SOLID Principles | ✅ | All components |
-| Server/Client Components | ✅ | T025-T044 |
-| TSDoc/JSDoc | ✅ | T062 |
-| State management (Zustand) | ✅ | T003 (installed if needed) |
-| **Testing (unit)** | ✅ | T030-T032, T038-T040, T045-T047 |
-| **Testing (E2E)** | ✅ | T048-T053 |
-| Animations/micro-interactions | ✅ | T054-T058 |
-| Error handling & loading states | ✅ | T020-T022, T026 |
-| Accessibility | ✅ | T059-T061 |
-| AI Usage Documentation | ✅ | T065 (docs/AI_USAGE.md) |
+## Notes
+
+- [P] tasks = different files, no dependencies — can run in parallel
+- [Story] label maps task to specific user story for traceability
+- Each user story is independently completable and testable
+- Motion animations are built INTO each component using `m` (not `motion`) inside LazyMotion
+- AI_USAGE.md updated incrementally after each major phase (FR-045)
+- Commit after each task or logical group
+- Stop at any checkpoint to validate independently
+- Run `npm test && npm run lint` frequently
+- **HSL tokens**: --background 220 15% 8%, --primary 42 100% 50%, --success 142 70% 45%
+- **Unsplash CDN**: All cover art and avatars from images.unsplash.com with ?w=400&h=400&fit=crop
+- **Chart gradients**: SVG defs linearGradient, 5% opacity top → 0% bottom, NO stackId on overlapping areas
+- **Reference comparison**: Run reference at localhost:5173 (cd example/even-artist-hub && npm run dev) for visual comparison
+- **Import Motion as**: `import { m, LazyMotion, AnimatePresence } from "motion/react"` — use `m` not `motion`
