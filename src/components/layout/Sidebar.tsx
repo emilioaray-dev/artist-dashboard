@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/core/button";
 import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { useSidebar } from "@/hooks/useSidebar";
-import { NAV_ITEMS } from "@/lib/constants";
+import { BRAND_NAME, NAV_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Link, usePathname } from "@/i18n/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -34,7 +34,7 @@ export function Sidebar() {
           <div className="flex items-center gap-2">
             <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
               <span className="text-primary-foreground text-sm font-bold">
-                E
+                {BRAND_NAME[0]}
               </span>
             </div>
             <span className="text-foreground text-lg font-semibold">
@@ -44,7 +44,7 @@ export function Sidebar() {
         )}
         {collapsed && (
           <div className="bg-primary mx-auto flex h-8 w-8 items-center justify-center rounded-lg">
-            <span className="text-primary-foreground text-sm font-bold">E</span>
+            <span className="text-primary-foreground text-sm font-bold">{BRAND_NAME[0]}</span>
           </div>
         )}
       </div>
@@ -52,8 +52,7 @@ export function Sidebar() {
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
           const isActive =
-            pathname === item.href ||
-            (pathname.startsWith(item.href) && item.href !== "/");
+            pathname === item.href || pathname.startsWith(item.href);
 
           return (
             <Link

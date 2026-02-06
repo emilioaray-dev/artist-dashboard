@@ -143,8 +143,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    overflow-y: scroll;
+    scrollbar-color: oklch(0.769 0.174 70.7 / 50%) oklch(0.145 0 0);
+    scrollbar-width: thin;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+  body[data-scroll-locked] {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
   }
 
   h1 {

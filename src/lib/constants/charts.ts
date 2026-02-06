@@ -1,13 +1,5 @@
-import { Channel, ReleaseStatus } from "@/types";
-import {
-  ArrowRight,
-  Disc3,
-  LayoutDashboard,
-  Settings,
-  TrendingDown,
-  TrendingUp,
-  Users,
-} from "lucide-react";
+import { Channel } from "@/types";
+import { ArrowRight, TrendingDown, TrendingUp } from "lucide-react";
 
 /**
  * Channel information with display names and colors
@@ -29,70 +21,6 @@ export const CHANNEL_INFO: Record<Channel, { name: string; color: string }> = {
     name: "Bundles",
     color: "#8B5CF6", // violet-500
   },
-};
-
-/**
- * Navigation items for the sidebar
- */
-export const NAV_ITEMS = [
-  {
-    title: "Overview",
-    href: "/",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Releases",
-    href: "/releases",
-    icon: Disc3,
-  },
-  {
-    title: "Fans",
-    href: "/fans",
-    icon: Users,
-  },
-  {
-    title: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
-];
-
-/**
- * Design tokens for the premium dark theme
- */
-export const DESIGN_TOKENS = {
-  // Colors
-  background: "#09090B",
-  surface: "#0A0A0A",
-  surfaceElevated: "#111111",
-  border: "#27272A",
-  accent: "#F59E0B", // amber
-  accentHover: "#D97706",
-  positive: "#10B981", // green
-  negative: "#F43F5E", // red
-  textPrimary: "#FAFAFA",
-  textSecondary: "#D4D4D8",
-
-  // Typography scale
-  headingXL: "32px", // Page titles
-  headingLG: "24px", // Section headers
-  dataValue: "20px", // Metric numbers
-  body: "14px", // Body text
-  caption: "12px", // Labels, captions
-
-  // Spacing
-  sectionPadding: "24px 32px",
-  cardGap: "16px",
-};
-
-/**
- * Status badge colors for releases (with improved contrast for white text)
- */
-export const STATUS_COLORS: Record<ReleaseStatus, string> = {
-  draft: "bg-gray-600", // Darker gray for better contrast
-  scheduled: "bg-blue-600", // Darker blue for better contrast
-  live: "bg-green-700", // Darker green for better contrast
-  archived: "bg-gray-800", // Darker gray for better contrast
 };
 
 /**

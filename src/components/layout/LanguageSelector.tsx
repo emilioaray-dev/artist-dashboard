@@ -9,17 +9,10 @@ import {
 } from "@/components/ui/core/select";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const localeNames: Record<string, string> = {
-  en: "English",
-  es: "Español",
-  fr: "Français",
-  pt: "Português",
-};
 
 interface LanguageSelectorProps {
   compact?: boolean;
@@ -34,6 +27,7 @@ export function LanguageSelector({
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations("Languages");
 
   function onLocaleChange(newLocale: string) {
     startTransition(() => {
@@ -49,21 +43,22 @@ export function LanguageSelector({
       <SelectTrigger
         aria-label="Select language"
         className={cn(
-          "border-0 bg-transparent shadow-none",
+          "border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:border-0",
+          compact && "w-auto",
           isPending && "pointer-events-none opacity-60",
           className,
         )}
         size="sm"
       >
-        <Globe className="size-4" />
+        <Globe className="size-4 shrink-0" />
         <SelectValue>
-          {compact ? locale.toUpperCase() : localeNames[locale]}
+          {compact ? locale.toUpperCase() : t(locale)}
         </SelectValue>
       </SelectTrigger>
       <SelectContent position="popper" align="start">
         {routing.locales.map((loc) => (
           <SelectItem key={loc} value={loc}>
-            {localeNames[loc]}
+            {t(loc)}
           </SelectItem>
         ))}
       </SelectContent>

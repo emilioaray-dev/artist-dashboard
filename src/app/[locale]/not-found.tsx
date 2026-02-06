@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/navigation";
+import { ROUTES } from "@/lib/constants";
 import { useTranslations } from "next-intl";
 
 export default function NotFound() {
@@ -11,7 +12,7 @@ export default function NotFound() {
         {t("pageNotFoundDescription")}
       </p>
       <Link
-        href="/"
+        href={ROUTES.home}
         className="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-medium"
       >
         {t("goHome")}
