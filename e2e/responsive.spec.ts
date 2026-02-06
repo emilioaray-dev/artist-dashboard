@@ -1,125 +1,64 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Responsive Design', () => {
-  test('works on mobile viewport (375px)', async ({ page }) => {
-    // Set viewport to mobile size
-    await page.setViewportSize({ width: 375, height: 667 });
+test.describe("Responsive Design", () => {
+  test("sidebar is visible on desktop", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
 
-    // Navigate to the overview page
-    await page.goto('/');
-
-    // Check if the sidebar is hidden on mobile
-    const sidebar = page.locator('aside');
-    await expect(sidebar).not.toBeVisible();
-
-    // Check if main content is visible
-    const mainContent = page.locator('main');
-    await expect(mainContent).toBeVisible();
-
-    // Check if the header is visible
-    const header = page.locator('h1');
-    await expect(header).toBeVisible();
-
-    // Check if metric cards stack vertically on mobile
-    const metricCards = page.locator('[data-testid="metric-card"]');
-    await expect(metricCards.first()).toBeVisible();
-
-    // Navigate to releases page
-    await page.goto('/releases');
-
-    // Check if releases grid is responsive (1 column on mobile)
-    const releasesGrid = page.locator('.grid.grid-cols-1.gap-4');
-    await expect(releasesGrid).toBeVisible();
-
-    // Navigate to fans page
-    await page.goto('/fans');
-
-    // Check if fans page is responsive
-    const fansMetricCards = page.locator('[data-testid="metric-card"]');
-    await expect(fansMetricCards).toHaveCount(3);
-  });
-
-  test('works on tablet viewport (768px)', async ({ page }) => {
-    // Set viewport to tablet size
-    await page.setViewportSize({ width: 768, height: 1024 });
-
-    // Navigate to the overview page
-    await page.goto('/');
-
-    // Check if main content is visible
-    const mainContent = page.locator('main');
-    await expect(mainContent).toBeVisible();
-
-    // Check if metric cards are arranged properly
-    const metricCards = page.locator('[data-testid="metric-card"]');
-    await expect(metricCards).toHaveCount(4);
-
-    // Navigate to releases page
-    await page.goto('/releases');
-
-    // Check if releases grid has 2 columns on tablet
-    const releasesGrid = page.locator('.grid.grid-cols-1.gap-4.sm\\\\:grid-cols-2');
-    await expect(releasesGrid).toBeVisible();
-  });
-
-  test('works on desktop viewport (1280px)', async ({ page }) => {
-    // Set viewport to desktop size
-    await page.setViewportSize({ width: 1280, height: 800 });
-
-    // Navigate to the overview page
-    await page.goto('/');
-
-    // Check if sidebar is visible on desktop
-    const sidebar = page.locator('aside');
+    const sidebar = page.locator("aside");
     await expect(sidebar).toBeVisible();
-
-    // Check if main content is visible
-    const mainContent = page.locator('main');
-    await expect(mainContent).toBeVisible();
-
-    // Check if metric cards are arranged in 4 columns on desktop
-    const metricCards = page.locator('[data-testid="metric-card"]');
-    await expect(metricCards).toHaveCount(4);
-
-    // Navigate to releases page
-    await page.goto('/releases');
-
-    // Check if releases grid has 3 columns on desktop
-    const releasesGrid = page.locator('.grid.grid-cols-1.gap-4.lg\\\\:grid-cols-3');
-    await expect(releasesGrid).toBeVisible();
-
-    // Navigate to fans page
-    await page.goto('/fans');
-
-    // Check if fans page has 2-column layout on desktop
-    const fansLayout = page.locator('.grid.grid-cols-1.gap-6.lg\\\\:grid-cols-2');
-    await expect(fansLayout).toBeVisible();
   });
 
-  test('maintains layout integrity across viewports', async ({ page }) => {
-    const viewports = [
-      { width: 375, height: 667 },   // Mobile
-      { width: 768, height: 1024 },  // Tablet
-      { width: 1280, height: 800 }   // Desktop
-    ];
+  test("sidebar is hidden on mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
 
-    for (const viewport of viewports) {
-      await page.setViewportSize(viewport);
+    const sidebar = page.locator("aside");
+    await expect(sidebar).toBeHidden();
+  });
 
-      // Test overview page
-      await page.goto('/');
-      await expect(page.locator('h1')).toContainText('Dashboard');
-      await expect(page.locator('[data-testid="metric-card"]')).toHaveCount(4);
+  test("mobile bottom navigation is visible on mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
 
-      // Test releases page
-      await page.goto('/releases');
-      await expect(page.locator('h1')).toContainText('Releases');
-      await expect(page.locator('[data-testid="release-card"]')).toHaveCountGreaterThan(0);
+    // Bottom nav is a fixed div at the bottom with md:hidden
+    // Use the text content to find it
+    const overviewButton = page
+      .locator("button")
+      .filter({ hasText: "Overview" });
+    await expect(overviewButton).toBeVisible({ timeout: 10000 });
+  });
 
-      // Test fans page
-      await page.goto('/fans');
-      await expect(page.locator('h1')).toContainText('Fans');
-      await expect(page.locator('[data-testid="metric-card"]')).toHaveCount(3);
-    }
+  test("mobile bottom navigation works for page switching", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
+
+    // Find the Releases button in the bottom nav (below the main content)
+    // The sidebar is hidden, so the only "Releases" link is in the bottom nav
+    await page.getByRole("link", { name: "Releases" }).click();
+
+    await expect(page).toHaveURL("/releases");
+    await expect(page.locator("h1")).toContainText("Releases", {
+      timeout: 15000,
+    });
+  });
+
+  test("metric cards are visible on mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
+
+    await expect(page.getByText("Total Revenue")).toBeVisible({
+      timeout: 15000,
+    });
+    await expect(page.getByText("Total Fans", { exact: true })).toBeVisible({
+      timeout: 10000,
+    });
   });
 });

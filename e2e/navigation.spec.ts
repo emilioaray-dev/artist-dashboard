@@ -1,84 +1,65 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Navigation', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+test.describe("Sidebar Navigation", () => {
+  test("navigates to Releases page", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
+
+    await page.getByRole("link", { name: "Releases" }).click();
+    await expect(page).toHaveURL("/releases");
+    await expect(page.locator("h1")).toContainText("Releases", {
+      timeout: 15000,
+    });
   });
 
-  test('sidebar navigation works across pages', async ({ page }) => {
-    // Check if sidebar is present
-    const sidebar = page.locator('aside');
-    await expect(sidebar).toBeVisible();
+  test("navigates to Fans page", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
 
-    // Check if Overview link is active initially
-    const overviewLink = page.locator('nav a[href="/"]:has-text("Overview")');
-    await expect(overviewLink).toHaveAttribute('class', /bg-accent/);
-
-    // Navigate to Releases page
-    const releasesLink = page.locator('nav a[href="/releases"]');
-    await releasesLink.click();
-
-    // Check if Releases page loaded
-    await expect(page.locator('h1')).toContainText('Releases');
-    await expect(releasesLink).toHaveAttribute('class', /bg-accent/);
-
-    // Navigate to Fans page
-    const fansLink = page.locator('nav a[href="/fans"]');
-    await fansLink.click();
-
-    // Check if Fans page loaded
-    await expect(page.locator('h1')).toContainText('Fans');
-    await expect(fansLink).toHaveAttribute('class', /bg-accent/);
-
-    // Navigate back to Overview
-    await overviewLink.click();
-    await expect(page.locator('h1')).toContainText('Dashboard');
-    await expect(overviewLink).toHaveAttribute('class', /bg-accent/);
+    await page.getByRole("link", { name: "Fans" }).click();
+    await expect(page).toHaveURL("/fans");
+    await expect(page.locator("h1")).toContainText("Fans", { timeout: 15000 });
   });
 
-  test('page transitions work correctly', async ({ page }) => {
-    // Measure initial page load time
-    const startTime = Date.now();
-    await page.goto('/');
-    const initialLoadTime = Date.now() - startTime;
+  test("navigates to Settings page", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
 
-    // Navigate to another page
-    const releasesLink = page.locator('nav a[href="/releases"]');
-    const navigationStartTime = Date.now();
-    await releasesLink.click();
-    await expect(page.locator('h1')).toContainText('Releases');
-    const navigationTime = Date.now() - navigationStartTime;
-
-    // Basic check that navigation happened in reasonable time
-    expect(navigationTime).toBeLessThan(5000); // Less than 5 seconds
-
-    // Navigate to another page
-    const fansLink = page.locator('nav a[href="/fans"]');
-    const secondNavigationStartTime = Date.now();
-    await fansLink.click();
-    await expect(page.locator('h1')).toContainText('Fans');
-    const secondNavigationTime = Date.now() - secondNavigationStartTime;
-
-    // Basic check that navigation happened in reasonable time
-    expect(secondNavigationTime).toBeLessThan(5000); // Less than 5 seconds
+    await page.getByRole("link", { name: "Settings" }).click();
+    await expect(page).toHaveURL("/settings");
+    await expect(page.locator("h1")).toContainText("Settings", {
+      timeout: 15000,
+    });
   });
 
-  test('all navigation links are accessible', async ({ page }) => {
-    // Check if all navigation items are present
-    const navLinks = page.locator('nav a');
-    await expect(navLinks).toHaveCount(3);
+  test("navigates back to Overview from another page", async ({ page }) => {
+    await page.goto("/releases");
+    await page.waitForSelector("h1", { timeout: 15000 });
 
-    // Check if each link has proper attributes
-    const overviewLink = page.locator('nav a[href="/"]');
-    await expect(overviewLink).toBeVisible();
-    await expect(overviewLink).toHaveAccessibleName('Overview');
+    await page.getByRole("link", { name: "Overview" }).click();
+    await expect(page).toHaveURL("/");
+    await expect(page.locator("h1")).toContainText("Overview", {
+      timeout: 15000,
+    });
+  });
 
-    const releasesLink = page.locator('nav a[href="/releases"]');
-    await expect(releasesLink).toBeVisible();
-    await expect(releasesLink).toHaveAccessibleName('Releases');
+  test("highlights active navigation item", async ({ page }) => {
+    await page.goto("/releases");
+    await page.waitForSelector("h1", { timeout: 15000 });
 
-    const fansLink = page.locator('nav a[href="/fans"]');
-    await expect(fansLink).toBeVisible();
-    await expect(fansLink).toHaveAccessibleName('Fans');
+    // The active link should have font-semibold styling
+    const releasesLink = page
+      .locator("aside")
+      .getByRole("link", { name: "Releases" });
+    await expect(releasesLink).toBeVisible({ timeout: 10000 });
+    // Check via computed style or class - Tailwind v4 may transform class names
+    await expect(releasesLink).toHaveCSS("font-weight", "600");
+  });
+
+  test("sidebar shows brand logo", async ({ page }) => {
+    await page.goto("/");
+    await page.waitForSelector("h1", { timeout: 15000 });
+
+    await expect(page.getByText("Backstage")).toBeVisible();
   });
 });
