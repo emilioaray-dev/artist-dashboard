@@ -16,6 +16,7 @@ import {
 import { SlideInAnimation } from "@/components/motion/AnimationUtils";
 import { CHART_COLORS } from "@/lib/constants";
 import { EngagementMetrics, FanData } from "@/types";
+import { useLocale, useTranslations } from "next-intl";
 
 type FanGrowthChartProps = {
   engagementData: EngagementMetrics;
@@ -26,6 +27,10 @@ type FanGrowthChartProps = {
  * Amber gradient fill, tooltips, responsive, FadeIn wrapper
  */
 export function FanGrowthChart({ engagementData }: FanGrowthChartProps) {
+  const locale = useLocale();
+  const t = useTranslations("Fans");
+  const tFormats = useTranslations("Formats");
+
   // Prepare chart data
   const chartData = engagementData.fanHistory.map((day: FanData) => ({
     date: day.date,
@@ -34,16 +39,16 @@ export function FanGrowthChart({ engagementData }: FanGrowthChartProps) {
   }));
 
   const chartConfig = {
-    total: CHART_COLORS.totalFans,
-    active: CHART_COLORS.activeFans,
+    total: { ...CHART_COLORS.totalFans, label: tFormats("totalFans") },
+    active: { ...CHART_COLORS.activeFans, label: tFormats("activeFans") },
   };
 
   return (
     <SlideInAnimation duration={0.3}>
       <Card>
         <CardHeader className="border-b py-5">
-          <CardTitle>Fan Growth</CardTitle>
-          <CardDescription>Total fans vs active buyers</CardDescription>
+          <CardTitle>{t("fanGrowth")}</CardTitle>
+          <CardDescription>{t("fanGrowthSubtitle")}</CardDescription>
         </CardHeader>
         <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
           <ChartContainer
@@ -64,7 +69,7 @@ export function FanGrowthChart({ engagementData }: FanGrowthChartProps) {
                 axisLine={false}
                 tickMargin={8}
                 tickFormatter={(value) => {
-                  return new Date(value).toLocaleDateString("en-US", {
+                  return new Date(value).toLocaleDateString(locale, {
                     month: "short",
                     day: "numeric",
                   });
