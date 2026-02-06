@@ -3,6 +3,8 @@
 Auto-generated from all feature plans. Last updated: 2026-02-05
 
 ## Active Technologies
+- TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + next-intl v4.x (i18n library with App Router + Server Component support) (feature/002-i18n-multi-language)
+- localStorage (language preference persistence via next-intl cookie) (feature/002-i18n-multi-language)
 
 - TypeScript 5.x with React 19.2.3 + Next.js 16.1.6, shadcn/ui, Recharts, Lucide React, Motion (animation) (001-artist-dashboard)
 
@@ -36,6 +38,7 @@ npm test && npm run lint
 TypeScript 5.x with React 19.2.3: Follow standard conventions. Motion animations use `motion` package (not framer-motion). Import from `motion/react`.
 
 ## Recent Changes
+- feature/002-i18n-multi-language: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + next-intl v4.x (i18n library with App Router + Server Component support)
 
 - 001-artist-dashboard: Updated plan with Motion animations, audio waveform, premium design tokens, chart interactivity (2026-02-05)
 - 001-artist-dashboard: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6, shadcn/ui, Recharts, Lucide React
