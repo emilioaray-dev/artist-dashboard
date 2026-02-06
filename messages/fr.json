@@ -99,7 +99,7 @@
   "Landing": {
     "tryDemo": "Essayer la Démo",
     "noLoginRequired": "Pas de connexion requise. Explorez le tableau de bord.",
-    "socialProof": "Rejoignez {count} artistes sur EVEN",
+    "socialProof": "Rejoignez {count} artistes sur MUSIC",
     "heroTitle1": "VENDEZ VOTRE MUSIQUE",
     "heroTitle2": "À VOS FANS",
     "heroSubtitle": "Gagnez de l'argent à chaque vente, sortez avant le streaming et soyez payé instantanément.",
@@ -111,9 +111,9 @@
     "featureChartsDesc": "Déclarez automatiquement toutes les ventes éligibles à Luminate.",
     "featureCommunityTitle": "Plus que de la Musique",
     "featureCommunityDesc": "Créez un espace pour tous vos projets créatifs.",
-    "footerText": "EVEN Backstage Démo · Projet de Démonstration",
-    "metaTitle": "EVEN Backstage | Vendez Votre Musique aux Fans",
-    "metaDescription": "Vendez votre musique directement à vos fans. Sortez en avance, soyez payé quotidiennement et développez votre audience avec EVEN Backstage."
+    "footerText": "MUSIC Backstage Démo · Projet de Démonstration",
+    "metaTitle": "MUSIC Backstage | Vendez Votre Musique aux Fans",
+    "metaDescription": "Vendez votre musique directement à vos fans. Sortez en avance, soyez payé quotidiennement et développez votre audience avec MUSIC Backstage."
   },
   "Formats": {
     "timeRange7d": "7 jours",

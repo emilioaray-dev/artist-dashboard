@@ -1,6 +1,6 @@
 # Music Artist Dashboard
 
-A modern dashboard for music artists to track releases, sales analytics, and fan engagement. Built for EVEN's Senior Frontend Engineer take-home assignment.
+A modern dashboard for music artists to track releases, sales analytics, and fan engagement. Built as a Senior Frontend Engineer take-home assignment.
 
 ## Live Demo
 
@@ -27,7 +27,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
+Open [http://localhost:3000](http://localhost:3000) to view the landing page and dashboard.
 
 ### Available Scripts
 
@@ -56,12 +56,13 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 
 | Library          | Purpose            | Why This Choice                                                               |
 | ---------------- | ------------------ | ----------------------------------------------------------------------------- |
-| **shadcn/ui**    | UI Components      | Recommended by EVEN, accessible, customizable, Tailwind-native                |
+| **shadcn/ui**    | UI Components      | Accessible, customizable, Tailwind-native                                     |
 | **Recharts**     | Data Visualization | Declarative, composable, great React integration                              |
 | **Lucide React** | Icons              | Consistent, lightweight, tree-shakeable                                       |
 | **Motion**       | Animations         | Lightweight animation library, smooth page transitions and micro-interactions |
 | **Zustand**      | State Management   | Lightweight, simple API; used for global audio player state                   |
 | **SWR**          | Data Fetching      | Client-side caching, revalidation, and deduplication for API calls            |
+| **next-intl**    | Internationalization | App Router + Server Component support, ICU message format, locale routing   |
 
 ### Architecture Decisions
 
@@ -69,11 +70,15 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 
 2. **Server Components + Suspense Streaming**: Pages use async server components with Suspense boundaries for progressive loading — data streams in as it resolves.
 
-3. **shadcn/ui over full component libraries**: Provides ownership of component code, easier customization, no black-box dependencies.
+3. **Route Groups for Layout Separation**: `(landing)` and `(dashboard)` route groups under `[locale]` provide different layouts (minimal vs full sidebar) while sharing i18n.
 
-4. **Recharts over Chart.js**: More React-idiomatic API, easier to customize with Tailwind, better TypeScript support.
+4. **shadcn/ui over full component libraries**: Provides ownership of component code, easier customization, no black-box dependencies.
 
-5. **Zustand for state management**: Minimal boilerplate compared to Redux, no providers required, TypeScript-first design. Used for the global audio player.
+5. **Recharts over Chart.js**: More React-idiomatic API, easier to customize with Tailwind, better TypeScript support.
+
+6. **Zustand for state management**: Minimal boilerplate compared to Redux, no providers required, TypeScript-first design. Used for the global audio player.
+
+7. **Centralized Constants**: All routes, brand name, design tokens, and chart configs live in `src/lib/constants/` — split by category for maintainability with a barrel `index.ts` for clean imports.
 
 ## Features Implemented
 
@@ -83,6 +88,20 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 - [x] **Sales Analytics** - Interactive Revenue chart with time range tabs (7d/30d/90d), gross vs net revenue with channel breakdown
 - [x] **Fan Engagement** - Fan Growth chart (total fans vs active buyers), Top Fans section with ranked avatars, metric cards for engagement rate
 
+### Landing Page
+
+- [x] **Hero Section** - Full-viewport hero with background image, gradient overlays, social proof pill, and CTA
+- [x] **Feature Cards** - 4 animated cards showcasing platform features with scroll-triggered animations
+- [x] **Fixed Header** - Logo, language selector, and "Try Demo" button linking to dashboard
+- [x] **Footer** - Minimal footer with brand text
+
+### Internationalization (i18n)
+
+- [x] **4 Languages** - English (default), Spanish, French, Portuguese
+- [x] **Locale Routing** - English at `/`, others at `/es/`, `/fr/`, `/pt/`
+- [x] **Language Selector** - Available in sidebar, settings, and landing page header
+- [x] **Full Coverage** - All UI text, navigation, errors, metadata, and chart labels translated
+
 ### Technical Features
 
 - [x] Responsive design with sidebar (desktop) and bottom navigation (mobile)
@@ -91,6 +110,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 - [x] Accessible components with jsx-a11y enforcement
 - [x] TypeScript strict mode throughout
 - [x] Clean, organized code with clear separation of concerns
+- [x] Custom dark scrollbar styling (primary accent at 50% opacity)
 
 ### Nice-to-Haves (All Implemented)
 
@@ -106,51 +126,74 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 
 ```
 src/
-├── app/                              # Next.js App Router
-│   ├── layout.tsx                    # Root layout (Inter font, dark theme)
-│   ├── client-layout.tsx             # Client layout (sidebar, bottom nav, audio player)
-│   ├── template.tsx                  # Page transition wrapper
-│   ├── page.tsx                      # Overview page (/)
-│   ├── globals.css                   # Tailwind v4 theme + oklch tokens
-│   ├── _components/                  # Private route components (home page)
-│   ├── releases/_components/         # Private route components (/releases)
-│   ├── fans/_components/             # Private route components (/fans)
-│   ├── settings/_components/         # Private route components (/settings)
-│   └── api/                          # API routes (releases, sales, engagement)
-├── components/                       # Shared components (single global folder)
-│   ├── ui/core/                      # shadcn/ui primitives (generated, don't modify)
-│   ├── ui/customs/cards/             # Card widgets (MetricCard, ClientMetricCard, ReleaseCard)
-│   ├── ui/customs/charts/            # Data visualization (FanGrowthChart, RevenueChart)
-│   ├── ui/customs/feedback/          # Loading states, skeletons, empty states
-│   ├── ui/customs/lists/             # List/grid compositions (TopFans, ReleasesGrid, RecentReleasesList)
-│   ├── layout/                       # Sidebar, MobileBottomNav, MainLayout
-│   ├── motion/                       # FadeIn, SlideIn, PageTransition, MotionProvider
-│   └── audio/                        # AudioPlayer, AudioWaveform, DynamicAudioPlayer
-├── hooks/                            # Custom hooks (useApiData, useSidebar)
-├── lib/                              # Utils, API client, data-service, constants, SWR provider
-├── store/                            # Zustand player store
-├── __mocks__/                        # Mock data (releases, sales, engagement, fans)
-└── types/                            # TypeScript interfaces
+├── app/
+│   ├── [locale]/                         # All pages under locale dynamic segment
+│   │   ├── (landing)/                    # Landing page route group (no sidebar)
+│   │   │   ├── _components/              # LandingHeader, LandingHero, LandingFeatures, LandingFooter
+│   │   │   ├── layout.tsx                # Minimal layout (MotionProvider only)
+│   │   │   └── page.tsx                  # Landing page (/)
+│   │   ├── (dashboard)/                  # Dashboard route group (sidebar + nav)
+│   │   │   ├── _components/              # HomePageStreaming
+│   │   │   ├── overview/                 # /overview
+│   │   │   ├── releases/                 # /releases
+│   │   │   ├── fans/                     # /fans
+│   │   │   ├── settings/                 # /settings
+│   │   │   └── layout.tsx                # Dashboard layout (Sidebar, MobileBottomNav, AudioPlayer)
+│   │   └── layout.tsx                    # Locale layout with NextIntlClientProvider
+│   ├── api/                              # API routes (releases, sales, engagement)
+│   └── layout.tsx                        # Root layout (Inter font, dark theme)
+├── components/
+│   ├── ui/core/                          # shadcn/ui primitives (generated, don't modify)
+│   ├── ui/customs/cards/                 # Card widgets (MetricCard, ReleaseCard)
+│   ├── ui/customs/charts/                # Data visualization (FanGrowthChart, RevenueChart)
+│   ├── ui/customs/feedback/              # Loading states, skeletons, empty states
+│   ├── ui/customs/lists/                 # List/grid compositions (TopFans, ReleasesGrid)
+│   ├── layout/                           # Sidebar, MobileBottomNav, LanguageSelector
+│   ├── motion/                           # FadeIn, SlideIn, PageTransition, MotionProvider
+│   └── audio/                            # AudioPlayer, AudioWaveform, DynamicAudioPlayer
+├── hooks/                                # Custom hooks (useApiData, useSidebar)
+├── i18n/                                 # next-intl configuration
+│   ├── routing.ts                        # Locale routing config (en, es, fr, pt)
+│   ├── request.ts                        # Per-request config, message loading, formats
+│   └── navigation.ts                     # Locale-aware Link, usePathname, useRouter
+├── lib/
+│   ├── constants/                        # Centralized constants by category
+│   │   ├── index.ts                      # Barrel re-export (import from @/lib/constants)
+│   │   ├── branding.ts                   # BRAND_NAME
+│   │   ├── routes.ts                     # ROUTES (all app route paths)
+│   │   ├── navigation.ts                 # NAV_ITEMS (sidebar items)
+│   │   ├── theme.ts                      # DESIGN_TOKENS, STATUS_COLORS
+│   │   └── charts.ts                     # CHANNEL_INFO, CHART_COLORS, TREND_ICONS, TIME_RANGES
+│   ├── actions.ts                        # Server actions
+│   ├── api.ts                            # API client
+│   ├── data-service.ts                   # Data fetching service
+│   ├── swr-provider.tsx                  # SWR global config
+│   ├── utils.ts                          # Utility functions (formatCurrency, formatDate, etc.)
+│   └── waveform.ts                       # Audio waveform utilities
+├── store/                                # Zustand player store
+├── __mocks__/                            # Mock data (releases, sales, engagement, fans)
+└── types/                                # TypeScript interfaces
+messages/                                 # Translation files (en.json, es.json, fr.json, pt.json)
 ```
 
 ## Assumptions Made
 
 1. **Single Artist View**: Dashboard shows data for one artist (the logged-in user). Multi-artist management would be a future feature.
 
-2. **Mock Data**: All data is mocked via API routes. In production, this would connect to EVEN's real backend API.
+2. **Mock Data**: All data is mocked via API routes. In production, this would connect to a real backend API.
 
 3. **Time Period**: Default analytics view shows last 30 days. Users can switch between 7d, 30d, and 90d.
 
-4. **Currency**: All monetary values in USD. Internationalization would be future work.
+4. **Currency**: All monetary values in USD with locale-aware formatting.
 
-5. **Dark Theme**: Dashboard uses a dark theme as default, matching the EVEN Backstage aesthetic.
+5. **Dark Theme**: Dashboard uses a dark theme as the only theme, with a premium SaaS aesthetic.
 
 ## What I'd Do With More Time
 
 ### Immediate Priorities
 
 1. **Deploy to Vercel**: Set up CI/CD pipeline with automatic deployments
-2. **More E2E Coverage**: Add tests for chart interactions, audio player, error states
+2. **More E2E Coverage**: Add tests for chart interactions, audio player, error states, i18n switching
 3. **Performance Optimization**: Implement image optimization with next/image for cover art, lazy loading for off-screen charts
 
 ### Future Enhancements
@@ -159,8 +202,7 @@ src/
 2. **Real-time Data**: WebSocket or SSE for live sales/engagement updates
 3. **Data Persistence**: Database integration for user preferences and saved views
 4. **Export Features**: PDF reports, CSV data export for analytics
-5. **Internationalization**: Multi-language support with next-intl
-6. **Performance Monitoring**: Vercel Analytics and Web Vitals tracking
+5. **Performance Monitoring**: Vercel Analytics and Web Vitals tracking
 
 ## AI Usage Documentation
 
@@ -176,19 +218,19 @@ This project uses a structured specification workflow powered by Spec Kit:
 
 ```
 specs/
-└── 001-artist-dashboard/
-    ├── spec.md          # Feature specification
-    ├── plan.md          # Implementation plan
-    ├── tasks.md         # Task breakdown
-    ├── research.md      # Technical research
-    ├── data-model.md    # Data model
-    └── quickstart.md    # Quick start guide
+├── 001-artist-dashboard/     # Core dashboard feature
+├── 002-i18n-multi-language/  # Internationalization
+└── 003-landing-page/         # Landing page
 ```
+
+Each spec contains: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model.md`, and `quickstart.md`.
 
 ### Branch Strategy
 
 - `main` - Production-ready code
-- `feature/001-artist-dashboard` - Main feature development branch
+- `feature/001-artist-dashboard` - Core dashboard
+- `feature/002-i18n-multi-language` - Internationalization
+- `feature/003-landing-page` - Landing page
 
 ## License
 
@@ -196,4 +238,4 @@ This project was created as part of a job application and is not licensed for pu
 
 ---
 
-Built with care for EVEN by Celsius Aray
+Built with care by Celsius Aray

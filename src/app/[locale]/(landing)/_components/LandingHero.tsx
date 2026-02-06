@@ -1,6 +1,7 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
+import { ROUTES } from "@/lib/constants";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -51,7 +52,7 @@ export function LandingHero() {
 
           {/* CTA Area */}
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Link href="/overview">
+            <Link href={ROUTES.overview}>
               <button className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-11 items-center gap-2 rounded-md px-8 text-base font-medium transition-colors">
                 {t("tryDemo")}
                 <ArrowRight className="h-5 w-5" />

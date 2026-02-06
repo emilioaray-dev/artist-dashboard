@@ -1,7 +1,7 @@
 "use client";
 
 import { buttonVariants } from "@/components/ui/core/button";
-import { STATUS_COLORS } from "@/lib/constants";
+import { ROUTES, STATUS_COLORS } from "@/lib/constants";
 import { cn, formatCurrency, formatDate } from "@/lib/utils";
 import { Release } from "@/types";
 import Image from "next/image";
@@ -37,7 +37,7 @@ export function RecentReleasesList({
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">{t("recentReleases")}</h2>
           <Link
-            href="/releases"
+            href={ROUTES.releases}
             className={cn(buttonVariants({ variant: "ghost" }), "text-sm")}
           >
             {tCommon("viewAll")}

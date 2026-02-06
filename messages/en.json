@@ -99,7 +99,7 @@
   "Landing": {
     "tryDemo": "Try Demo",
     "noLoginRequired": "No login required. Explore the dashboard.",
-    "socialProof": "Join {count} artists getting EVEN",
+    "socialProof": "Join {count} artists getting MUSIC",
     "heroTitle1": "SELL MUSIC",
     "heroTitle2": "TO YOUR FANS",
     "heroSubtitle": "Make money from every sale, release early before streaming and get paid instantly.",
@@ -111,9 +111,9 @@
     "featureChartsDesc": "Report all eligible sales to Luminate automatically.",
     "featureCommunityTitle": "More Than Music",
     "featureCommunityDesc": "Build a home for all of your creative projects.",
-    "footerText": "EVEN Backstage Demo · Take-home Assignment",
-    "metaTitle": "EVEN Backstage | Sell Music Direct to Fans",
-    "metaDescription": "Sell music directly to your fans. Release early, get paid daily, and grow your audience with EVEN Backstage."
+    "footerText": "MUSIC Backstage Demo · Take-home Assignment",
+    "metaTitle": "MUSIC Backstage | Sell Music Direct to Fans",
+    "metaDescription": "Sell music directly to your fans. Release early, get paid daily, and grow your audience with MUSIC Backstage."
   },
   "Formats": {
     "timeRange7d": "7 Days",

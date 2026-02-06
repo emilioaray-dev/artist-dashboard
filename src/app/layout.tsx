@@ -13,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EVEN Backstage | Artist Dashboard",
+  title: "MUSIC Backstage | Artist Dashboard",
   description: "Track your releases, direct-to-fan sales, and fan engagement",
 };
 
