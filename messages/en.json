@@ -1,0 +1,106 @@
+{
+  "Common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "viewAll": "View all",
+    "noData": "No data available",
+    "noCover": "No cover",
+    "addRelease": "Add Release",
+    "saveChanges": "Save Changes",
+    "savePreferences": "Save Preferences",
+    "goHome": "Go home",
+    "collapse": "Collapse",
+    "showingDataFor": "Showing revenue data for {start} to {end}",
+    "loadingChartData": "Loading chart data..."
+  },
+  "Navigation": {
+    "overview": "Overview",
+    "releases": "Releases",
+    "fans": "Fans",
+    "settings": "Settings"
+  },
+  "Overview": {
+    "title": "Overview",
+    "subtitle": "Your dashboard for direct-to-fan performance",
+    "loadingDashboard": "Loading dashboard data...",
+    "revenue": "Revenue",
+    "totalRevenue": "Total Revenue",
+    "totalFans": "Total Fans",
+    "activeBuyers": "Active Buyers",
+    "avgOrderValue": "Avg. Order Value",
+    "noSalesData": "No sales data available",
+    "noEngagementData": "No engagement data available",
+    "loadingReleases": "Loading releases...",
+    "loadingTopFans": "Loading top fans..."
+  },
+  "Releases": {
+    "title": "Releases",
+    "subtitle": "Manage and track your exclusive drops",
+    "loading": "Loading releases...",
+    "errorLoading": "Error loading releases",
+    "noReleases": "No releases yet",
+    "noReleasesDescription": "When you add new releases, they'll appear here",
+    "recentReleases": "Recent Releases",
+    "status": {
+      "draft": "DRAFT",
+      "scheduled": "SCHEDULED",
+      "live": "LIVE",
+      "archived": "ARCHIVED"
+    }
+  },
+  "Fans": {
+    "title": "Fans",
+    "subtitle": "Track your community growth and engagement",
+    "loading": "Loading fan engagement data...",
+    "errorLoading": "Error loading fan engagement data",
+    "noEngagement": "No engagement data available",
+    "errorFanData": "Error loading fan data",
+    "totalFans": "Total Fans",
+    "activeBuyers": "Active Buyers",
+    "engagementRate": "Engagement Rate",
+    "topFans": "Top Fans",
+    "topFansSubtitle": "Your most valuable supporters",
+    "noFansData": "No fans data available",
+    "purchases": "{count, plural, =0 {0 purchases} one {1 purchase} other {# purchases}}",
+    "fanGrowth": "Fan Growth",
+    "fanGrowthSubtitle": "Total fans vs active buyers"
+  },
+  "Settings": {
+    "title": "Settings",
+    "accountInfo": "Account Information",
+    "email": "Email",
+    "displayName": "Display Name",
+    "preferences": "Preferences",
+    "emailNotifications": "Email Notifications",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "selectTheme": "Select theme",
+    "language": "Language"
+  },
+  "Errors": {
+    "somethingWrong": "Something went wrong",
+    "unexpectedError": "An unexpected error occurred.",
+    "pageNotFound": "Page not found",
+    "pageNotFoundDescription": "The page you're looking for doesn't exist.",
+    "tryAgain": "Try again",
+    "goHome": "Go home"
+  },
+  "Formats": {
+    "timeRange7d": "7 Days",
+    "timeRange30d": "30 Days",
+    "timeRange90d": "90 Days",
+    "grossRevenue": "Gross Revenue",
+    "netRevenue": "Net Revenue",
+    "directToFan": "Direct to Fan",
+    "digital": "Digital",
+    "physical": "Physical",
+    "bundles": "Bundles",
+    "totalFans": "Total Fans",
+    "activeFans": "Active Fans"
+  }
+}

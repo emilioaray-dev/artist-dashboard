@@ -1,0 +1,106 @@
+{
+  "Common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "retry": "Intentar de nuevo",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "viewAll": "Ver todo",
+    "noData": "No hay datos disponibles",
+    "noCover": "Sin portada",
+    "addRelease": "Agregar lanzamiento",
+    "saveChanges": "Guardar cambios",
+    "savePreferences": "Guardar preferencias",
+    "goHome": "Ir al inicio",
+    "collapse": "Colapsar",
+    "showingDataFor": "Mostrando datos de ingresos del {start} al {end}",
+    "loadingChartData": "Cargando datos del gráfico..."
+  },
+  "Navigation": {
+    "overview": "Resumen",
+    "releases": "Lanzamientos",
+    "fans": "Fans",
+    "settings": "Configuración"
+  },
+  "Overview": {
+    "title": "Resumen",
+    "subtitle": "Tu panel de rendimiento directo al fan",
+    "loadingDashboard": "Cargando datos del panel...",
+    "revenue": "Ingresos",
+    "totalRevenue": "Ingresos totales",
+    "totalFans": "Total de fans",
+    "activeBuyers": "Compradores activos",
+    "avgOrderValue": "Valor promedio de orden",
+    "noSalesData": "No hay datos de ventas disponibles",
+    "noEngagementData": "No hay datos de interacción disponibles",
+    "loadingReleases": "Cargando lanzamientos...",
+    "loadingTopFans": "Cargando mejores fans..."
+  },
+  "Releases": {
+    "title": "Lanzamientos",
+    "subtitle": "Administra y rastrea tus lanzamientos exclusivos",
+    "loading": "Cargando lanzamientos...",
+    "errorLoading": "Error al cargar lanzamientos",
+    "noReleases": "Aún no hay lanzamientos",
+    "noReleasesDescription": "Cuando agregues nuevos lanzamientos, aparecerán aquí",
+    "recentReleases": "Lanzamientos recientes",
+    "status": {
+      "draft": "BORRADOR",
+      "scheduled": "PROGRAMADO",
+      "live": "EN VIVO",
+      "archived": "ARCHIVADO"
+    }
+  },
+  "Fans": {
+    "title": "Fans",
+    "subtitle": "Rastrea el crecimiento y la interacción de tu comunidad",
+    "loading": "Cargando datos de interacción de fans...",
+    "errorLoading": "Error al cargar datos de interacción de fans",
+    "noEngagement": "No hay datos de interacción disponibles",
+    "errorFanData": "Error al cargar datos de fans",
+    "totalFans": "Total de fans",
+    "activeBuyers": "Compradores activos",
+    "engagementRate": "Tasa de interacción",
+    "topFans": "Mejores fans",
+    "topFansSubtitle": "Tus seguidores más valiosos",
+    "noFansData": "No hay datos de fans disponibles",
+    "purchases": "{count, plural, =0 {0 compras} one {1 compra} other {# compras}}",
+    "fanGrowth": "Crecimiento de fans",
+    "fanGrowthSubtitle": "Total de fans vs compradores activos"
+  },
+  "Settings": {
+    "title": "Configuración",
+    "accountInfo": "Información de la cuenta",
+    "email": "Correo electrónico",
+    "displayName": "Nombre para mostrar",
+    "preferences": "Preferencias",
+    "emailNotifications": "Notificaciones por correo",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
+    "themeSystem": "Sistema",
+    "selectTheme": "Seleccionar tema",
+    "language": "Idioma"
+  },
+  "Errors": {
+    "somethingWrong": "Algo salió mal",
+    "unexpectedError": "Ocurrió un error inesperado.",
+    "pageNotFound": "Página no encontrada",
+    "pageNotFoundDescription": "La página que buscas no existe.",
+    "tryAgain": "Intentar de nuevo",
+    "goHome": "Ir al inicio"
+  },
+  "Formats": {
+    "timeRange7d": "7 días",
+    "timeRange30d": "30 días",
+    "timeRange90d": "90 días",
+    "grossRevenue": "Ingresos brutos",
+    "netRevenue": "Ingresos netos",
+    "directToFan": "Directo al fan",
+    "digital": "Digital",
+    "physical": "Físico",
+    "bundles": "Paquetes",
+    "totalFans": "Total de fans",
+    "activeFans": "Fans activos"
+  }
+}

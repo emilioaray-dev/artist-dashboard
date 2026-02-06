@@ -1,0 +1,106 @@
+{
+  "Common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "retry": "Tentar novamente",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "viewAll": "Ver tudo",
+    "noData": "Nenhum dado disponível",
+    "noCover": "Sem capa",
+    "addRelease": "Adicionar Lançamento",
+    "saveChanges": "Salvar Alterações",
+    "savePreferences": "Salvar Preferências",
+    "goHome": "Ir para o início",
+    "collapse": "Recolher",
+    "showingDataFor": "Exibindo dados de receita de {start} a {end}",
+    "loadingChartData": "Carregando dados do gráfico..."
+  },
+  "Navigation": {
+    "overview": "Visão Geral",
+    "releases": "Lançamentos",
+    "fans": "Fãs",
+    "settings": "Configurações"
+  },
+  "Overview": {
+    "title": "Visão Geral",
+    "subtitle": "Seu painel de desempenho direto ao fã",
+    "loadingDashboard": "Carregando dados do painel...",
+    "revenue": "Receita",
+    "totalRevenue": "Receita Total",
+    "totalFans": "Total de Fãs",
+    "activeBuyers": "Compradores Ativos",
+    "avgOrderValue": "Valor Médio do Pedido",
+    "noSalesData": "Nenhum dado de vendas disponível",
+    "noEngagementData": "Nenhum dado de engajamento disponível",
+    "loadingReleases": "Carregando lançamentos...",
+    "loadingTopFans": "Carregando principais fãs..."
+  },
+  "Releases": {
+    "title": "Lançamentos",
+    "subtitle": "Gerencie e acompanhe seus drops exclusivos",
+    "loading": "Carregando lançamentos...",
+    "errorLoading": "Erro ao carregar lançamentos",
+    "noReleases": "Nenhum lançamento ainda",
+    "noReleasesDescription": "Quando você adicionar novos lançamentos, eles aparecerão aqui",
+    "recentReleases": "Lançamentos Recentes",
+    "status": {
+      "draft": "RASCUNHO",
+      "scheduled": "AGENDADO",
+      "live": "AO VIVO",
+      "archived": "ARQUIVADO"
+    }
+  },
+  "Fans": {
+    "title": "Fãs",
+    "subtitle": "Acompanhe o crescimento e engajamento da sua comunidade",
+    "loading": "Carregando dados de engajamento dos fãs...",
+    "errorLoading": "Erro ao carregar dados de engajamento dos fãs",
+    "noEngagement": "Nenhum dado de engajamento disponível",
+    "errorFanData": "Erro ao carregar dados dos fãs",
+    "totalFans": "Total de Fãs",
+    "activeBuyers": "Compradores Ativos",
+    "engagementRate": "Taxa de Engajamento",
+    "topFans": "Principais Fãs",
+    "topFansSubtitle": "Seus apoiadores mais valiosos",
+    "noFansData": "Nenhum dado de fãs disponível",
+    "purchases": "{count, plural, =0 {0 compras} one {1 compra} other {# compras}}",
+    "fanGrowth": "Crescimento de Fãs",
+    "fanGrowthSubtitle": "Total de fãs vs compradores ativos"
+  },
+  "Settings": {
+    "title": "Configurações",
+    "accountInfo": "Informações da Conta",
+    "email": "E-mail",
+    "displayName": "Nome de Exibição",
+    "preferences": "Preferências",
+    "emailNotifications": "Notificações por E-mail",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Escuro",
+    "themeSystem": "Sistema",
+    "selectTheme": "Selecionar tema",
+    "language": "Idioma"
+  },
+  "Errors": {
+    "somethingWrong": "Algo deu errado",
+    "unexpectedError": "Ocorreu um erro inesperado.",
+    "pageNotFound": "Página não encontrada",
+    "pageNotFoundDescription": "A página que você está procurando não existe.",
+    "tryAgain": "Tentar novamente",
+    "goHome": "Ir para o início"
+  },
+  "Formats": {
+    "timeRange7d": "7 Dias",
+    "timeRange30d": "30 Dias",
+    "timeRange90d": "90 Dias",
+    "grossRevenue": "Receita Bruta",
+    "netRevenue": "Receita Líquida",
+    "directToFan": "Direto ao Fã",
+    "digital": "Digital",
+    "physical": "Físico",
+    "bundles": "Pacotes",
+    "totalFans": "Total de Fãs",
+    "activeFans": "Fãs Ativos"
+  }
+}
