@@ -151,16 +151,16 @@ Phase 4: T020 can start in parallel with Phase 3's T017 (different file)
 
 ## Summary
 
-| Metric | Value |
-| ------ | ----- |
-| Total tasks | 26 |
-| Phase 1 (Setup) | 11 tasks |
-| Phase 2 (US1 - Hero + CTA) | 5 tasks |
-| Phase 3 (US2 - Features) | 3 tasks |
-| Phase 4 (US3 - Footer) | 2 tasks |
-| Phase 5 (Polish) | 5 tasks |
-| Parallel opportunities | 8 tasks across phases |
-| MVP scope | Phase 1 + Phase 2 (16 tasks) |
+| Metric                     | Value                        |
+| -------------------------- | ---------------------------- |
+| Total tasks                | 26                           |
+| Phase 1 (Setup)            | 11 tasks                     |
+| Phase 2 (US1 - Hero + CTA) | 5 tasks                      |
+| Phase 3 (US2 - Features)   | 3 tasks                      |
+| Phase 4 (US3 - Footer)     | 2 tasks                      |
+| Phase 5 (Polish)           | 5 tasks                      |
+| Parallel opportunities     | 8 tasks across phases        |
+| MVP scope                  | Phase 1 + Phase 2 (16 tasks) |
 
 ## Notes
 

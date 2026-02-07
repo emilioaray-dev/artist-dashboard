@@ -91,20 +91,20 @@ npx playwright test
 
 ### Unit Tests
 
-| Test | Description |
-| --- | --- |
+| Test                      | Description                                              |
+| ------------------------- | -------------------------------------------------------- |
 | Language dropdown renders | Selector shows current locale code, expands to 4 options |
-| Translation fallback | Missing key falls back to English string |
-| Locale detection priority | URL > cookie > Accept-Language > default |
-| Format helpers | Currency/date/number format correctly per locale |
+| Translation fallback      | Missing key falls back to English string                 |
+| Locale detection priority | URL > cookie > Accept-Language > default                 |
+| Format helpers            | Currency/date/number format correctly per locale         |
 
 ### E2E Tests
 
-| Test | Description |
-| --- | --- |
-| Default language loads | Visit `/` → English UI |
+| Test                         | Description                                                               |
+| ---------------------------- | ------------------------------------------------------------------------- |
+| Default language loads       | Visit `/` → English UI                                                    |
 | Language switch via dropdown | Click selector → choose Spanish → URL updates to `/es/`, all text Spanish |
-| Persistence across pages | Switch to French → navigate to Releases → still French |
-| Persistence across sessions | Switch to Portuguese → reload → still Portuguese |
-| Settings language dropdown | Change language in Settings → same effect as sidebar selector |
-| Chart formatting | Revenue chart in French shows French date/number formatting |
+| Persistence across pages     | Switch to French → navigate to Releases → still French                    |
+| Persistence across sessions  | Switch to Portuguese → reload → still Portuguese                          |
+| Settings language dropdown   | Change language in Settings → same effect as sidebar selector             |
+| Chart formatting             | Revenue chart in French shows French date/number formatting               |

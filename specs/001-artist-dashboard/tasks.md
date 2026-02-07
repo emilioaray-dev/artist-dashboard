@@ -68,10 +68,10 @@
 ### Data Service Layer
 
 - [x] T015 Data service in src/lib/data-service.ts — getReleases, getSales (gross+net), getEngagement, getTopFans
-- [x] T016 [P] Mock releases in src/__mocks__/releases.ts — 6 releases with local cover art (public/covers/)
-- [x] T017 [P] Mock sales in src/__mocks__/sales.ts — daily data with gross/net, 7d/30d/90d ranges
-- [x] T018 [P] Mock engagement in src/__mocks__/engagement.ts — fan growth history, active rates
-- [x] T019 [P] Mock fans in src/__mocks__/fans.ts — 5 top fans with local avatars (public/avatars/)
+- [x] T016 [P] Mock releases in src/**mocks**/releases.ts — 6 releases with local cover art (public/covers/)
+- [x] T017 [P] Mock sales in src/**mocks**/sales.ts — daily data with gross/net, 7d/30d/90d ranges
+- [x] T018 [P] Mock engagement in src/**mocks**/engagement.ts — fan growth history, active rates
+- [x] T019 [P] Mock fans in src/**mocks**/fans.ts — 5 top fans with local avatars (public/avatars/)
 
 ### API Routes
 
@@ -100,12 +100,12 @@
 - [x] T028 [P] [US2] FanGrowthChart in src/components/ui/customs/charts/FanGrowthChart.tsx — total vs active fans, tooltips, legend
 - [x] T029 [P] [US2] RecentReleasesList in src/components/ui/customs/lists/RecentReleasesList.tsx — cover thumbnails, status badges, audio waveform
 - [x] T030 [P] [US2] TopFans in src/components/ui/customs/lists/TopFans.tsx — avatars, ranking, purchase count, total spent
-- [x] T031 [US2] Overview page in src/app/page.tsx + src/app/_components/HomePageStreaming.tsx — Server Component with Suspense streaming, parallel data fetching via server actions
+- [x] T031 [US2] Overview page in src/app/page.tsx + src/app/\_components/HomePageStreaming.tsx — Server Component with Suspense streaming, parallel data fetching via server actions
 
 ### Unit Tests for User Story 2
 
-- [x] T032 [P] [US2] MetricCard test in __tests__/components/MetricCard.test.tsx + __tests__/metric-card.test.tsx + snapshot test
-- [x] T033 [P] [US2] RevenueChart test in __tests__/components/RevenueChart.test.tsx — renders chart, time range tabs, loading state
+- [x] T032 [P] [US2] MetricCard test in **tests**/components/MetricCard.test.tsx + **tests**/metric-card.test.tsx + snapshot test
+- [x] T033 [P] [US2] RevenueChart test in **tests**/components/RevenueChart.test.tsx — renders chart, time range tabs, loading state
 
 **Checkpoint**: Overview page complete ✅
 
@@ -119,13 +119,13 @@
 
 - [x] T034 [P] [US1] AudioWaveform in src/components/audio/AudioWaveform.tsx — SVG bars, play/pause toggle, aria-label, seeded waveform data
 - [x] T035 [P] [US1] ReleaseCard in src/components/ui/customs/cards/ReleaseCard.tsx — cover art, status badge, title, type, revenue, AudioWaveform
-- [x] T036 [US1] Releases page in src/app/releases/page.tsx + src/app/releases/_components/ — Server Component with Suspense, responsive grid, loading/error states
+- [x] T036 [US1] Releases page in src/app/releases/page.tsx + src/app/releases/\_components/ — Server Component with Suspense, responsive grid, loading/error states
 - [x] T037 [US1] ~~Unsplash config~~ — Used local images (public/covers/) instead of Unsplash CDN
 
 ### Unit Tests for User Story 1
 
-- [x] T038 [P] [US1] AudioWaveform test in __tests__/components/AudioWaveform.test.tsx
-- [x] T039 [P] [US1] ReleaseCard test in __tests__/components/ReleaseCard.test.tsx
+- [x] T038 [P] [US1] AudioWaveform test in **tests**/components/AudioWaveform.test.tsx
+- [x] T039 [P] [US1] ReleaseCard test in **tests**/components/ReleaseCard.test.tsx
 
 **Checkpoint**: Releases page complete ✅
 
@@ -137,11 +137,11 @@
 
 ### Implementation for User Story 3
 
-- [x] T040 [US3] Fans page in src/app/fans/page.tsx + src/app/fans/_components/ — Server Component with Suspense, metric cards, FanGrowthChart, TopFans. Reuses components from Phase 3.
+- [x] T040 [US3] Fans page in src/app/fans/page.tsx + src/app/fans/\_components/ — Server Component with Suspense, metric cards, FanGrowthChart, TopFans. Reuses components from Phase 3.
 
 ### Unit Tests for User Story 3
 
-- [x] T041 [P] [US3] TopFans test in __tests__/components/TopFans.test.tsx — renders avatars, purchase count, total spent
+- [x] T041 [P] [US3] TopFans test in **tests**/components/TopFans.test.tsx — renders avatars, purchase count, total spent
 
 **Checkpoint**: Fans page complete ✅
 
@@ -155,7 +155,7 @@
 
 ### Implementation for User Story 4
 
-- [ ] T042 [P] [US4] Create ReleaseDetailClient in src/app/releases/[id]/_components/ReleaseDetailClient.tsx
+- [ ] T042 [P] [US4] Create ReleaseDetailClient in src/app/releases/[id]/\_components/ReleaseDetailClient.tsx
 - [ ] T043 [US4] Create Release Detail page in src/app/releases/[id]/page.tsx
 
 ### Unit Tests for User Story 4
@@ -172,7 +172,7 @@
 
 ### Implementation for User Story 5
 
-- [x] T045 [US5] SettingsPageClient in src/app/settings/_components/SettingsPageClient.tsx — Account info (email, name) + Preferences (notifications switch, theme select) using shadcn Input, Label, Switch, Select
+- [x] T045 [US5] SettingsPageClient in src/app/settings/\_components/SettingsPageClient.tsx — Account info (email, name) + Preferences (notifications switch, theme select) using shadcn Input, Label, Switch, Select
 - [x] T046 [US5] Settings page in src/app/settings/page.tsx — Server Component wrapper
 
 **Checkpoint**: Settings page complete ✅
@@ -300,17 +300,17 @@ After US1: US4 — T042-T044 (Release Detail — needs release card navigation)
 
 ## Task Summary
 
-| Phase               | Tasks  | Done   | Status |
-| ------------------- | ------ | ------ | ------ |
-| Setup               | 7      | 7/7    | ✅     |
-| Foundation          | 18     | 18/18  | ✅     |
-| US2: Overview       | 8      | 8/8    | ✅     |
-| US1: Releases       | 6      | 6/6    | ✅     |
-| US3: Fans           | 2      | 2/2    | ✅     |
-| US4: Release Detail | 3      | 0/3    | ⏳     |
-| US5: Settings       | 2      | 2/2    | ✅     |
-| Polish              | 9      | 8/9    | ✅     |
-| **Total**           | **55** | **51/55** |     |
+| Phase               | Tasks  | Done      | Status |
+| ------------------- | ------ | --------- | ------ |
+| Setup               | 7      | 7/7       | ✅     |
+| Foundation          | 18     | 18/18     | ✅     |
+| US2: Overview       | 8      | 8/8       | ✅     |
+| US1: Releases       | 6      | 6/6       | ✅     |
+| US3: Fans           | 2      | 2/2       | ✅     |
+| US4: Release Detail | 3      | 0/3       | ⏳     |
+| US5: Settings       | 2      | 2/2       | ✅     |
+| Polish              | 9      | 8/9       | ✅     |
+| **Total**           | **55** | **51/55** |        |
 
 **Remaining**: T042–T044 (Release Detail page — deferred), T054 (Vercel deployment — pending)
 

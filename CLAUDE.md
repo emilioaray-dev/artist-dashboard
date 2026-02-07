@@ -3,10 +3,13 @@
 Auto-generated from all feature plans. Last updated: 2026-02-05
 
 ## Active Technologies
+
 - TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + next-intl v4.x (i18n library with App Router + Server Component support) (feature/002-i18n-multi-language)
 - localStorage (language preference persistence via next-intl cookie) (feature/002-i18n-multi-language)
 - TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + next-intl v4.x, motion (animation), Lucide React (icons), Tailwind v4 (feature/003-landing-page)
 - N/A (static page, no data persistence) (feature/003-landing-page)
+- TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + shadcn/ui, Recharts, Lucide React, Motion (animation), next-intl v4.x, Tailwind v4 (feature/004-dashboard-ui-ux)
+- N/A (presentation-layer changes only, mock data for header) (feature/004-dashboard-ui-ux)
 
 - TypeScript 5.x with React 19.2.3 + Next.js 16.1.6, shadcn/ui, Recharts, Lucide React, Motion (animation) (001-artist-dashboard)
 
@@ -65,6 +68,7 @@ messages/                      # Translation files (en.json, es.json, fr.json, p
 ```
 
 ## i18n Architecture
+
 - **Locales**: en (default), es, fr, pt
 - **Prefix**: `as-needed` — English at `/`, others at `/es/`, `/fr/`, `/pt/`
 - **Proxy**: `src/proxy.ts` handles locale detection (Accept-Language header)
@@ -74,6 +78,7 @@ messages/                      # Translation files (en.json, es.json, fr.json, p
 - **Formatting**: All `formatCurrency()`, `formatDate()`, `formatNumber()` accept `locale` param
 
 ## Constants Architecture
+
 - **Import**: Always use `from "@/lib/constants"` — the barrel `index.ts` re-exports everything
 - **`branding.ts`**: `BRAND_NAME` — single source of truth for the app brand name
 - **`routes.ts`**: `ROUTES` — all application route paths as `const` object
@@ -91,10 +96,10 @@ npm test && npm run lint
 TypeScript 5.x with React 19.2.3: Follow standard conventions. Motion animations use `motion` package (not framer-motion). Import from `motion/react`.
 
 ## Recent Changes
+
+- feature/004-dashboard-ui-ux: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + shadcn/ui, Recharts, Lucide React, Motion (animation), next-intl v4.x, Tailwind v4
 - feature/003-landing-page: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + next-intl v4.x, motion (animation), Lucide React (icons), Tailwind v4
 - feature/002-i18n-multi-language: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + next-intl v4.x (i18n library with App Router + Server Component support)
-
-- 001-artist-dashboard: Updated plan with Motion animations, audio waveform, premium design tokens, chart interactivity (2026-02-05)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

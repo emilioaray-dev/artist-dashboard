@@ -10,6 +10,7 @@
 The landing page must replicate the visual design and flow of the prototype at `even-artist-hub.vercel.app`. The structure captured from the prototype is:
 
 ### 1. Fixed Header (Navbar)
+
 - Fixed top, full width, with blurred background (`bg-background/80 backdrop-blur-xl`)
 - Border bottom: subtle `border-border/40`
 - Left: Logo mark (amber square with "E") + "EVEN" (bold) "BACKSTAGE" (muted/normal weight)
@@ -17,6 +18,7 @@ The landing page must replicate the visual design and flow of the prototype at `
 - Max width container: `max-w-7xl`, height `h-16`, horizontal padding `px-6`
 
 ### 2. Hero Section (Full viewport height)
+
 - Full `min-h-screen`, vertically centered content
 - **Background**: Full-bleed hero image (`hero-bg.jpg` — artist/musician photo) with two gradient overlays:
   - `bg-gradient-to-r from-background via-background/85 to-background/40` (left-to-right dark fade)
@@ -30,6 +32,7 @@ The landing page must replicate the visual design and flow of the prototype at `
 - Content constrained to `max-w-2xl` within `max-w-7xl` container, left-aligned
 
 ### 3. Features Section (4-column grid)
+
 - Positioned below hero, same max-width container (`max-w-7xl`)
 - 4 feature cards in responsive grid: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4`, gap-4
 - Each card:
@@ -46,6 +49,7 @@ The landing page must replicate the visual design and flow of the prototype at `
   4. **More Than Music** (Users icon) — "Build a home for all of your creative projects."
 
 ### 4. Footer
+
 - Top border: `border-t border-border/40`
 - Centered text: "EVEN Backstage Demo · Take-home Assignment"
 - Padding `py-8`, muted foreground, small text
