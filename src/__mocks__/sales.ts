@@ -4,30 +4,34 @@ import { SalesSummary, DailySales, Channel } from "@/types";
 function generateDateRange(startDate: string, days: number): string[] {
   const dates: string[] = [];
   const start = new Date(startDate);
-  
+
   for (let i = 0; i < days; i++) {
     const date = new Date(start);
     date.setDate(start.getDate() + i);
-    dates.push(date.toISOString().split('T')[0]);
+    dates.push(date.toISOString().split("T")[0]);
   }
-  
+
   return dates;
 }
 
 // Helper function to generate mock daily sales data
-function generateDailySales(dates: string[], baseRevenue: number, variation: number = 0.2): DailySales[] {
+function generateDailySales(
+  dates: string[],
+  baseRevenue: number,
+  variation: number = 0.2,
+): DailySales[] {
   return dates.map((date) => {
     // Add some variation to make it look more realistic
     const dailyVariation = 1 + (Math.random() - 0.5) * variation;
     const revenue = Math.round(baseRevenue * dailyVariation);
     const sales = Math.round(revenue / 20); // Assume avg $20 per sale
-    
+
     // Distribute revenue across channels
     const directToFanPercent = 0.5 + Math.random() * 0.2; // 50-70%
-    const digitalPercent = 0.2 + Math.random() * 0.2;     // 20-40%
-    const physicalPercent = 0.1 + Math.random() * 0.1;    // 10-20%
-    const bundlesPercent = 0.1;                           // 10%
-    
+    const digitalPercent = 0.2 + Math.random() * 0.2; // 20-40%
+    const physicalPercent = 0.1 + Math.random() * 0.1; // 10-20%
+    const bundlesPercent = 0.1; // 10%
+
     return {
       date,
       revenue,
@@ -36,14 +40,14 @@ function generateDailySales(dates: string[], baseRevenue: number, variation: num
         direct_to_fan: Math.round(revenue * directToFanPercent),
         digital: Math.round(revenue * digitalPercent),
         physical: Math.round(revenue * physicalPercent),
-        bundles: Math.round(revenue * bundlesPercent)
+        bundles: Math.round(revenue * bundlesPercent),
       },
       salesByChannel: {
         direct_to_fan: Math.round(sales * directToFanPercent),
         digital: Math.round(sales * digitalPercent),
         physical: Math.round(sales * physicalPercent),
-        bundles: Math.round(sales * bundlesPercent)
-      }
+        bundles: Math.round(sales * bundlesPercent),
+      },
     };
   });
 }
@@ -65,13 +69,13 @@ function calculateTotals(dailyData: DailySales[]) {
     direct_to_fan: 0,
     digital: 0,
     physical: 0,
-    bundles: 0
+    bundles: 0,
   };
 
   for (const day of dailyData) {
     totalRevenue += day.revenue;
     totalSales += day.sales;
-    
+
     for (const channel of Object.keys(day.revenueByChannel) as Channel[]) {
       byChannel[channel] += day.revenueByChannel[channel];
     }
@@ -85,9 +89,23 @@ const thirtyDayTotals = calculateTotals(thirtyDaySales);
 const ninetyDayTotals = calculateTotals(ninetyDaySales);
 
 // Mock sales data for different time ranges
+/**
+ * Generate per-release daily sales data scaled to the release's totalRevenue.
+ * Returns 30 days of data.
+ */
+export function generateReleaseSalesData(release: {
+  totalRevenue: number;
+  releaseDate: string;
+}): DailySales[] {
+  const days = 30;
+  const dailyBase = Math.round(release.totalRevenue / days);
+  const dates = generateDateRange(release.releaseDate, days);
+  return generateDailySales(dates, dailyBase, 0.3);
+}
+
 export const mockSales: SalesSummary[] = [
   {
-    periodRange: '7d',
+    periodRange: "7d",
     totalRevenue: sevenDayTotals.totalRevenue,
     totalSales: sevenDayTotals.totalSales,
     grossRevenue: Math.round(sevenDayTotals.totalRevenue * 1.1), // 10% fee
@@ -98,11 +116,11 @@ export const mockSales: SalesSummary[] = [
     byChannel: sevenDayTotals.byChannel,
     revenueChange: {
       percentage: 5.2,
-      trend: "up"
-    }
+      trend: "up",
+    },
   },
   {
-    periodRange: '30d',
+    periodRange: "30d",
     totalRevenue: thirtyDayTotals.totalRevenue,
     totalSales: thirtyDayTotals.totalSales,
     grossRevenue: Math.round(thirtyDayTotals.totalRevenue * 1.1), // 10% fee
@@ -113,11 +131,11 @@ export const mockSales: SalesSummary[] = [
     byChannel: thirtyDayTotals.byChannel,
     revenueChange: {
       percentage: 3.1,
-      trend: "up"
-    }
+      trend: "up",
+    },
   },
   {
-    periodRange: '90d',
+    periodRange: "90d",
     totalRevenue: ninetyDayTotals.totalRevenue,
     totalSales: ninetyDayTotals.totalSales,
     grossRevenue: Math.round(ninetyDayTotals.totalRevenue * 1.1), // 10% fee
@@ -128,7 +146,7 @@ export const mockSales: SalesSummary[] = [
     byChannel: ninetyDayTotals.byChannel,
     revenueChange: {
       percentage: -1.2,
-      trend: "down"
-    }
-  }
+      trend: "down",
+    },
+  },
 ];
