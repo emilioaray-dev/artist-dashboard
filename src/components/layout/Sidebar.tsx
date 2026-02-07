@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/core/button";
-import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { useSidebar } from "@/hooks/useSidebar";
 import { BRAND_NAME, NAV_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -25,7 +24,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "bg-surface fixed inset-y-0 left-0 z-10 hidden border-r transition-all duration-300 md:flex md:flex-col",
+        "bg-sidebar fixed inset-y-0 left-0 z-10 hidden border-r transition-all duration-300 md:flex md:flex-col",
         collapsed ? "w-16" : "w-60",
       )}
     >
@@ -44,7 +43,9 @@ export function Sidebar() {
         )}
         {collapsed && (
           <div className="bg-primary mx-auto flex h-8 w-8 items-center justify-center rounded-lg">
-            <span className="text-primary-foreground text-sm font-bold">{BRAND_NAME[0]}</span>
+            <span className="text-primary-foreground text-sm font-bold">
+              {BRAND_NAME[0]}
+            </span>
           </div>
         )}
       </div>
@@ -61,27 +62,17 @@ export function Sidebar() {
               className={cn(
                 "mb-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-primary/10 text-primary font-semibold"
-                  : "text-foreground hover:bg-accent/50",
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold"
+                  : "text-sidebar-foreground hover:bg-sidebar-accent/50",
               )}
             >
-              <Icon className="size-5" />
+              <Icon className={cn("size-5", isActive && "text-primary")} />
               {!collapsed && <span>{t(navTranslationKeys[item.title])}</span>}
             </Link>
           );
         })}
       </nav>
       <div className="border-t p-3">
-        {!collapsed && (
-          <div className="mb-2">
-            <LanguageSelector />
-          </div>
-        )}
-        {collapsed && (
-          <div className="mb-2 flex justify-center">
-            <LanguageSelector compact />
-          </div>
-        )}
         <Button
           variant="ghost"
           size="sm"

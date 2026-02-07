@@ -2,7 +2,7 @@
 
 exports[`MetricCard Snapshot Tests > matches snapshot with negative change 1`] = `
 <div
-  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden"
+  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm card-hover overflow-hidden"
   data-slot="card"
   data-testid="card"
 >
@@ -11,35 +11,19 @@ exports[`MetricCard Snapshot Tests > matches snapshot with negative change 1`] =
     data-slot="card-content"
   >
     <div
-      class="flex items-center justify-between"
+      class="flex items-start justify-between"
     >
-      <div>
-        <p
-          class="text-muted-foreground text-sm"
-        >
-          Total Revenue
-        </p>
-        <div
-          class="mt-2 flex items-baseline gap-1"
-        >
-          <span
-            class="text-foreground text-2xl font-medium"
-          >
-            $
-          </span>
-          <span
-            class="text-foreground text-2xl font-bold"
-          >
-            24,500
-          </span>
-        </div>
-      </div>
+      <p
+        class="text-muted-foreground text-sm"
+      >
+        Total Revenue
+      </p>
       <div
-        class="bg-primary text-primary-foreground rounded-full bg-[#D97706] p-3 text-white"
+        class="bg-muted rounded-lg p-2"
       >
         <svg
           aria-hidden="true"
-          class="lucide lucide-dollar-sign size-5"
+          class="lucide lucide-dollar-sign text-muted-foreground size-5"
           fill="none"
           height="24"
           stroke="currentColor"
@@ -63,31 +47,45 @@ exports[`MetricCard Snapshot Tests > matches snapshot with negative change 1`] =
       </div>
     </div>
     <div
-      class="mt-4 flex items-center gap-1"
+      class="mt-3 flex items-end justify-between"
     >
-      <svg
-        aria-hidden="true"
-        class="lucide lucide-trending-down text-negative h-4 w-4"
-        fill="none"
-        height="24"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        width="24"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        class="flex items-baseline gap-1"
       >
-        <path
-          d="M16 17h6v-6"
-        />
-        <path
-          d="m22 17-8.5-8.5-5 5L2 7"
-        />
-      </svg>
+        <span
+          class="text-foreground text-2xl font-medium"
+        >
+          $
+        </span>
+        <span
+          class="text-foreground text-2xl font-bold"
+        >
+          24,500
+        </span>
+      </div>
       <span
-        class="text-sm font-medium text-negative"
+        class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium bg-destructive/10 text-destructive"
       >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-trending-down size-3"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16 17h6v-6"
+          />
+          <path
+            d="m22 17-8.5-8.5-5 5L2 7"
+          />
+        </svg>
         -
         5.2
         %
@@ -99,7 +97,7 @@ exports[`MetricCard Snapshot Tests > matches snapshot with negative change 1`] =
 
 exports[`MetricCard Snapshot Tests > matches snapshot with positive change 1`] = `
 <div
-  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden"
+  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm card-hover overflow-hidden"
   data-slot="card"
   data-testid="card"
 >
@@ -108,35 +106,19 @@ exports[`MetricCard Snapshot Tests > matches snapshot with positive change 1`] =
     data-slot="card-content"
   >
     <div
-      class="flex items-center justify-between"
+      class="flex items-start justify-between"
     >
-      <div>
-        <p
-          class="text-muted-foreground text-sm"
-        >
-          Total Revenue
-        </p>
-        <div
-          class="mt-2 flex items-baseline gap-1"
-        >
-          <span
-            class="text-foreground text-2xl font-medium"
-          >
-            $
-          </span>
-          <span
-            class="text-foreground text-2xl font-bold"
-          >
-            24,500
-          </span>
-        </div>
-      </div>
+      <p
+        class="text-muted-foreground text-sm"
+      >
+        Total Revenue
+      </p>
       <div
-        class="bg-primary text-primary-foreground rounded-full bg-[#D97706] p-3 text-white"
+        class="bg-muted rounded-lg p-2"
       >
         <svg
           aria-hidden="true"
-          class="lucide lucide-dollar-sign size-5"
+          class="lucide lucide-dollar-sign text-muted-foreground size-5"
           fill="none"
           height="24"
           stroke="currentColor"
@@ -160,31 +142,45 @@ exports[`MetricCard Snapshot Tests > matches snapshot with positive change 1`] =
       </div>
     </div>
     <div
-      class="mt-4 flex items-center gap-1"
+      class="mt-3 flex items-end justify-between"
     >
-      <svg
-        aria-hidden="true"
-        class="lucide lucide-trending-up text-positive h-4 w-4"
-        fill="none"
-        height="24"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        width="24"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        class="flex items-baseline gap-1"
       >
-        <path
-          d="M16 7h6v6"
-        />
-        <path
-          d="m22 7-8.5 8.5-5-5L2 17"
-        />
-      </svg>
+        <span
+          class="text-foreground text-2xl font-medium"
+        >
+          $
+        </span>
+        <span
+          class="text-foreground text-2xl font-bold"
+        >
+          24,500
+        </span>
+      </div>
       <span
-        class="text-sm font-medium text-positive"
+        class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium bg-success/10 text-success"
       >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-trending-up size-3"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16 7h6v6"
+          />
+          <path
+            d="m22 7-8.5 8.5-5-5L2 17"
+          />
+        </svg>
         +
         12.5
         %
@@ -196,7 +192,7 @@ exports[`MetricCard Snapshot Tests > matches snapshot with positive change 1`] =
 
 exports[`MetricCard Snapshot Tests > matches snapshot without change indicator 1`] = `
 <div
-  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden"
+  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm card-hover overflow-hidden"
   data-slot="card"
   data-testid="card"
 >
@@ -205,35 +201,19 @@ exports[`MetricCard Snapshot Tests > matches snapshot without change indicator 1
     data-slot="card-content"
   >
     <div
-      class="flex items-center justify-between"
+      class="flex items-start justify-between"
     >
-      <div>
-        <p
-          class="text-muted-foreground text-sm"
-        >
-          Total Revenue
-        </p>
-        <div
-          class="mt-2 flex items-baseline gap-1"
-        >
-          <span
-            class="text-foreground text-2xl font-medium"
-          >
-            $
-          </span>
-          <span
-            class="text-foreground text-2xl font-bold"
-          >
-            24,500
-          </span>
-        </div>
-      </div>
+      <p
+        class="text-muted-foreground text-sm"
+      >
+        Total Revenue
+      </p>
       <div
-        class="bg-primary text-primary-foreground rounded-full bg-[#D97706] p-3 text-white"
+        class="bg-muted rounded-lg p-2"
       >
         <svg
           aria-hidden="true"
-          class="lucide lucide-dollar-sign size-5"
+          class="lucide lucide-dollar-sign text-muted-foreground size-5"
           fill="none"
           height="24"
           stroke="currentColor"
@@ -254,6 +234,24 @@ exports[`MetricCard Snapshot Tests > matches snapshot without change indicator 1
             d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
           />
         </svg>
+      </div>
+    </div>
+    <div
+      class="mt-3 flex items-end justify-between"
+    >
+      <div
+        class="flex items-baseline gap-1"
+      >
+        <span
+          class="text-foreground text-2xl font-medium"
+        >
+          $
+        </span>
+        <span
+          class="text-foreground text-2xl font-bold"
+        >
+          24,500
+        </span>
       </div>
     </div>
   </div>
@@ -262,7 +260,7 @@ exports[`MetricCard Snapshot Tests > matches snapshot without change indicator 1
 
 exports[`MetricCard Snapshot Tests > matches snapshot without prefix 1`] = `
 <div
-  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden"
+  class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm card-hover overflow-hidden"
   data-slot="card"
   data-testid="card"
 >
@@ -271,30 +269,19 @@ exports[`MetricCard Snapshot Tests > matches snapshot without prefix 1`] = `
     data-slot="card-content"
   >
     <div
-      class="flex items-center justify-between"
+      class="flex items-start justify-between"
     >
-      <div>
-        <p
-          class="text-muted-foreground text-sm"
-        >
-          Total Revenue
-        </p>
-        <div
-          class="mt-2 flex items-baseline gap-1"
-        >
-          <span
-            class="text-foreground text-2xl font-bold"
-          >
-            24,500
-          </span>
-        </div>
-      </div>
+      <p
+        class="text-muted-foreground text-sm"
+      >
+        Total Revenue
+      </p>
       <div
-        class="bg-primary text-primary-foreground rounded-full bg-[#D97706] p-3 text-white"
+        class="bg-muted rounded-lg p-2"
       >
         <svg
           aria-hidden="true"
-          class="lucide lucide-dollar-sign size-5"
+          class="lucide lucide-dollar-sign text-muted-foreground size-5"
           fill="none"
           height="24"
           stroke="currentColor"
@@ -318,31 +305,40 @@ exports[`MetricCard Snapshot Tests > matches snapshot without prefix 1`] = `
       </div>
     </div>
     <div
-      class="mt-4 flex items-center gap-1"
+      class="mt-3 flex items-end justify-between"
     >
-      <svg
-        aria-hidden="true"
-        class="lucide lucide-trending-up text-positive h-4 w-4"
-        fill="none"
-        height="24"
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        width="24"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        class="flex items-baseline gap-1"
       >
-        <path
-          d="M16 7h6v6"
-        />
-        <path
-          d="m22 7-8.5 8.5-5-5L2 17"
-        />
-      </svg>
+        <span
+          class="text-foreground text-2xl font-bold"
+        >
+          24,500
+        </span>
+      </div>
       <span
-        class="text-sm font-medium text-positive"
+        class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium bg-success/10 text-success"
       >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-trending-up size-3"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M16 7h6v6"
+          />
+          <path
+            d="m22 7-8.5 8.5-5-5L2 17"
+          />
+        </svg>
         +
         12.5
         %

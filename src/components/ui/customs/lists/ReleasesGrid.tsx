@@ -1,23 +1,24 @@
 "use client";
 
-import { Release } from "@/types";
-import { ReleaseCard } from "@/components/ui/customs/cards/ReleaseCard";
-import { StaggerContainer } from "@/components/motion/StaggerContainer";
 import { FadeIn } from "@/components/motion/FadeIn";
-import { EmptyState } from "@/components/ui/customs/feedback/EmptyState";
+import { StaggerContainer } from "@/components/motion/StaggerContainer";
 import { Button } from "@/components/ui/core/button";
+import { ReleaseCard } from "@/components/ui/customs/cards/ReleaseCard";
+import { EmptyState } from "@/components/ui/customs/feedback/EmptyState";
+import { Release } from "@/types";
 import { Music } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 type ReleasesGridProps = {
   releases: Release[];
+  onAddRelease?: () => void;
 };
 
 /**
  * Responsive grid of releases with 3 cols desktop, 2 tablet, 1 mobile
  * StaggerContainer wrapping FadeIn children
  */
-export function ReleasesGrid({ releases }: ReleasesGridProps) {
+export function ReleasesGrid({ releases, onAddRelease }: ReleasesGridProps) {
   const t = useTranslations("Releases");
   const tCommon = useTranslations("Common");
 
@@ -27,7 +28,7 @@ export function ReleasesGrid({ releases }: ReleasesGridProps) {
         title={t("noReleases")}
         description={t("noReleasesDescription")}
         action={
-          <Button>
+          <Button onClick={onAddRelease}>
             <Music className="mr-2 size-4" />
             {tCommon("addRelease")}
           </Button>
@@ -38,7 +39,7 @@ export function ReleasesGrid({ releases }: ReleasesGridProps) {
 
   return (
     <StaggerContainer>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {releases.map((release, index) => (
           <FadeIn key={release.id}>
             <ReleaseCard release={release} priority={index < 3} />

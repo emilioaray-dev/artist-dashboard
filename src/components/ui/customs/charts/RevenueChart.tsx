@@ -98,7 +98,7 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
   };
 
   return (
-    <Card>
+    <Card className="card-hover">
       <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
         <div className="grid flex-1 gap-1 text-center sm:text-left">
           <CardTitle>{tOverview("revenue")}</CardTitle>
@@ -148,7 +148,37 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                 right: 12,
               }}
             >
-              <CartesianGrid vertical={false} />
+              <defs>
+                <linearGradient id="grossGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="5%"
+                    stopColor="hsl(42, 100%, 50%)"
+                    stopOpacity={0.3}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="hsl(42, 100%, 50%)"
+                    stopOpacity={0}
+                  />
+                </linearGradient>
+                <linearGradient id="netGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop
+                    offset="5%"
+                    stopColor="hsl(142, 70%, 45%)"
+                    stopOpacity={0.3}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="hsl(142, 70%, 45%)"
+                    stopOpacity={0}
+                  />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                vertical={false}
+                strokeDasharray="3 3"
+                stroke="hsl(220, 15%, 18%)"
+              />
               <XAxis
                 dataKey="date"
                 tickLine={false}
@@ -170,9 +200,9 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                 <Area
                   dataKey="gross"
                   type="natural"
-                  fill="var(--color-gross)"
-                  fillOpacity={0.4}
-                  stroke="var(--color-gross)"
+                  fill="url(#grossGradient)"
+                  stroke="hsl(42, 100%, 50%)"
+                  strokeWidth={2}
                   stackId="a"
                 />
               )}
@@ -180,9 +210,9 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                 <Area
                   dataKey="net"
                   type="natural"
-                  fill="var(--color-net)"
-                  fillOpacity={0.4}
-                  stroke="var(--color-net)"
+                  fill="url(#netGradient)"
+                  stroke="hsl(142, 70%, 45%)"
+                  strokeWidth={2}
                   stackId="a"
                 />
               )}
@@ -193,6 +223,7 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                   fill="var(--color-direct_to_fan)"
                   fillOpacity={0.4}
                   stroke="var(--color-direct_to_fan)"
+                  strokeWidth={2}
                   stackId="a"
                 />
               )}
@@ -203,6 +234,7 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                   fill="var(--color-digital)"
                   fillOpacity={0.4}
                   stroke="var(--color-digital)"
+                  strokeWidth={2}
                   stackId="a"
                 />
               )}
@@ -213,6 +245,7 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                   fill="var(--color-physical)"
                   fillOpacity={0.4}
                   stroke="var(--color-physical)"
+                  strokeWidth={2}
                   stackId="a"
                 />
               )}
@@ -223,6 +256,7 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
                   fill="var(--color-bundles)"
                   fillOpacity={0.4}
                   stroke="var(--color-bundles)"
+                  strokeWidth={2}
                   stackId="a"
                 />
               )}

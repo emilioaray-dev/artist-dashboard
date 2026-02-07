@@ -5,7 +5,7 @@ import { MetricCardSkeleton } from "@/components/ui/customs/feedback/MetricCardS
 import { RevenueChartSkeleton } from "@/components/ui/customs/feedback/RevenueChartSkeleton";
 import { FanGrowthChart } from "@/components/ui/customs/charts/FanGrowthChart";
 import { TopFans } from "@/components/ui/customs/lists/TopFans";
-import { FadeInAnimation } from "@/components/motion/AnimationUtils";
+import { PageHeader } from "@/components/layout/PageHeader";
 import {
   getCachedEngagement,
   getCachedReleases,
@@ -100,27 +100,26 @@ async function HomePageContent() {
 
   // Mock dashboard stats based on our data
   const mockDashboardStats = {
-    totalRevenue: formatCurrency(totalRevenue, locale).replace(/[^0-9.,\s]/g, "").trim(),
+    totalRevenue: formatCurrency(totalRevenue, locale)
+      .replace(/[^0-9.,\s]/g, "")
+      .trim(),
     revenueChange: revenueChange.percentage,
     totalFans: formatNumber(engagement?.totalFans || 0, locale),
     fanChange: engagement?.fanGrowth.percentage || 0,
     activeBuyers: formatNumber(engagement?.totalBuyers || 0, locale),
     buyerChange: engagement?.purchaseRate.change || 0,
     avgOrderValue: engagement
-      ? new Intl.NumberFormat(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(totalRevenue / engagement.totalBuyers / 100)
+      ? new Intl.NumberFormat(locale, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(totalRevenue / engagement.totalBuyers / 100)
       : "0.00",
     orderValueChange: 2.1,
   };
 
   return (
-    <div className="container mx-auto py-6">
-      {/* Page Header */}
-      <FadeInAnimation duration={0.3}>
-        <div className="mb-8">
-          <h1 className="text-foreground text-2xl font-bold">{t("title")}</h1>
-          <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
-        </div>
-      </FadeInAnimation>
+    <div className="container mx-auto">
+      <PageHeader title={t("title")} subtitle={t("subtitle")} />
 
       {/* Stats Grid - 4 cards in a row on large screens */}
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -197,17 +196,8 @@ export default async function HomePageStreaming() {
   return (
     <Suspense
       fallback={
-        <div className="container mx-auto py-6">
-          <FadeInAnimation duration={0.3}>
-            <div className="mb-8">
-              <h1 className="text-foreground text-2xl font-bold">
-                {t("title")}
-              </h1>
-              <p className="text-muted-foreground mt-1">
-                {t("loadingDashboard")}
-              </p>
-            </div>
-          </FadeInAnimation>
+        <div className="container mx-auto">
+          <PageHeader title={t("title")} subtitle={t("loadingDashboard")} />
           <div className="p-4">{t("loadingDashboard")}</div>
         </div>
       }
