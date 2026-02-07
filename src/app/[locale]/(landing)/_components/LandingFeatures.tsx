@@ -13,10 +13,30 @@ interface FeatureCard {
 }
 
 const FEATURES: FeatureCard[] = [
-  { id: "release", titleKey: "featureReleaseTitle", descKey: "featureReleaseDesc", icon: Music },
-  { id: "paid", titleKey: "featurePaidTitle", descKey: "featurePaidDesc", icon: DollarSign },
-  { id: "charts", titleKey: "featureChartsTitle", descKey: "featureChartsDesc", icon: ChartColumn },
-  { id: "community", titleKey: "featureCommunityTitle", descKey: "featureCommunityDesc", icon: Users },
+  {
+    id: "release",
+    titleKey: "featureReleaseTitle",
+    descKey: "featureReleaseDesc",
+    icon: Music,
+  },
+  {
+    id: "paid",
+    titleKey: "featurePaidTitle",
+    descKey: "featurePaidDesc",
+    icon: DollarSign,
+  },
+  {
+    id: "charts",
+    titleKey: "featureChartsTitle",
+    descKey: "featureChartsDesc",
+    icon: ChartColumn,
+  },
+  {
+    id: "community",
+    titleKey: "featureCommunityTitle",
+    descKey: "featureCommunityDesc",
+    icon: Users,
+  },
 ];
 
 export function LandingFeatures() {
@@ -33,8 +53,12 @@ export function LandingFeatures() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.3, delay: index * 0.1, ease: "easeOut" }}
-              className="group rounded-xl border border-border/60 bg-card/60 p-6 backdrop-blur-sm transition-colors hover:border-primary/40 hover:bg-card"
+              transition={{
+                duration: 0.3,
+                delay: index * 0.1,
+                ease: "easeOut",
+              }}
+              className="group border-border/60 bg-card/60 hover:border-primary/40 hover:bg-card rounded-xl border p-6 backdrop-blur-sm transition-colors"
             >
               <Icon className="text-primary mb-4 h-6 w-6" />
               <h3 className="text-lg font-semibold">{t(feature.titleKey)}</h3>

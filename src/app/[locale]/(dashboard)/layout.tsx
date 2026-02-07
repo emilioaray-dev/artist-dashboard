@@ -2,6 +2,7 @@
 
 import AccessibilityChecker from "@/components/AccessibilityChecker";
 import { DynamicAudioPlayer } from "@/components/audio/DynamicAudioPlayer";
+import { DashboardHeader } from "@/components/layout/DashboardHeader";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { MainLayout } from "@/components/layout/MainLayout";
@@ -25,10 +26,11 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     <SWRProvider>
       <MotionProvider>
         <SidebarProvider>
-          <div className="flex min-h-screen flex-col">
+          <div className="flex h-screen flex-col overflow-hidden">
             <Suspense fallback={null}>
               <Sidebar />
             </Suspense>
+            <DashboardHeader />
             <MainLayout>
               <>
                 {children}

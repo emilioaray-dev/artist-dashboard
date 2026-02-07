@@ -9,7 +9,7 @@ function generateDateRange(startDate: string, days: number): string[] {
   for (let i = 0; i < days; i++) {
     const date = new Date(start);
     date.setDate(start.getDate() + i);
-    dates.push(date.toISOString().split('T')[0]);
+    dates.push(date.toISOString().split("T")[0]);
   }
 
   return dates;
@@ -29,7 +29,7 @@ const fanHistory: FanData[] = fanHistoryDates.map((date, index) => {
   return {
     date,
     count,
-    activeFans
+    activeFans,
   };
 });
 
@@ -42,19 +42,27 @@ const activeFans = fanHistory[fanHistory.length - 1].activeFans;
 const initialFanCount = fanHistory[0].count;
 const fanGrowthAbsolute = totalFans - initialFanCount;
 const fanGrowthPercentage = (fanGrowthAbsolute / initialFanCount) * 100;
-const fanGrowthTrend: "up" | "down" | "stable" = fanGrowthPercentage > 0.5 ? "up" :
-  fanGrowthPercentage < -0.5 ? "down" : "stable";
+const fanGrowthTrend: "up" | "down" | "stable" =
+  fanGrowthPercentage > 0.5
+    ? "up"
+    : fanGrowthPercentage < -0.5
+      ? "down"
+      : "stable";
 
 // Calculate engagement rate
 const engagementRateValue = (activeFans / totalFans) * 100;
-const engagementRateTrend: "up" | "down" | "stable" = engagementRateValue > 37 ? "up" :
-  engagementRateValue < 35 ? "down" : "stable";
+const engagementRateTrend: "up" | "down" | "stable" =
+  engagementRateValue > 37
+    ? "up"
+    : engagementRateValue < 35
+      ? "down"
+      : "stable";
 const engagementRateChange = 2.3; // Example change from previous period
 
 // Calculate purchase rate
 const purchaseRateValue = (totalBuyers / totalFans) * 100;
-const purchaseRateTrend: "up" | "down" | "stable" = purchaseRateValue > 8.5 ? "up" :
-  purchaseRateValue < 8.0 ? "down" : "stable";
+const purchaseRateTrend: "up" | "down" | "stable" =
+  purchaseRateValue > 8.5 ? "up" : purchaseRateValue < 8.0 ? "down" : "stable";
 const purchaseRateChange = 0.8; // Example change from previous period
 
 export const mockEngagement: EngagementMetrics = {
@@ -64,18 +72,18 @@ export const mockEngagement: EngagementMetrics = {
   fanGrowth: {
     absolute: fanGrowthAbsolute,
     percentage: parseFloat(fanGrowthPercentage.toFixed(1)),
-    trend: fanGrowthTrend
+    trend: fanGrowthTrend,
   },
   engagementRate: {
     value: parseFloat(engagementRateValue.toFixed(1)),
     trend: engagementRateTrend,
-    change: engagementRateChange
+    change: engagementRateChange,
   },
   purchaseRate: {
     value: parseFloat(purchaseRateValue.toFixed(1)),
     trend: purchaseRateTrend,
-    change: purchaseRateChange
+    change: purchaseRateChange,
   },
   fanHistory,
-  topFans: mockFans // Using the mock fans data
+  topFans: mockFans, // Using the mock fans data
 };

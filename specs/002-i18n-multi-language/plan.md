@@ -86,6 +86,7 @@ src/lib/utils.ts                 # Update formatCurrency/formatNumber to use loc
 ### 1. Page Migration Strategy
 
 All routes move under `[locale]/`:
+
 - `src/app/page.tsx` → `src/app/[locale]/page.tsx`
 - `src/app/fans/` → `src/app/[locale]/fans/`
 - `src/app/releases/` → `src/app/[locale]/releases/`
@@ -103,6 +104,7 @@ All routes move under `[locale]/`:
 ### 3. Locale Prefix Strategy
 
 `localePrefix: 'as-needed'`:
+
 - `/` → English (no prefix)
 - `/es/fans` → Spanish
 - `/fr/releases` → French

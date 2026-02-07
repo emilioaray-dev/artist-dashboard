@@ -7,7 +7,7 @@ import { TopFans } from "@/components/ui/customs/lists/TopFans";
 import { formatNumber } from "@/lib/utils";
 import { useEngagement } from "@/hooks/useApiData";
 import { MetricCardSkeleton } from "@/components/ui/customs/feedback/MetricCardSkeleton";
-import { FadeInAnimation } from "@/components/motion/AnimationUtils";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { EngagementMetrics } from "@/types";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -26,13 +26,8 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto py-6">
-        <FadeInAnimation duration={0.3}>
-          <div className="mb-8">
-            <h1 className="text-foreground text-2xl font-bold">{t("title")}</h1>
-            <p className="text-muted-foreground mt-1">{t("loading")}</p>
-          </div>
-        </FadeInAnimation>
+      <div className="container mx-auto">
+        <PageHeader title={t("title")} subtitle={t("loading")} />
         <div className="p-4">{tCommon("loading")}</div>
       </div>
     );
@@ -40,13 +35,8 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
 
   if (isError || !finalEngagement) {
     return (
-      <div className="container mx-auto py-6">
-        <FadeInAnimation duration={0.3}>
-          <div className="mb-8">
-            <h1 className="text-foreground text-2xl font-bold">{t("title")}</h1>
-            <p className="text-muted-foreground mt-1">{t("errorLoading")}</p>
-          </div>
-        </FadeInAnimation>
+      <div className="container mx-auto">
+        <PageHeader title={t("title")} subtitle={t("errorLoading")} />
         <div className="text-destructive p-4">
           {isError ? t("errorFanData") : t("noEngagement")}
         </div>
@@ -55,13 +45,8 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
   }
 
   return (
-    <div className="container mx-auto py-6">
-      <FadeInAnimation duration={0.3}>
-        <div className="mb-8">
-          <h1 className="text-foreground text-2xl font-bold">{t("title")}</h1>
-          <p className="text-muted-foreground mt-1">{t("subtitle")}</p>
-        </div>
-      </FadeInAnimation>
+    <div className="container mx-auto">
+      <PageHeader title={t("title")} subtitle={t("subtitle")} />
 
       {/* Stats */}
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -115,15 +100,8 @@ export default function FansPageContent({
   return (
     <Suspense
       fallback={
-        <div className="container mx-auto py-6">
-          <FadeInAnimation duration={0.3}>
-            <div className="mb-8">
-              <h1 className="text-foreground text-2xl font-bold">
-                {t("title")}
-              </h1>
-              <p className="text-muted-foreground mt-1">{t("loading")}</p>
-            </div>
-          </FadeInAnimation>
+        <div className="container mx-auto">
+          <PageHeader title={t("title")} subtitle={t("loading")} />
           <div className="p-4">{tCommon("loading")}</div>
         </div>
       }

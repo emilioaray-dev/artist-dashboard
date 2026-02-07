@@ -54,15 +54,15 @@ Open [http://localhost:3000](http://localhost:3000) to view the landing page and
 
 ### Additional Libraries
 
-| Library          | Purpose            | Why This Choice                                                               |
-| ---------------- | ------------------ | ----------------------------------------------------------------------------- |
-| **shadcn/ui**    | UI Components      | Accessible, customizable, Tailwind-native                                     |
-| **Recharts**     | Data Visualization | Declarative, composable, great React integration                              |
-| **Lucide React** | Icons              | Consistent, lightweight, tree-shakeable                                       |
-| **Motion**       | Animations         | Lightweight animation library, smooth page transitions and micro-interactions |
-| **Zustand**      | State Management   | Lightweight, simple API; used for global audio player state                   |
-| **SWR**          | Data Fetching      | Client-side caching, revalidation, and deduplication for API calls            |
-| **next-intl**    | Internationalization | App Router + Server Component support, ICU message format, locale routing   |
+| Library          | Purpose              | Why This Choice                                                               |
+| ---------------- | -------------------- | ----------------------------------------------------------------------------- |
+| **shadcn/ui**    | UI Components        | Accessible, customizable, Tailwind-native                                     |
+| **Recharts**     | Data Visualization   | Declarative, composable, great React integration                              |
+| **Lucide React** | Icons                | Consistent, lightweight, tree-shakeable                                       |
+| **Motion**       | Animations           | Lightweight animation library, smooth page transitions and micro-interactions |
+| **Zustand**      | State Management     | Lightweight, simple API; used for global audio player state                   |
+| **SWR**          | Data Fetching        | Client-side caching, revalidation, and deduplication for API calls            |
+| **next-intl**    | Internationalization | App Router + Server Component support, ICU message format, locale routing     |
 
 ### Architecture Decisions
 

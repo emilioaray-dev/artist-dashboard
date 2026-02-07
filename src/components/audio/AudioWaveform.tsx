@@ -37,10 +37,8 @@ export function AudioWaveform({
     setDuration,
   } = usePlayerStore();
 
-  // Use consistent audio URL - fallback if release.audioUrl is undefined
-  const audioUrl =
-    release.audioUrl ||
-    `https://pub-d285a77a938b46bf93539cdd85ba963b.r2.dev/Nul%20Tiel%20Records%20-%20Jeopardy.mp3?id=${release.id}`;
+  // Use proxy URL — never expose CDN origin to the client
+  const audioUrl = release.audioUrl || `/api/audio/${release.id}`;
   const isCurrentTrack = currentTrack === audioUrl;
 
   // Scrubbing state
@@ -310,7 +308,7 @@ export function AudioWaveform({
         </button>
       </div>
       {/* Time indicators */}
-      <div className="text-muted-foreground mt-1 flex justify-between pr-4 pl-2 text-xs">
+      <div className="text-muted-foreground mt-1 flex justify-between pr-3 pl-2 text-xs">
         <span>
           {showPreview ? (
             <span className="text-primary font-medium">

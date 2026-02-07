@@ -6,7 +6,7 @@ export function LandingFooter() {
   const t = useTranslations("Landing");
 
   return (
-    <footer className="border-t border-border/40 py-8">
+    <footer className="border-border/40 border-t py-8">
       <div className="text-muted-foreground mx-auto max-w-7xl px-6 text-center text-sm">
         {t("footerText")}
       </div>

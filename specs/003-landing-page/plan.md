@@ -87,6 +87,7 @@ The landing page needs a different layout (no sidebar) than the dashboard (with 
 ### 2. Dashboard Overview Path Change
 
 The current dashboard overview at `/` must move to `/overview` since the landing page takes over `/`. This requires:
+
 - Updating `NAV_ITEMS` in `constants.ts` (Overview href: `/` → `/overview`)
 - Moving `page.tsx` to `(dashboard)/overview/page.tsx`
 - All other dashboard paths (`/releases`, `/fans`, `/settings`) remain the same

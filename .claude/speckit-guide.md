@@ -39,6 +39,7 @@ Each step builds on the previous. Do NOT skip steps unless explicitly noted.
 **Creates**: `plan.md`, `research.md`, `data-model.md`, `quickstart.md`, `contracts/`
 
 Three phases:
+
 - **Phase 0 (Research)**: Evaluate options, document decisions and rationale in `research.md`
 - **Phase 1 (Design)**: Define entities (`data-model.md`), API contracts, integration scenarios (`quickstart.md`)
 - **Phase 2 (Structure)**: Define project file organization, architecture decisions

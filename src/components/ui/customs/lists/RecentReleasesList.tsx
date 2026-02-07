@@ -57,7 +57,7 @@ export function RecentReleasesList({
             >
               <div className="flex flex-col items-center gap-4 md:flex-row">
                 <Link
-                  href={`/releases`}
+                  href={ROUTES.releaseDetail(release.id)}
                   className="flex flex-1 items-center gap-4 sm:w-full md:w-fit"
                 >
                   <div className="relative size-16 overflow-hidden rounded-md">

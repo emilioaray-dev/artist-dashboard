@@ -45,7 +45,7 @@ export function FanGrowthChart({ engagementData }: FanGrowthChartProps) {
 
   return (
     <SlideInAnimation duration={0.3}>
-      <Card>
+      <Card className="card-hover">
         <CardHeader className="border-b py-5">
           <CardTitle>{t("fanGrowth")}</CardTitle>
           <CardDescription>{t("fanGrowthSubtitle")}</CardDescription>
@@ -62,7 +62,49 @@ export function FanGrowthChart({ engagementData }: FanGrowthChartProps) {
                 right: 12,
               }}
             >
-              <CartesianGrid vertical={false} />
+              <defs>
+                <linearGradient
+                  id="totalFansGradient"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop
+                    offset="5%"
+                    stopColor="hsl(42, 100%, 50%)"
+                    stopOpacity={0.3}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="hsl(42, 100%, 50%)"
+                    stopOpacity={0}
+                  />
+                </linearGradient>
+                <linearGradient
+                  id="activeFansGradient"
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="1"
+                >
+                  <stop
+                    offset="5%"
+                    stopColor="hsl(142, 70%, 45%)"
+                    stopOpacity={0.3}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="hsl(142, 70%, 45%)"
+                    stopOpacity={0}
+                  />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                vertical={false}
+                strokeDasharray="3 3"
+                stroke="hsl(220, 15%, 18%)"
+              />
               <XAxis
                 dataKey="date"
                 tickLine={false}
@@ -93,17 +135,17 @@ export function FanGrowthChart({ engagementData }: FanGrowthChartProps) {
               <Area
                 dataKey="total"
                 type="monotone"
-                fill="var(--color-total)"
-                fillOpacity={0.4}
-                stroke="var(--color-total)"
+                fill="url(#totalFansGradient)"
+                stroke="hsl(42, 100%, 50%)"
+                strokeWidth={2}
                 stackId="a"
               />
               <Area
                 dataKey="active"
                 type="monotone"
-                fill="var(--color-active)"
-                fillOpacity={0.4}
-                stroke="var(--color-active)"
+                fill="url(#activeFansGradient)"
+                stroke="hsl(142, 70%, 45%)"
+                strokeWidth={2}
                 stackId="a"
               />
             </AreaChart>

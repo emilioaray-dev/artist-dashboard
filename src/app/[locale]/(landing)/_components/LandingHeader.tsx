@@ -1,7 +1,7 @@
 "use client";
 
-import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { Button } from "@/components/ui/core/button";
+import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { Link } from "@/i18n/navigation";
 import { BRAND_NAME, ROUTES } from "@/lib/constants";
 import { ArrowRight } from "lucide-react";
