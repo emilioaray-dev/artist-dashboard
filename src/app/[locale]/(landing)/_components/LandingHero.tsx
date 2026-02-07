@@ -4,22 +4,23 @@ import { Link } from "@/i18n/navigation";
 import { ROUTES } from "@/lib/constants";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
 export function LandingHero() {
   const t = useTranslations("Landing");
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
-      {/* Background Image + Gradient Overlays */}
+      {/* Background Video + Gradient Overlays */}
       <div className="absolute inset-0">
-        <Image
-          src="/images/hero-bg.jpg"
-          alt=""
-          fill
-          className="object-cover"
-          priority
-        />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover"
+        >
+          <source src="/video/landing-cover.mp4" type="video/mp4" />
+        </video>
         <div className="from-background via-background/85 to-background/40 absolute inset-0 bg-gradient-to-r" />
         <div className="from-background absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />
       </div>
@@ -39,7 +40,7 @@ export function LandingHero() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-5xl font-black leading-[1.05] tracking-tight sm:text-7xl">
+          <h1 className="text-5xl leading-[1.05] font-black tracking-tight sm:text-7xl">
             {t("heroTitle1")}
             <br />
             <span className="text-primary">{t("heroTitle2")}</span>

@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { LandingHeader } from "./_components/LandingHeader";
-import { LandingHero } from "./_components/LandingHero";
 import { LandingFeatures } from "./_components/LandingFeatures";
 import { LandingFooter } from "./_components/LandingFooter";
-import type { Metadata } from "next";
+import { LandingHeader } from "./_components/LandingHeader";
+import { LandingHero } from "./_components/LandingHero";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Landing");
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function LandingPage() {
   return (
-    <div className="bg-background text-foreground min-h-screen">
+    <div className="bg-background text-foreground landing-page min-h-dvh">
       <LandingHeader />
       <LandingHero />
       <LandingFeatures />
