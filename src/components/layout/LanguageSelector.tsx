@@ -30,6 +30,8 @@ export function LanguageSelector({
   const t = useTranslations("Languages");
 
   function onLocaleChange(newLocale: string) {
+    // Persist locale in cookie so middleware respects it on every request
+    document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000;SameSite=Lax`;
     startTransition(() => {
       router.replace(
         { pathname },
@@ -43,7 +45,7 @@ export function LanguageSelector({
       <SelectTrigger
         aria-label="Select language"
         className={cn(
-          "border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:border-0",
+          "border-0 bg-transparent shadow-none focus-visible:border-0 focus-visible:ring-0",
           compact && "w-auto",
           isPending && "pointer-events-none opacity-60",
           className,
@@ -51,9 +53,7 @@ export function LanguageSelector({
         size="sm"
       >
         <Globe className="size-4 shrink-0" />
-        <SelectValue>
-          {compact ? locale.toUpperCase() : t(locale)}
-        </SelectValue>
+        <SelectValue>{compact ? locale.toUpperCase() : t(locale)}</SelectValue>
       </SelectTrigger>
       <SelectContent position="popper" align="start">
         {routing.locales.map((loc) => (
