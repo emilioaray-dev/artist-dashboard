@@ -1,21 +1,21 @@
 // src/types/component-types.ts
 
-// Interfaces comunes para componentes de la aplicación
+// Common component interfaces
 
-// Props base para componentes que aceptan clases CSS personalizadas
+// Base props for components that accept custom CSS classes
 export interface ClassNameProps {
   className?: string;
 }
 
-// Props base para componentes que aceptan hijos
+// Base props for components that accept children
 export interface ChildrenProps {
   children: React.ReactNode;
 }
 
-// Props base combinadas
+// Combined base props
 export interface BaseComponentProps extends ClassNameProps, ChildrenProps {}
 
-// Props para componentes de tarjetas
+// Card component props
 export interface CardProps extends ClassNameProps {
   title?: string;
   description?: string;
@@ -23,18 +23,18 @@ export interface CardProps extends ClassNameProps {
   footer?: React.ReactNode;
 }
 
-// Props para componentes de métricas
+// Metric component props
 export interface MetricProps extends ClassNameProps {
   title: string;
   value: string | number;
   prefix?: string;
   suffix?: string;
-  change?: number; // Porcentaje de cambio
+  change?: number; // Change percentage
   icon?: React.ElementType;
   trend?: "up" | "down" | "neutral";
 }
 
-// Props para componentes de gráficos
+// Chart component props
 export interface ChartProps<T> extends ClassNameProps {
   data: T[];
   config: Record<string, unknown>;
@@ -43,7 +43,7 @@ export interface ChartProps<T> extends ClassNameProps {
   description?: string;
 }
 
-// Props para componentes de skeleton
+// Skeleton component props
 export interface SkeletonProps extends ClassNameProps {
   variant?:
     | "metric-card"
@@ -58,7 +58,7 @@ export interface SkeletonProps extends ClassNameProps {
   height?: string | number;
 }
 
-// Props para componentes de botones
+// Button component props
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
     | "default"
@@ -79,7 +79,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   asChild?: boolean;
 }
 
-// Props para componentes de animación
+// Animation component props
 export interface AnimationProps extends ClassNameProps {
   animationType?: "fadeIn" | "slideIn" | "scaleIn" | "stagger";
   delay?: number;
@@ -87,7 +87,7 @@ export interface AnimationProps extends ClassNameProps {
   children: React.ReactNode;
 }
 
-// Props para componentes de formulario
+// Form field component props
 export interface FormFieldProps extends ClassNameProps {
   label?: string;
   description?: string;
@@ -95,7 +95,7 @@ export interface FormFieldProps extends ClassNameProps {
   required?: boolean;
 }
 
-// Props para componentes de lista
+// List component props
 export interface ListProps<T> extends ClassNameProps {
   items: T[];
   renderItem: (item: T, index: number) => React.ReactNode;

@@ -4,16 +4,16 @@
 import { SWRConfig } from "swr";
 import React from "react";
 
-// Configuración global de SWR para toda la aplicación
+// Global SWR configuration for the entire application
 const swrGlobalConfig = {
-  // Opciones de revalidación
-  revalidateOnFocus: false, // No revalidar cuando la ventana gana foco
-  revalidateOnReconnect: true, // Revalidar cuando se reconecta a internet
-  refreshInterval: 0, // Desactivar actualización automática
+  // Revalidation options
+  revalidateOnFocus: false, // Don't revalidate when window gains focus
+  revalidateOnReconnect: true, // Revalidate when internet reconnects
+  refreshInterval: 0, // Disable automatic refresh
 
-  // Opciones de reintento
-  errorRetryCount: 3, // Reintentar 3 veces antes de mostrar error
-  errorRetryInterval: 5000, // Esperar 5 segundos entre reintentos
+  // Retry options
+  errorRetryCount: 3, // Retry 3 times before showing error
+  errorRetryInterval: 5000, // Wait 5 seconds between retries
   fetcher: (url: string) =>
     fetch(url).then((res) => {
       if (!res.ok) {
@@ -22,14 +22,14 @@ const swrGlobalConfig = {
       return res.json();
     }),
 
-  // Opciones de caché
-  dedupingInterval: 2000, // Evitar solicitudes duplicadas dentro de 2 segundos
-  focusThrottleInterval: 5000, // Limitar revalidaciones por foco cada 5 segundos
-  loadingTimeout: 3000, // Timeout de 3 segundos para cargas lentas
+  // Cache options
+  dedupingInterval: 2000, // Prevent duplicate requests within 2 seconds
+  focusThrottleInterval: 5000, // Throttle focus revalidations every 5 seconds
+  loadingTimeout: 3000, // 3-second timeout for slow loads
 
-  // Opciones de comportamiento
-  shouldRetryOnError: true, // Reintentar en caso de error
-  suspense: false, // No usar suspense por defecto (manejado localmente)
+  // Behavior options
+  shouldRetryOnError: true, // Retry on error
+  suspense: false, // Don't use suspense by default (handled locally)
 };
 
 interface SWRProviderProps {

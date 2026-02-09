@@ -3,10 +3,10 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
-// Componente para auditoría de accesibilidad
+// Accessibility audit component
 export const AccessibilityChecker = () => {
   useEffect(() => {
-    // Solo ejecutar en entornos de desarrollo y en el cliente
+    // Only run in development and on the client
     if (
       process.env.NODE_ENV === "development" &&
       globalThis.window !== undefined
@@ -25,7 +25,7 @@ export const AccessibilityChecker = () => {
     }
   }, []);
 
-  return null; // Este componente no renderiza nada visible
+  return null; // This component renders nothing visible
 };
 
 export default AccessibilityChecker;
