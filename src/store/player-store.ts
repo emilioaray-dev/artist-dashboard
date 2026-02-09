@@ -9,7 +9,7 @@ function secureRandomInt(max: number): number {
   return Math.floor(Math.random() * max);
 }
 
-// Definir tipos para el estado del reproductor
+// Player state types
 interface PlayerState {
   currentTrack: string | null;
   currentTrackTitle: string | null;
@@ -18,15 +18,15 @@ interface PlayerState {
   currentTime: number;
   duration: number;
   volume: number;
-  seekTime: number | null; // Tiempo objetivo para buscar (observado por AudioPlayer)
-  playbackRate: number; // Velocidad de reproducción
-  playlist: string[]; // Lista de reproducción
-  currentTrackIndex: number; // Índice de la pista actual en la lista
-  repeatMode: "off" | "track" | "playlist"; // Modo de repetición
-  shuffle: boolean; // Modo aleatorio activado
+  seekTime: number | null; // Seek target time (observed by AudioPlayer)
+  playbackRate: number; // Playback speed
+  playlist: string[]; // Playlist
+  currentTrackIndex: number; // Current track index in playlist
+  repeatMode: "off" | "track" | "playlist"; // Repeat mode
+  shuffle: boolean; // Shuffle mode enabled
   _intervalId: ReturnType<typeof setInterval> | null;
 
-  // Acciones de control
+  // Playback controls
   play: (trackUrl?: string, title?: string) => void;
   pause: () => void;
   togglePlayPause: () => void;
@@ -34,28 +34,28 @@ interface PlayerState {
   next: () => void;
   previous: () => void;
 
-  // Acciones de posición y tiempo
+  // Position and time actions
   setCurrentTime: (time: number) => void;
   setDuration: (duration: number) => void;
   seekTo: (time: number) => void;
   skipForward: (seconds?: number) => void;
   skipBackward: (seconds?: number) => void;
 
-  // Acciones de volumen y velocidad
+  // Volume and speed actions
   setVolume: (volume: number) => void;
   toggleMute: () => void;
   setPlaybackRate: (rate: number) => void;
 
-  // Acciones de lista de reproducción
+  // Playlist actions
   setPlaylist: (tracks: string[]) => void;
   addToPlaylist: (track: string) => void;
   removeFromPlaylist: (index: number) => void;
 
-  // Acciones de configuración
+  // Configuration actions
   setRepeatMode: (mode: "off" | "track" | "playlist") => void;
   toggleShuffle: () => void;
 
-  // Acciones auxiliares
+  // Utility actions
   setBuffering: (buffering: boolean) => void;
   clearSeek: () => void;
   reset: () => void;
@@ -65,51 +65,51 @@ interface PlayerState {
 
 export const usePlayerStore = create<PlayerState>()(
   subscribeWithSelector((set, get) => ({
-    // Estado inicial
+    // Initial state
     currentTrack: null,
     currentTrackTitle: null,
     isPlaying: false,
     isBuffering: false,
     currentTime: 0,
-    duration: 180, // Duración predeterminada de 3 minutos para fines de demostración
+    duration: 180, // Default 3-minute duration for demo purposes
     volume: 1,
-    seekTime: null, // Tiempo objetivo para buscar (observado por AudioPlayer)
-    playbackRate: 1, // Velocidad de reproducción normal
+    seekTime: null, // Seek target time (observed by AudioPlayer)
+    playbackRate: 1, // Normal playback speed
     playlist: [],
     currentTrackIndex: -1,
     repeatMode: "off",
     shuffle: false,
     _intervalId: null,
 
-    // Métodos privados
+    // Private methods
     _startProgressTimer: () => {
       const { _intervalId } = get();
-      // Limpiar cualquier intervalo existente
+      // Clear any existing interval
       if (_intervalId) {
         clearInterval(_intervalId);
       }
 
-      // Iniciar un nuevo intervalo que actualiza currentTime cada 100ms
+      // Start a new interval that updates currentTime every 100ms
       const newIntervalId = setInterval(() => {
         const { isPlaying, isBuffering, currentTime, duration } = get();
         if (isBuffering) return; // Wait until audio actually starts playing
         if (isPlaying && currentTime < duration) {
           set({ currentTime: currentTime + 0.1 });
         } else if (currentTime >= duration) {
-          // La pista terminó - manejar según el modo de repetición
+          // Track ended — handle based on repeat mode
           const { repeatMode, playlist, currentTrackIndex } = get();
 
           if (repeatMode === "track") {
-            // Repetir la pista actual
+            // Repeat the current track
             set({ currentTime: 0 });
           } else if (
             repeatMode === "playlist" ||
             currentTrackIndex < playlist.length - 1
           ) {
-            // Ir a la siguiente pista si hay repetición de lista o más pistas
+            // Go to next track if playlist repeat or more tracks remain
             get().next();
           } else {
-            // Detener la reproducción si no hay más pistas y no está en modo repetición
+            // Stop playback if no more tracks and not in repeat mode
             get()._stopProgressTimer();
             set({ isPlaying: false });
           }
@@ -127,7 +127,7 @@ export const usePlayerStore = create<PlayerState>()(
       }
     },
 
-    // Acciones de control
+    // Playback controls
     play: (trackUrl, title) => {
       const {
         currentTrack,
@@ -137,10 +137,10 @@ export const usePlayerStore = create<PlayerState>()(
         currentTrackIndex,
       } = get();
 
-      // Detener cualquier temporizador existente
+      // Stop any existing timer
       _stopProgressTimer();
 
-      // Si se proporciona una URL específica, reproducirla
+      // If a specific URL is provided, play it
       if (trackUrl) {
         const isNewTrack = trackUrl !== currentTrack;
         set({
@@ -151,7 +151,7 @@ export const usePlayerStore = create<PlayerState>()(
           currentTime: isNewTrack ? 0 : get().currentTime,
         });
       } else if (currentTrack) {
-        // Continuar con la pista actual
+        // Resume the current track
         set({ isPlaying: true, isBuffering: false });
       } else if (playlist.length > 0 && currentTrackIndex >= 0) {
         set({
@@ -162,7 +162,7 @@ export const usePlayerStore = create<PlayerState>()(
         });
       }
 
-      // Iniciar el temporizador de progreso
+      // Start the progress timer
       _startProgressTimer();
     },
 
@@ -193,7 +193,7 @@ export const usePlayerStore = create<PlayerState>()(
       let nextIndex;
 
       if (shuffle) {
-        // Seleccionar aleatoriamente una pista que no sea la actual
+        // Randomly select a track that isn't the current one
         const otherTracks = playlist
           .map((_, idx) => idx)
           .filter((idx) => idx !== currentTrackIndex);
@@ -202,10 +202,10 @@ export const usePlayerStore = create<PlayerState>()(
           const randomIndex = secureRandomInt(otherTracks.length);
           nextIndex = otherTracks[randomIndex];
         } else {
-          return; // No hay otras pistas para reproducir
+          return; // No other tracks to play
         }
       } else {
-        // Pista siguiente en orden
+        // Next track in order
         nextIndex = (currentTrackIndex + 1) % playlist.length;
       }
 
@@ -218,7 +218,7 @@ export const usePlayerStore = create<PlayerState>()(
 
       if (playlist.length === 0) return;
 
-      // Si la pista actual ha sonado por más de 3 segundos, reiniciarla
+      // If current track has played for more than 3 seconds, restart it
       if (currentTime > 3) {
         get().play();
         return;
@@ -227,7 +227,7 @@ export const usePlayerStore = create<PlayerState>()(
       let prevIndex;
 
       if (shuffle) {
-        // Seleccionar aleatoriamente una pista que no sea la actual
+        // Randomly select a track that isn't the current one
         const otherTracks = playlist
           .map((_, idx) => idx)
           .filter((idx) => idx !== currentTrackIndex);
@@ -236,10 +236,10 @@ export const usePlayerStore = create<PlayerState>()(
           const randomIndex = secureRandomInt(otherTracks.length);
           prevIndex = otherTracks[randomIndex];
         } else {
-          return; // No hay otras pistas para reproducir
+          return; // No other tracks to play
         }
       } else {
-        // Pista anterior en orden
+        // Previous track in order
         prevIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
       }
 
@@ -247,7 +247,7 @@ export const usePlayerStore = create<PlayerState>()(
       get().play(playlist[prevIndex]);
     },
 
-    // Acciones de posición y tiempo
+    // Position and time actions
     setCurrentTime: (time) => set({ currentTime: time }),
 
     setDuration: (duration) => set({ duration }),
@@ -266,18 +266,18 @@ export const usePlayerStore = create<PlayerState>()(
       get().seekTo(newTime);
     },
 
-    // Acciones de volumen y velocidad
-    setVolume: (volume) => set({ volume: Math.max(0, Math.min(1, volume)) }), // Limitar entre 0 y 1
+    // Volume and speed actions
+    setVolume: (volume) => set({ volume: Math.max(0, Math.min(1, volume)) }), // Clamp between 0 and 1
 
     toggleMute: () => {
       const { volume } = get();
-      set({ volume: volume > 0 ? 0 : 0.7 }); // Si está silenciado, establecer volumen medio
+      set({ volume: volume > 0 ? 0 : 0.7 }); // If muted, set to medium volume
     },
 
     setPlaybackRate: (rate) =>
-      set({ playbackRate: Math.max(0.5, Math.min(2, rate)) }), // Limitar entre 0.5x y 2x
+      set({ playbackRate: Math.max(0.5, Math.min(2, rate)) }), // Clamp between 0.5x and 2x
 
-    // Acciones de lista de reproducción
+    // Playlist actions
     setPlaylist: (tracks) => {
       set({ playlist: tracks });
       if (tracks.length > 0) {
@@ -289,7 +289,7 @@ export const usePlayerStore = create<PlayerState>()(
       const { playlist } = get();
       const newPlaylist = [...playlist, track];
       set({ playlist: newPlaylist });
-      // Si era la primera pista, establecerla como actual
+      // If it was the first track, set it as current
       if (playlist.length === 0) {
         set({ currentTrackIndex: 0, currentTrack: track });
       }
@@ -300,7 +300,7 @@ export const usePlayerStore = create<PlayerState>()(
       const newPlaylist = playlist.filter((_, i) => i !== index);
       set({ playlist: newPlaylist });
 
-      // Ajustar el índice actual si es necesario
+      // Adjust current index if needed
       if (currentTrackIndex >= index) {
         const newIndex = Math.max(0, currentTrackIndex - 1);
         set({ currentTrackIndex: newIndex });
@@ -310,7 +310,7 @@ export const usePlayerStore = create<PlayerState>()(
       }
     },
 
-    // Acciones de configuración
+    // Configuration actions
     setRepeatMode: (mode) => set({ repeatMode: mode }),
 
     toggleShuffle: () => {
@@ -318,7 +318,7 @@ export const usePlayerStore = create<PlayerState>()(
       set({ shuffle: !shuffle });
     },
 
-    // Acciones auxiliares
+    // Utility actions
     setBuffering: (buffering) => set({ isBuffering: buffering }),
     clearSeek: () => set({ seekTime: null }),
 

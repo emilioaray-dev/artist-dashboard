@@ -4,17 +4,17 @@ import { motion } from "motion/react";
 import React from "react";
 import { AnimationProps } from "@/types/component-types";
 
-// Definir tipos para las animaciones comunes
+// Common animation types
 type AnimationType = "fadeIn" | "slideIn" | "stagger" | "scaleIn";
 
-// Propiedades extendidas para nuestras animaciones personalizadas
+// Extended props for custom animations
 interface CustomMotionProps extends AnimationProps {
   animationType?: AnimationType;
 }
 
 /**
- * Componente de utilidad para animaciones comunes
- * Proporciona animaciones consistentes en toda la aplicación
+ * Utility component for common animations.
+ * Provides consistent animations across the application.
  */
 export const AnimatedElement: React.FC<CustomMotionProps> = ({
   animationType = "fadeIn",
@@ -23,7 +23,7 @@ export const AnimatedElement: React.FC<CustomMotionProps> = ({
   children,
   ...props
 }) => {
-  // Definir variantes de animación
+  // Define animation variants
   const getVariants = () => {
     switch (animationType) {
       case "fadeIn":
@@ -81,7 +81,7 @@ export const AnimatedElement: React.FC<CustomMotionProps> = ({
   );
 };
 
-// Componentes específicos para facilitar el uso
+// Convenience components for common animation types
 export const FadeInAnimation: React.FC<
   Omit<CustomMotionProps, "animationType">
 > = (props) => <AnimatedElement animationType="fadeIn" {...props} />;

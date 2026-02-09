@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/core/skeleton";
 import React from "react";
 import { SkeletonProps } from "@/types/component-types";
 
-// Tipos para las variantes de skeleton
+// Skeleton variant types
 type SkeletonVariant =
   | "metric-card"
   | "chart"
@@ -19,8 +19,8 @@ interface GenericSkeletonProps extends SkeletonProps {
 const CHART_BAR_WIDTHS = ["w-full", "w-5/6", "w-4/6", "w-3/6", "w-2/6"] as const;
 
 /**
- * Componente genérico de skeleton para diferentes tipos de contenido
- * Permite estandarizar los estados de carga en toda la aplicación
+ * Generic skeleton component for different content types.
+ * Standardizes loading states across the application.
  */
 export const GenericSkeleton: React.FC<GenericSkeletonProps> = ({
   variant = "custom",
@@ -29,7 +29,7 @@ export const GenericSkeleton: React.FC<GenericSkeletonProps> = ({
   width,
   height,
 }) => {
-  // Función para generar skeleton basado en la variante
+  // Generate skeleton based on variant
   const renderSkeletonByVariant = () => {
     switch (variant) {
       case "metric-card":
@@ -87,7 +87,7 @@ export const GenericSkeleton: React.FC<GenericSkeletonProps> = ({
     }
   };
 
-  // Si count > 1, renderizar múltiples skeletons
+  // If count > 1, render multiple skeletons
   if (count > 1) {
     return (
       <div className={className}>
