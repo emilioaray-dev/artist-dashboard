@@ -1,4 +1,5 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SITE_PRODUCTION_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
@@ -16,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "MUSIC Backstage | Artist Dashboard",
   description: "Track your releases, direct-to-fan sales, and fan engagement",
-  metadataBase: new URL("https://music.celsiusaray.com"),
+  metadataBase: new URL(SITE_PRODUCTION_URL),
   icons: {
     icon: [{ url: "/favicon.ico", sizes: "any" }],
     apple: "/apple-icon.png",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "MUSIC Backstage | Artist Dashboard",
     description: "Track your releases, direct-to-fan sales, and fan engagement",
-    url: "https://music.celsiusaray.com",
+    url: SITE_PRODUCTION_URL,
     siteName: "MUSIC Backstage",
     images: [
       {

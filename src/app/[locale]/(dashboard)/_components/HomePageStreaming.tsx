@@ -1,9 +1,9 @@
 import { ClientMetricCard } from "@/components/ui/customs/cards/ClientMetricCard";
 import { RecentReleasesList } from "@/components/ui/customs/lists/RecentReleasesList";
-import { RevenueChart } from "@/components/ui/customs/charts/RevenueChart";
+import { DynamicRevenueChart } from "@/components/ui/customs/charts/DynamicRevenueChart";
 import { MetricCardSkeleton } from "@/components/ui/customs/feedback/MetricCardSkeleton";
 import { RevenueChartSkeleton } from "@/components/ui/customs/feedback/RevenueChartSkeleton";
-import { FanGrowthChart } from "@/components/ui/customs/charts/FanGrowthChart";
+import { DynamicFanGrowthChart } from "@/components/ui/customs/charts/DynamicFanGrowthChart";
 import { TopFans } from "@/components/ui/customs/lists/TopFans";
 import { PageHeader } from "@/components/layout/PageHeader";
 import {
@@ -30,7 +30,7 @@ async function RevenueSection() {
     <div className="bg-card rounded-xl border p-6">
       <h2 className="mb-4 text-lg font-semibold">{t("revenue")}</h2>
       {sales ? (
-        <RevenueChart initialSalesData={sales} />
+        <DynamicRevenueChart initialSalesData={sales} />
       ) : (
         <p>{t("noSalesData")}</p>
       )}
@@ -51,7 +51,7 @@ async function FanEngagementSection() {
     return <div>{t("noEngagementData")}</div>;
   }
 
-  return <FanGrowthChart engagementData={engagement} />;
+  return <DynamicFanGrowthChart engagementData={engagement} />;
 }
 
 function ReleasesSection({ releases }: Readonly<{ releases: Release[] }>) {

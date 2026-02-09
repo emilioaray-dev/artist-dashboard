@@ -2,7 +2,7 @@
 
 import { ChartColumn, DollarSign, Music, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import type { LucideIcon } from "lucide-react";
 
 interface FeatureCard {
@@ -48,7 +48,7 @@ export function LandingFeatures() {
         {FEATURES.map((feature, index) => {
           const Icon = feature.icon;
           return (
-            <motion.div
+            <m.div
               key={feature.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -61,11 +61,11 @@ export function LandingFeatures() {
               className="group border-border/60 bg-card/60 hover:border-primary/40 hover:bg-card rounded-xl border p-6 backdrop-blur-sm transition-colors"
             >
               <Icon className="text-primary mb-4 h-6 w-6" />
-              <h3 className="text-lg font-semibold">{t(feature.titleKey)}</h3>
+              <h2 className="text-lg font-semibold">{t(feature.titleKey)}</h2>
               <p className="text-muted-foreground mt-2 text-sm">
                 {t(feature.descKey)}
               </p>
-            </motion.div>
+            </m.div>
           );
         })}
       </div>

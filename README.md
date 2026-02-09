@@ -1,6 +1,7 @@
 # Music Artist Dashboard
 
-[![Quality Gate Status](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=alert_status&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
+[![Quality Gate](https://sonarqube.celsiusaray.com/api/project_badges/quality_gate?project=artist-dashboard&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
+
 [![Coverage](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=coverage&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
 [![Bugs](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=bugs&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
 [![Code Smells](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=code_smells&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
