@@ -1,6 +1,5 @@
 "use client";
 
-import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { NAV_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -19,9 +18,8 @@ export function MobileBottomNav() {
   };
 
   return (
-    <div className="bg-surface/80 fixed right-0 bottom-0 left-0 border-t p-2 backdrop-blur-xl md:hidden">
+    <div className="bg-surface/80 fixed right-0 bottom-0 left-0 h-[var(--mobile-nav-height)] border-t p-2 backdrop-blur-xl md:hidden">
       <div className="flex justify-around">
-        <LanguageSelector compact className="h-12 w-12 justify-center px-0" />
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
           const isActive =
