@@ -70,6 +70,9 @@ jest.setup.ts
 # MCP configuration
 .mcp.json
 
+# SonarQube
+.scannerwork/
+
 # Local dev scripts/files
 generate-covers.js
 traks

@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Sidebar Navigation", () => {
   test("navigates to Releases page", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/overview");
     await page.waitForSelector("h1", { timeout: 15000 });
 
     await page.getByRole("link", { name: "Releases" }).click();
@@ -13,7 +13,7 @@ test.describe("Sidebar Navigation", () => {
   });
 
   test("navigates to Fans page", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/overview");
     await page.waitForSelector("h1", { timeout: 15000 });
 
     await page.getByRole("link", { name: "Fans" }).click();
@@ -22,7 +22,7 @@ test.describe("Sidebar Navigation", () => {
   });
 
   test("navigates to Settings page", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/overview");
     await page.waitForSelector("h1", { timeout: 15000 });
 
     await page.getByRole("link", { name: "Settings" }).click();
@@ -37,7 +37,7 @@ test.describe("Sidebar Navigation", () => {
     await page.waitForSelector("h1", { timeout: 15000 });
 
     await page.getByRole("link", { name: "Overview" }).click();
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/overview");
     await expect(page.locator("h1")).toContainText("Overview", {
       timeout: 15000,
     });
@@ -57,9 +57,9 @@ test.describe("Sidebar Navigation", () => {
   });
 
   test("sidebar shows brand logo", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/overview");
     await page.waitForSelector("h1", { timeout: 15000 });
 
-    await expect(page.getByText("Backstage")).toBeVisible();
+    await expect(page.locator("aside").getByText("Backstage")).toBeVisible();
   });
 });
