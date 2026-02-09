@@ -11,6 +11,7 @@ const createMockRelease = (id: string): Release => ({
   releaseDate: "2026-01-15",
   coverArtUrl: "/covers/test.jpg",
   audioUrl: `https://example.com/audio-${id}.mp3`,
+  duration: 214,
   totalSales: 100,
   totalRevenue: 10000,
   salesByChannel: {
@@ -62,9 +63,11 @@ describe("AudioWaveform", () => {
       fireEvent.click(playButton);
     }
 
-    // After clicking, the button should show pause
-    const pauseButton = container.querySelector('button[aria-label="Pause"]');
-    expect(pauseButton).toBeInTheDocument();
+    // After clicking, the button should show loading (buffering) or pause
+    const loadingOrPause = container.querySelector(
+      'button[aria-label="Loading"], button[aria-label="Pause"]',
+    );
+    expect(loadingOrPause).toBeInTheDocument();
   });
 
   it("generates consistent waveform for same release ID", () => {
