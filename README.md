@@ -226,7 +226,9 @@ This project uses a structured specification workflow powered by Spec Kit:
 specs/
 ├── 001-artist-dashboard/     # Core dashboard feature
 ├── 002-i18n-multi-language/  # Internationalization
-└── 003-landing-page/         # Landing page
+├── 003-landing-page/         # Landing page
+├── 004-dashboard-ui-ux/      # Dashboard UI/UX redesign
+└── 005-responsive-mobile-fix/ # Responsive mobile layout fixes
 ```
 
 Each spec contains: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model.md`, and `quickstart.md`.
@@ -237,6 +239,8 @@ Each spec contains: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model
 - `feature/001-artist-dashboard` - Core dashboard
 - `feature/002-i18n-multi-language` - Internationalization
 - `feature/003-landing-page` - Landing page
+- `feature/004-dashboard-ui-ux` - Dashboard UI/UX redesign
+- `feature/005-responsive-mobile-fix` - Responsive mobile layout fixes
 
 ## License
 
