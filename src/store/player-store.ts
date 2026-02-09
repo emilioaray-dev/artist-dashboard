@@ -1,6 +1,14 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
 
+/** Returns a random integer in [0, max). Uses crypto when available, falls back to Math.random(). */
+function secureRandomInt(max: number): number {
+  if (typeof crypto !== "undefined" && crypto.getRandomValues) {
+    return crypto.getRandomValues(new Uint32Array(1))[0] % max;
+  }
+  return Math.floor(Math.random() * max);
+}
+
 // Definir tipos para el estado del reproductor
 interface PlayerState {
   currentTrack: string | null;
@@ -191,7 +199,7 @@ export const usePlayerStore = create<PlayerState>()(
           .filter((idx) => idx !== currentTrackIndex);
 
         if (otherTracks.length > 0) {
-          const randomIndex = Math.floor(Math.random() * otherTracks.length);
+          const randomIndex = secureRandomInt(otherTracks.length);
           nextIndex = otherTracks[randomIndex];
         } else {
           return; // No hay otras pistas para reproducir
@@ -225,7 +233,7 @@ export const usePlayerStore = create<PlayerState>()(
           .filter((idx) => idx !== currentTrackIndex);
 
         if (otherTracks.length > 0) {
-          const randomIndex = Math.floor(Math.random() * otherTracks.length);
+          const randomIndex = secureRandomInt(otherTracks.length);
           prevIndex = otherTracks[randomIndex];
         } else {
           return; // No hay otras pistas para reproducir
@@ -323,9 +331,13 @@ export const usePlayerStore = create<PlayerState>()(
         isBuffering: false,
         currentTime: 0,
         duration: 180,
+        volume: 1,
         seekTime: null,
+        playbackRate: 1,
         playlist: [],
         currentTrackIndex: -1,
+        repeatMode: "off",
+        shuffle: false,
       });
     },
   })),
