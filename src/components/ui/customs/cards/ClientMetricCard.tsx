@@ -16,7 +16,7 @@ export function ClientMetricCard({
   delay = 0,
   icon,
   ...props
-}: ClientMetricCardProps) {
+}: Readonly<ClientMetricCardProps>) {
   // Mapear nombres de iconos a componentes
   const iconComponents: Record<
     string,

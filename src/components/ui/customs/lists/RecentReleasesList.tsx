@@ -21,7 +21,7 @@ type RecentReleasesListProps = {
 export function RecentReleasesList({
   releases,
   className,
-}: RecentReleasesListProps) {
+}: Readonly<RecentReleasesListProps>) {
   const locale = useLocale();
   const t = useTranslations("Releases");
   const tCommon = useTranslations("Common");

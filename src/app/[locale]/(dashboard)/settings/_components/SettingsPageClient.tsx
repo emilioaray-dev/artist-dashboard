@@ -36,7 +36,7 @@ const localeNames: Record<string, string> = {
   pt: "Português",
 };
 
-function SaveSuccessMessage({ show }: { show: boolean }) {
+function SaveSuccessMessage({ show }: Readonly<{ show: boolean }>) {
   const t = useTranslations("Settings");
   if (!show) return null;
   return (

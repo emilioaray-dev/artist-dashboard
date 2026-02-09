@@ -1,3 +1,5 @@
+export type Trend = "up" | "down" | "stable";
+
 /**
  * Sales channel types available in EVEN Backstage.
  * These represent the different ways artists can monetize their content directly with fans.
@@ -101,7 +103,7 @@ export interface SalesSummary {
   /** Revenue change percentage from previous period */
   revenueChange: {
     percentage: number;
-    trend: "up" | "down" | "stable";
+    trend: Trend;
   };
   /** Time range for the data (for internal use) */
   periodRange?: "7d" | "30d" | "90d";
@@ -136,14 +138,14 @@ export interface EngagementMetrics {
     /** Growth rate percentage (e.g., 12.5 for 12.5%) */
     percentage: number;
     /** Trend direction */
-    trend: "up" | "down" | "stable";
+    trend: Trend;
   };
   /** Engagement rate metrics */
   engagementRate: {
     /** Percentage of fans who engaged (e.g., 4.2 for 4.2%) */
     value: number;
     /** Trend direction */
-    trend: "up" | "down" | "stable";
+    trend: Trend;
     /** Change from previous period */
     change: number;
   };
@@ -152,7 +154,7 @@ export interface EngagementMetrics {
     /** Percentage of fans who purchased (e.g., 8.5 for 8.5%) */
     value: number;
     /** Trend direction */
-    trend: "up" | "down" | "stable";
+    trend: Trend;
     /** Change from previous period */
     change: number;
   };

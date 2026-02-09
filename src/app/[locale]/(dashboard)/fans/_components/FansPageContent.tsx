@@ -15,7 +15,7 @@ interface FansPageContentProps {
   initialEngagement?: EngagementMetrics;
 }
 
-function FansPageInner({ initialEngagement }: FansPageContentProps) {
+function FansPageInner({ initialEngagement }: Readonly<FansPageContentProps>) {
   const { data: engagement, isLoading, error: isError } = useEngagement();
   const locale = useLocale();
   const t = useTranslations("Fans");
@@ -93,7 +93,7 @@ function FansPageInner({ initialEngagement }: FansPageContentProps) {
 
 export default function FansPageContent({
   initialEngagement,
-}: FansPageContentProps) {
+}: Readonly<FansPageContentProps>) {
   const t = useTranslations("Fans");
   const tCommon = useTranslations("Common");
 

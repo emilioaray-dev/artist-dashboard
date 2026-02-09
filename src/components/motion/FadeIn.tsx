@@ -11,7 +11,7 @@ type FadeInProps = {
  * Child motion.div with opacity + translateY animation
  * Designed to be used inside StaggerContainer for individual item animations
  */
-export function FadeIn({ children, className }: FadeInProps) {
+export function FadeIn({ children, className }: Readonly<FadeInProps>) {
   return (
     <motion.div
       className={className}

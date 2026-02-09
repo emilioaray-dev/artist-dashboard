@@ -26,9 +26,9 @@ const MetricCardComponent = ({
   change,
   prefix = "",
   className,
-}: ExtendedMetricProps) => {
-  const isPositive = change !== undefined && change >= 0;
-  const changeValue = change !== undefined ? Math.abs(change) : 0;
+}: Readonly<ExtendedMetricProps>) => {
+  const isPositive = change === undefined || change >= 0;
+  const changeValue = change === undefined ? 0 : Math.abs(change);
 
   return (
     <Card className={cn("card-hover overflow-hidden", className)}>

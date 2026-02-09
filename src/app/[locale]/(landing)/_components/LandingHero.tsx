@@ -5,6 +5,10 @@ import { ROUTES } from "@/lib/constants";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+const StrongText = (chunks: React.ReactNode) => (
+  <strong className="text-foreground">{chunks}</strong>
+);
+
 export function LandingHero() {
   const t = useTranslations("Landing");
 
@@ -33,9 +37,7 @@ export function LandingHero() {
             <span className="bg-primary inline-block h-2 w-2 animate-pulse rounded-full" />
             {t.rich("socialProof", {
               count: "500K+",
-              strong: (chunks) => (
-                <strong className="text-foreground">{chunks}</strong>
-              ),
+              strong: StrongText,
             })}
           </div>
 

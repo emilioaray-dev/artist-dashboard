@@ -13,7 +13,7 @@ export async function generateStaticParams() {
   return releases.map((release) => ({ id: release.id }));
 }
 
-export default async function ReleaseDetailPage({ params }: Props) {
+export default async function ReleaseDetailPage({ params }: Readonly<Props>) {
   const { id } = await params;
   const response = await dataService.getReleases();
   const release = response.data?.find((r) => r.id === id) ?? null;

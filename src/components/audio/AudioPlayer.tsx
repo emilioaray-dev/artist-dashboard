@@ -131,7 +131,7 @@ export function AudioPlayer() {
   }, [seekTime, clearSeek]);
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newTime = parseFloat(e.target.value);
+    const newTime = Number.parseFloat(e.target.value);
     setCurrentTime(newTime);
     if (audioRef.current) {
       audioRef.current.currentTime = newTime;
@@ -139,7 +139,7 @@ export function AudioPlayer() {
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseFloat(e.target.value);
+    const newVolume = Number.parseFloat(e.target.value);
     usePlayerStore.getState().setVolume(newVolume);
   };
 

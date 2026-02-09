@@ -3,13 +3,13 @@
 import { Button } from "@/components/ui/core/button";
 import { useTranslations } from "next-intl";
 
-export default function Error({
+export default function ErrorPage({
   error,
   reset,
-}: {
+}: Readonly<{
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}>) {
   const t = useTranslations("Errors");
 
   return (

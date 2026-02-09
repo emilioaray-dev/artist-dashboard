@@ -9,7 +9,7 @@ export const AccessibilityChecker = () => {
     // Solo ejecutar en entornos de desarrollo y en el cliente
     if (
       process.env.NODE_ENV === "development" &&
-      typeof window !== "undefined"
+      globalThis.window !== undefined
     ) {
       import("@axe-core/react").then(({ default: axe }) => {
         // color-contrast & heading-order disabled: false positives during

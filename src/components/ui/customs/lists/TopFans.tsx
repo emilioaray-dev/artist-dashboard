@@ -22,7 +22,7 @@ const RANK_COLORS = [
  * Avatar with rank badge overlay, name + purchases on the left,
  * total spent on the right.
  */
-export function TopFans({ fans, className }: TopFansProps) {
+export function TopFans({ fans, className }: Readonly<TopFansProps>) {
   const locale = useLocale();
   const t = useTranslations("Fans");
 

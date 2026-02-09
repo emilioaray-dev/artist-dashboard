@@ -24,7 +24,7 @@ export function ReleaseCard({
   release,
   className,
   priority = false,
-}: ReleaseCardProps) {
+}: Readonly<ReleaseCardProps>) {
   const locale = useLocale();
   const t = useTranslations("Releases");
   const tCommon = useTranslations("Common");

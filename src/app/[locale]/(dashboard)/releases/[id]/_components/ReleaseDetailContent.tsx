@@ -38,7 +38,7 @@ type ReleaseDetailContentProps = {
 export default function ReleaseDetailContent({
   release,
   dailySales,
-}: ReleaseDetailContentProps) {
+}: Readonly<ReleaseDetailContentProps>) {
   const locale = useLocale();
   const t = useTranslations("ReleaseDetail");
   const tReleases = useTranslations("Releases");

@@ -9,10 +9,22 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Release } from "@/types";
 
-type AudioWaveformProps = {
+type AudioWaveformProps = Readonly<{
   release: Release;
   className?: string;
-};
+}>;
+
+function getPlayButtonLabel(isCurrentTrack: boolean, isBuffering: boolean, isPlaying: boolean) {
+  if (isCurrentTrack && isBuffering) return "Loading";
+  if (isCurrentTrack && isPlaying) return "Pause";
+  return "Play";
+}
+
+function PlayButtonIcon({ isCurrentTrack, isBuffering, isPlaying }: Readonly<{ isCurrentTrack: boolean; isBuffering: boolean; isPlaying: boolean }>) {
+  if (isCurrentTrack && isBuffering) return <Loader2 className="size-4 animate-spin" />;
+  if (isCurrentTrack && isPlaying) return <Pause className="size-4" />;
+  return <Play className="size-4" />;
+}
 
 /**
  * Audio waveform visualizer with play/pause toggle and time indicators
@@ -134,12 +146,12 @@ export function AudioWaveform({ release, className }: AudioWaveformProps) {
       const handleGlobalMouseMove = (e: MouseEvent) => handleMouseMove(e);
       const handleGlobalMouseUp = (e: MouseEvent) => handleMouseUp(e);
 
-      window.addEventListener("mousemove", handleGlobalMouseMove);
-      window.addEventListener("mouseup", handleGlobalMouseUp);
+      globalThis.addEventListener("mousemove", handleGlobalMouseMove);
+      globalThis.addEventListener("mouseup", handleGlobalMouseUp);
 
       return () => {
-        window.removeEventListener("mousemove", handleGlobalMouseMove);
-        window.removeEventListener("mouseup", handleGlobalMouseUp);
+        globalThis.removeEventListener("mousemove", handleGlobalMouseMove);
+        globalThis.removeEventListener("mouseup", handleGlobalMouseUp);
       };
     }
   }, [isDragging, handleMouseMove, handleMouseUp]);
@@ -165,10 +177,9 @@ export function AudioWaveform({ release, className }: AudioWaveformProps) {
   // Preview percentage for display (while hovering or dragging)
   const showPreview =
     isCurrentTrack && (isHovering || isDragging) && previewPercent !== null;
+  const effectiveDuration = globalDuration > 0 ? globalDuration : trackDuration;
   const previewTime =
-    previewPercent === null
-      ? 0
-      : previewPercent * (globalDuration > 0 ? globalDuration : trackDuration);
+    previewPercent === null ? 0 : previewPercent * effectiveDuration;
 
   return (
     <>
@@ -216,14 +227,13 @@ export function AudioWaveform({ release, className }: AudioWaveformProps) {
                   previewPercent !== null &&
                   barPosition <= previewPercent * 100;
 
-                let barColor = "var(--muted)";
-                if (isPlayed || (showPreview && isInPreview)) {
-                  barColor = "var(--primaryDark)";
-                }
+                const barColor = (isPlayed || (showPreview && isInPreview))
+                  ? "var(--primaryDark)"
+                  : "var(--muted)";
 
                 return (
                   <motion.rect
-                    key={index}
+                    key={`bar-${x}`}
                     x={x}
                     y={(28 - height) / 2}
                     width="4"
@@ -275,21 +285,9 @@ export function AudioWaveform({ release, className }: AudioWaveformProps) {
         <button
           onClick={handleToggle}
           className="bg-accent text-accent-foreground hover:bg-accent/90 focus:ring-accent flex size-8 items-center justify-center rounded-full focus:ring-2 focus:ring-offset-2 focus:outline-none"
-          aria-label={
-            isCurrentTrack && isBuffering
-              ? "Loading"
-              : isCurrentTrack && isPlaying
-                ? "Pause"
-                : "Play"
-          }
+          aria-label={getPlayButtonLabel(isCurrentTrack, isBuffering, isPlaying)}
         >
-          {isCurrentTrack && isBuffering ? (
-            <Loader2 className="size-4 animate-spin" />
-          ) : isCurrentTrack && isPlaying ? (
-            <Pause className="size-4" />
-          ) : (
-            <Play className="size-4" />
-          )}
+          <PlayButtonIcon isCurrentTrack={isCurrentTrack} isBuffering={isBuffering} isPlaying={isPlaying} />
         </button>
       </div>
       {/* Time indicators */}

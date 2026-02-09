@@ -3,10 +3,10 @@
 export default function GlobalError({
   error,
   reset,
-}: {
+}: Readonly<{
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}>) {
   return (
     <html lang="en" className="dark">
       <body className="bg-background min-h-screen font-sans antialiased">

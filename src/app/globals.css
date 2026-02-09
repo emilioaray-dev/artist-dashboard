@@ -212,6 +212,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-size: var(--body);
   }
   body[data-scroll-locked] {
     padding-right: 0 !important;
@@ -231,10 +232,6 @@
   .data-value {
     font-size: var(--data-value);
     font-weight: 600;
-  }
-
-  body {
-    font-size: var(--body);
   }
 
   .caption {

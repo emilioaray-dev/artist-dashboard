@@ -54,7 +54,7 @@ async function FanEngagementSection() {
   return <FanGrowthChart engagementData={engagement} />;
 }
 
-function ReleasesSection({ releases }: { releases: Release[] }) {
+function ReleasesSection({ releases }: Readonly<{ releases: Release[] }>) {
   return (
     <div>
       <RecentReleasesList releases={releases} />
@@ -95,13 +95,12 @@ async function HomePageContent() {
   // Calculate metrics if data is available
   const totalRevenue = sales?.totalRevenue || 0;
   const revenueChange = sales?.revenueChange
-    ? sales.revenueChange
-    : { percentage: 0, trend: "stable" as const };
+    ?? { percentage: 0, trend: "stable" as const };
 
   // Mock dashboard stats based on our data
   const mockDashboardStats = {
     totalRevenue: formatCurrency(totalRevenue, locale)
-      .replace(/[^0-9.,\s]/g, "")
+      .replaceAll(/[^0-9.,\s]/g, "")
       .trim(),
     revenueChange: revenueChange.percentage,
     totalFans: formatNumber(engagement?.totalFans || 0, locale),
