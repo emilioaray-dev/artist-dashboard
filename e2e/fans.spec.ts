@@ -14,8 +14,8 @@ test.describe("Fans Page", () => {
   });
 
   test("shows fan metric cards", async ({ page }) => {
-    await expect(page.getByText("Total Fans")).toBeVisible({ timeout: 15000 });
-    await expect(page.getByText("Active Buyers")).toBeVisible({
+    await expect(page.getByText("Total Fans", { exact: true })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText("Active Buyers", { exact: true })).toBeVisible({
       timeout: 10000,
     });
     await expect(page.getByText("Engagement Rate")).toBeVisible({

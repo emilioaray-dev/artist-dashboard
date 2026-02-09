@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Overview Page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/overview");
     // Wait for the main content to render (streaming SSR may take a moment)
     await page.waitForSelector("h1", { timeout: 15000 });
   });
