@@ -17,7 +17,6 @@ import { MetricCard } from "@/components/ui/customs/cards/MetricCard";
 import { Link } from "@/i18n/navigation";
 import { CHANNEL_INFO, ROUTES, STATUS_COLORS } from "@/lib/constants";
 import { cn, formatCurrency, formatDate } from "@/lib/utils";
-import { usePlayerStore } from "@/store/player-store";
 import { Channel, DailySales, Release } from "@/types";
 import {
   ArrowLeft,
@@ -45,18 +44,6 @@ export default function ReleaseDetailContent({
   const tReleases = useTranslations("Releases");
   const tFormats = useTranslations("Formats");
   const tCommon = useTranslations("Common");
-
-  const { currentTrack, isPlaying, play, pause } = usePlayerStore();
-  const audioUrl = release.audioUrl || `/api/audio/${release.id}`;
-  const isCurrentTrack = currentTrack === audioUrl;
-
-  const togglePlayback = () => {
-    if (isCurrentTrack && isPlaying) {
-      pause();
-    } else {
-      play(audioUrl);
-    }
-  };
 
   // Conversion rate: buyers / total fans (mock a reasonable %)
   const conversionRate =
@@ -160,7 +147,7 @@ export default function ReleaseDetailContent({
 
           {/* Audio player — compact, below actions */}
           <div className="max-w-md origin-top">
-            <AudioWaveform release={release} onPlayPause={togglePlayback} />
+            <AudioWaveform release={release} />
           </div>
         </div>
       </div>

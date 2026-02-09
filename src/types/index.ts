@@ -50,6 +50,8 @@ export interface Release {
   coverArtUrl: string;
   /** URL to audio file (optional) */
   audioUrl?: string;
+  /** Track duration in seconds (from audio metadata) */
+  duration: number;
   /** Total units sold across all channels */
   totalSales: number;
   /** Total revenue in cents */

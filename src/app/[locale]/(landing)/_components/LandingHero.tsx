@@ -17,7 +17,7 @@ export function LandingHero() {
           loop
           muted
           playsInline
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover object-[75%_center] md:object-center"
         >
           <source src="/video/landing-cover.mp4" type="video/mp4" />
         </video>
@@ -40,7 +40,7 @@ export function LandingHero() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-5xl leading-[1.05] font-black tracking-tight sm:text-7xl">
+          <h1 className="text-4xl leading-[1.05] font-black tracking-tight sm:text-5xl lg:text-7xl">
             {t("heroTitle1")}
             <br />
             <span className="text-primary">{t("heroTitle2")}</span>

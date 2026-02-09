@@ -19,9 +19,9 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/core/tabs";
 import { getCachedSales } from "@/lib/actions";
 import { CHART_COLORS, TIME_RANGES } from "@/lib/constants";
 import { DailySales, SalesSummary } from "@/types";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-import { useLocale, useTranslations } from "next-intl";
 
 type RevenueChartProps = {
   initialSalesData: SalesSummary;
@@ -99,8 +99,8 @@ export function RevenueChart({ initialSalesData }: RevenueChartProps) {
 
   return (
     <Card className="card-hover">
-      <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
-        <div className="grid flex-1 gap-1 text-center sm:text-left">
+      <CardHeader className="flex flex-col justify-between gap-2 space-y-0 border-b py-5 md:flex-row">
+        <div className="grid gap-1 text-left md:text-center">
           <CardTitle>{tOverview("revenue")}</CardTitle>
           <CardDescription>
             {isLoading ? (

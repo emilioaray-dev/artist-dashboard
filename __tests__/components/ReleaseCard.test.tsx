@@ -13,6 +13,7 @@ describe("ReleaseCard", () => {
     releaseDate: "2026-01-15",
     coverArtUrl: "/test-cover.jpg",
     audioUrl: "https://example.com/test.mp3",
+    duration: 214,
     totalSales: 1000,
     totalRevenue: 2000000, // $20,000
     salesByChannel: {

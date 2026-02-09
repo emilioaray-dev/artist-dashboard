@@ -9,10 +9,10 @@ import {
 } from "@/components/ui/core/select";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
+import { cn } from "@/lib/utils";
+import { Globe } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
-import { Globe } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface LanguageSelectorProps {
   compact?: boolean;
@@ -52,7 +52,7 @@ export function LanguageSelector({
         )}
         size="sm"
       >
-        <Globe className="size-4 shrink-0" />
+        <Globe className="hidden size-4 shrink-0 md:block" />
         <SelectValue>{compact ? locale.toUpperCase() : t(locale)}</SelectValue>
       </SelectTrigger>
       <SelectContent position="popper" align="start">

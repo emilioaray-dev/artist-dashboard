@@ -32,11 +32,9 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
             </Suspense>
             <DashboardHeader />
             <MainLayout>
-              <>
-                {children}
-                <DynamicAudioPlayer />
-              </>
+              {children}
             </MainLayout>
+            <DynamicAudioPlayer />
           </div>
           <Suspense fallback={null}>
             <MobileBottomNav />

@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/core/card";
 import { Link } from "@/i18n/navigation";
 import { ROUTES, STATUS_COLORS } from "@/lib/constants";
 import { cn, formatCurrency, formatDate } from "@/lib/utils";
-import { usePlayerStore } from "@/store/player-store";
 import { Release } from "@/types";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
@@ -29,19 +28,6 @@ export function ReleaseCard({
   const locale = useLocale();
   const t = useTranslations("Releases");
   const tCommon = useTranslations("Common");
-  // Get player state and actions
-  const { currentTrack, isPlaying, play, pause } = usePlayerStore();
-  const isCurrentTrack = currentTrack === release.audioUrl;
-
-  // Handle play/pause for this release
-  const togglePlayback = () => {
-    if (isCurrentTrack && isPlaying) {
-      pause();
-    } else {
-      play(release.audioUrl || `/api/audio/${release.id}`);
-    }
-  };
-
   // Calculate revenue trend (simplified for mock data)
   const revenueTrend = release.totalRevenue > 2000000 ? "up" : "down";
   const trendIcon = revenueTrend === "up" ? "↑" : "↓";
@@ -110,7 +96,7 @@ export function ReleaseCard({
 
           {/* Audio Waveform — outside link to prevent navigation on play */}
           <div className="mt-3" data-testid="audio-waveform-container">
-            <AudioWaveform release={release} onPlayPause={togglePlayback} />
+            <AudioWaveform release={release} />
           </div>
         </div>
       </CardContent>
