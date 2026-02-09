@@ -15,7 +15,12 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/core/chart";
 import { Skeleton } from "@/components/ui/core/skeleton";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/core/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/core/tabs";
 import { getCachedSales } from "@/lib/actions";
 import { CHART_COLORS, TIME_RANGES } from "@/lib/constants";
 import { DailySales, SalesSummary } from "@/types";
@@ -31,7 +36,9 @@ type RevenueChartProps = {
  * Revenue chart with time range tabs and clickable legend
  * Uses shadcn/ui AreaChart with Gross vs Net lines
  */
-export function RevenueChart({ initialSalesData }: Readonly<RevenueChartProps>) {
+export function RevenueChart({
+  initialSalesData,
+}: Readonly<RevenueChartProps>) {
   const locale = useLocale();
   const t = useTranslations("Formats");
   const tCommon = useTranslations("Common");
@@ -129,6 +136,14 @@ export function RevenueChart({ initialSalesData }: Readonly<RevenueChartProps>) 
               </TabsTrigger>
             ))}
           </TabsList>
+          {TIME_RANGES.map((range) => (
+            <TabsContent
+              key={range.value}
+              value={range.value}
+              forceMount
+              hidden
+            />
+          ))}
         </Tabs>
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
@@ -195,7 +210,9 @@ export function RevenueChart({ initialSalesData }: Readonly<RevenueChartProps>) 
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <ChartLegend content={<ChartLegendContent />} />
+              <ChartLegend
+                content={<ChartLegendContent className="flex-wrap" />}
+              />
               {activeChannels.gross && (
                 <Area
                   dataKey="gross"

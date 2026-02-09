@@ -78,7 +78,7 @@ export function ReleaseCard({
         <div className="p-4">
           {/* Title and Info */}
           <div className="mb-2">
-            <h3 className="truncate font-semibold">{release.title}</h3>
+            <p className="truncate font-semibold">{release.title}</p>
             <p className="text-muted-foreground text-xs capitalize">
               {release.type} • {formatDate(release.releaseDate, locale)}
             </p>
