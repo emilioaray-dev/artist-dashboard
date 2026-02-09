@@ -1,12 +1,15 @@
 "use client";
 
+import { useSidebar } from "@/hooks/useSidebar";
 import { usePlayerStore } from "@/store/player-store";
 import { useEffect, useRef } from "react";
 
 export function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { collapsed } = useSidebar();
   const {
     currentTrack,
+    currentTrackTitle,
     isPlaying,
     currentTime,
     duration,
@@ -14,6 +17,7 @@ export function AudioPlayer() {
     seekTime,
     setCurrentTime,
     setDuration,
+    setBuffering,
     clearSeek,
     pause,
     play,
@@ -39,13 +43,9 @@ export function AudioPlayer() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    let playPromise: Promise<void> | null = null;
-
     if (isPlaying) {
-      // Only attempt to play if we have a valid track
       if (currentTrack) {
-        playPromise = audio.play().catch((e) => {
-          // Ignore the AbortError which occurs when play is interrupted by a new load
+        audio.play().catch((e) => {
           if (e.name !== "AbortError") {
             console.error("Audio play error:", e);
           }
@@ -54,14 +54,20 @@ export function AudioPlayer() {
     } else {
       audio.pause();
     }
-
-    return () => {
-      // Cancel play promise if component unmounts or effect re-runs
-      if (playPromise) {
-        // We can't actually cancel a play promise, but we can ignore the result
-      }
-    };
   }, [isPlaying, currentTrack]);
+
+  // Clear buffering when audio actually starts playing
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handlePlaying = () => setBuffering(false);
+
+    audio.addEventListener("playing", handlePlaying);
+    return () => {
+      audio.removeEventListener("playing", handlePlaying);
+    };
+  }, [setBuffering]);
 
   // Handle time updates
   useEffect(() => {
@@ -137,11 +143,25 @@ export function AudioPlayer() {
     usePlayerStore.getState().setVolume(newVolume);
   };
 
+  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const volumePercent = volume * 100;
+
+  const rangeTrackStyle = (percent: number) =>
+    ({
+      "--range-track": `linear-gradient(to right, var(--primaryDark) ${percent}%, var(--muted) ${percent}%)`,
+    }) as React.CSSProperties;
+
   if (!currentTrack) return null;
 
   return (
-    <div className="bg-background fixed right-0 bottom-17 left-0 z-50 ml-0 border-t px-4 py-2 transition-all duration-300 md:bottom-0 md:ml-[1rem] lg:ml-[15rem]">
-      <div className="container mx-auto flex items-center gap-4">
+    <div
+      className={`bg-background fixed right-0 bottom-[var(--mobile-nav-height)] left-0 z-50 border-t px-4 transition-all duration-300 md:bottom-0 ${collapsed ? "md:ml-16" : "md:ml-60"} ${
+        isPlaying
+          ? "translate-y-0"
+          : "translate-y-[calc(100%+var(--mobile-nav-height))] md:translate-y-full"
+      }`}
+    >
+      <div className="container mx-auto flex h-14 items-center gap-4">
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <audio
           ref={audioRef}
@@ -152,23 +172,22 @@ export function AudioPlayer() {
           }}
         />
 
-        <div className="flex min-w-0 flex-1 items-center gap-2">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           <button
             onClick={() => (isPlaying ? pause() : play(currentTrack))}
-            className="hover:bg-accent rounded-full p-2"
+            className="text-primary hover:text-primary/80 shrink-0 rounded-full p-1.5"
           >
             {isPlaying ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="lucide lucide-pause"
               >
                 <rect width="4" height="16" x="6" y="4" />
                 <rect width="4" height="16" x="14" y="4" />
@@ -176,15 +195,14 @@ export function AudioPlayer() {
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="22"
+                height="22"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="lucide lucide-play"
               >
                 <polygon points="6 3 20 12 6 21 6 3" />
               </svg>
@@ -193,44 +211,44 @@ export function AudioPlayer() {
 
           <div className="min-w-0 flex-1">
             <div className="truncate text-sm font-medium">
-              {currentTrack.split("/").pop()?.replace("%20", " ") ||
-                "Current Track"}
+              {currentTrackTitle || "Current Track"}
             </div>
             <div className="text-muted-foreground flex items-center gap-2 text-xs">
               <span>
-                {new Date(currentTime * 1000).toISOString().substr(14, 5)}
+                {new Date(currentTime * 1000).toISOString().substring(14, 19)}
               </span>
               <span>/</span>
               <span>
-                {new Date(duration * 1000).toISOString().substr(14, 5)}
+                {new Date(duration * 1000).toISOString().substring(14, 19)}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex min-w-0 flex-1 items-center gap-2">
+        <div className="flex min-w-0 flex-1 items-center">
           <input
             type="range"
             min="0"
             max={duration || 100}
             value={currentTime}
             onChange={handleSeek}
-            className="bg-muted h-1.5 w-full cursor-pointer appearance-none rounded-lg"
+            className="audio-range w-full"
+            style={rangeTrackStyle(progressPercent)}
           />
         </div>
 
-        <div className="flex w-24 items-center gap-2">
+        <div className="hidden w-28 items-center gap-2 sm:flex">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="lucide lucide-volume-2 h-4 w-4"
+            className="text-muted-foreground shrink-0"
           >
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
@@ -243,7 +261,8 @@ export function AudioPlayer() {
             step="0.01"
             value={volume}
             onChange={handleVolumeChange}
-            className="bg-muted h-1.5 w-full cursor-pointer appearance-none rounded-lg"
+            className="audio-range w-full"
+            style={rangeTrackStyle(volumePercent)}
           />
         </div>
       </div>

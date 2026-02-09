@@ -4,7 +4,9 @@ import { subscribeWithSelector } from "zustand/middleware";
 // Definir tipos para el estado del reproductor
 interface PlayerState {
   currentTrack: string | null;
+  currentTrackTitle: string | null;
   isPlaying: boolean;
+  isBuffering: boolean;
   currentTime: number;
   duration: number;
   volume: number;
@@ -17,7 +19,7 @@ interface PlayerState {
   _intervalId: ReturnType<typeof setInterval> | null;
 
   // Acciones de control
-  play: (trackUrl?: string) => void;
+  play: (trackUrl?: string, title?: string) => void;
   pause: () => void;
   togglePlayPause: () => void;
   stop: () => void;
@@ -46,6 +48,7 @@ interface PlayerState {
   toggleShuffle: () => void;
 
   // Acciones auxiliares
+  setBuffering: (buffering: boolean) => void;
   clearSeek: () => void;
   reset: () => void;
   _startProgressTimer: () => void;
@@ -56,7 +59,9 @@ export const usePlayerStore = create<PlayerState>()(
   subscribeWithSelector((set, get) => ({
     // Estado inicial
     currentTrack: null,
+    currentTrackTitle: null,
     isPlaying: false,
+    isBuffering: false,
     currentTime: 0,
     duration: 180, // Duración predeterminada de 3 minutos para fines de demostración
     volume: 1,
@@ -78,7 +83,8 @@ export const usePlayerStore = create<PlayerState>()(
 
       // Iniciar un nuevo intervalo que actualiza currentTime cada 100ms
       const newIntervalId = setInterval(() => {
-        const { isPlaying, currentTime, duration } = get();
+        const { isPlaying, isBuffering, currentTime, duration } = get();
+        if (isBuffering) return; // Wait until audio actually starts playing
         if (isPlaying && currentTime < duration) {
           set({ currentTime: currentTime + 0.1 });
         } else if (currentTime >= duration) {
@@ -114,7 +120,7 @@ export const usePlayerStore = create<PlayerState>()(
     },
 
     // Acciones de control
-    play: (trackUrl) => {
+    play: (trackUrl, title) => {
       const {
         currentTrack,
         _stopProgressTimer,
@@ -128,20 +134,23 @@ export const usePlayerStore = create<PlayerState>()(
 
       // Si se proporciona una URL específica, reproducirla
       if (trackUrl) {
+        const isNewTrack = trackUrl !== currentTrack;
         set({
           currentTrack: trackUrl,
+          currentTrackTitle: title ?? get().currentTrackTitle,
           isPlaying: true,
-          currentTime: 0, // Reiniciar tiempo al comenzar una nueva pista
+          isBuffering: isNewTrack,
+          currentTime: isNewTrack ? 0 : get().currentTime,
         });
       } else {
         // Si no se proporciona URL, continuar con la pista actual
         if (currentTrack) {
-          set({ isPlaying: true });
+          set({ isPlaying: true, isBuffering: false });
         } else if (playlist.length > 0 && currentTrackIndex >= 0) {
-          // Si no hay pista actual pero hay una lista de reproducción, reproducir la pista actual
           set({
             currentTrack: playlist[currentTrackIndex],
             isPlaying: true,
+            isBuffering: true,
             currentTime: 0,
           });
         }
@@ -304,13 +313,16 @@ export const usePlayerStore = create<PlayerState>()(
     },
 
     // Acciones auxiliares
+    setBuffering: (buffering) => set({ isBuffering: buffering }),
     clearSeek: () => set({ seekTime: null }),
 
     reset: () => {
       get()._stopProgressTimer();
       set({
         currentTrack: null,
+        currentTrackTitle: null,
         isPlaying: false,
+        isBuffering: false,
         currentTime: 0,
         duration: 180,
         seekTime: null,
