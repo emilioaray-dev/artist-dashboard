@@ -94,8 +94,10 @@ async function HomePageContent() {
 
   // Calculate metrics if data is available
   const totalRevenue = sales?.totalRevenue || 0;
-  const revenueChange = sales?.revenueChange
-    ?? { percentage: 0, trend: "stable" as const };
+  const revenueChange = sales?.revenueChange ?? {
+    percentage: 0,
+    trend: "stable" as const,
+  };
 
   // Mock dashboard stats based on our data
   const mockDashboardStats = {

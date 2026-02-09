@@ -14,7 +14,9 @@ interface ReleasesPageContentProps {
   initialReleases?: Release[];
 }
 
-function ReleasesPageInner({ initialReleases }: Readonly<ReleasesPageContentProps>) {
+function ReleasesPageInner({
+  initialReleases,
+}: Readonly<ReleasesPageContentProps>) {
   const { data: releases, isLoading, error: isError } = useReleases();
   const t = useTranslations("Releases");
   const tCommon = useTranslations("Common");

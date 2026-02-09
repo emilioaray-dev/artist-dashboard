@@ -17,7 +17,10 @@ interface TrackListEditorProps {
   onChange: (tracks: Track[]) => void;
 }
 
-export function TrackListEditor({ tracks, onChange }: Readonly<TrackListEditorProps>) {
+export function TrackListEditor({
+  tracks,
+  onChange,
+}: Readonly<TrackListEditorProps>) {
   const t = useTranslations("ReleaseUpload");
 
   const addTrack = () => {

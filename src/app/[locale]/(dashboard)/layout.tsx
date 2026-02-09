@@ -16,7 +16,9 @@ interface ClientLayoutProps {
   children: ReactNode;
 }
 
-export default function ClientLayout({ children }: Readonly<ClientLayoutProps>) {
+export default function ClientLayout({
+  children,
+}: Readonly<ClientLayoutProps>) {
   const locale = useLocale();
 
   useEffect(() => {
@@ -31,9 +33,7 @@ export default function ClientLayout({ children }: Readonly<ClientLayoutProps>) 
               <Sidebar />
             </Suspense>
             <DashboardHeader />
-            <MainLayout>
-              {children}
-            </MainLayout>
+            <MainLayout>{children}</MainLayout>
             <DynamicAudioPlayer />
           </div>
           <Suspense fallback={null}>
