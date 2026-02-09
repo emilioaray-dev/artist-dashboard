@@ -20,7 +20,7 @@ describe("Utility Functions", () => {
   describe("formatCurrency", () => {
     it("formats cents to currency format", () => {
       expect(formatCurrency(100)).toBe("$1"); // 100 cents = $1
-      expect(formatCurrency(150)).toBe("$1.5"); // 150 cents = $1.50
+      expect(formatCurrency(150)).toBe("$1.50"); // 150 cents = $1.50
       expect(formatCurrency(10000)).toBe("$100"); // 10000 cents = $100
       expect(formatCurrency(1234567)).toBe("$12,345.67"); // 1234567 cents = $12,345.67
     });

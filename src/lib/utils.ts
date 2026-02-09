@@ -30,10 +30,11 @@ export function formatNumber(num: number, locale = "en"): string {
  */
 export function formatCurrency(cents: number, locale = "en"): string {
   const dollars = cents / 100;
+  const hasCents = cents % 100 !== 0;
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "USD",
-    minimumFractionDigits: 0,
+    minimumFractionDigits: hasCents ? 2 : 0,
     maximumFractionDigits: 2,
   }).format(dollars);
 }

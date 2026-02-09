@@ -32,7 +32,7 @@ describe("Utility Functions", () => {
   describe("formatCurrency", () => {
     it("should format cents to currency format", () => {
       expect(formatCurrency(100)).toBe("$1");
-      expect(formatCurrency(150)).toBe("$1.5");
+      expect(formatCurrency(150)).toBe("$1.50");
       expect(formatCurrency(12345)).toBe("$123.45");
       expect(formatCurrency(0)).toBe("$0");
     });

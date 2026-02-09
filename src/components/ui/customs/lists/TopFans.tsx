@@ -12,9 +12,9 @@ type TopFansProps = {
 };
 
 const RANK_COLORS = [
-  "bg-amber-500 text-black",
-  "bg-orange-500 text-white",
-  "bg-yellow-600 text-white",
+  "bg-amber-400 text-black",
+  "bg-slate-300 text-slate-800",
+  "bg-orange-700 text-white",
 ];
 
 /**
@@ -72,7 +72,7 @@ export function TopFans({ fans, className }: Readonly<TopFansProps>) {
                     {t("purchases", { count: fan.purchaseCount })}
                   </p>
                 </div>
-                <span className="text-primary flex-shrink-0 text-sm font-semibold">
+                <span className="flex-shrink-0 text-sm font-semibold text-emerald-400">
                   {formatCurrency(fan.totalSpent, locale)}
                 </span>
               </div>
