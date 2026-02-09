@@ -38,7 +38,7 @@ const initialTracks: Track[] = [
 export function ReleaseUploadDialog({
   open,
   onOpenChange,
-}: ReleaseUploadDialogProps) {
+}: Readonly<ReleaseUploadDialogProps>) {
   const t = useTranslations("ReleaseUpload");
 
   const [releaseType, setReleaseType] = useState<"single" | "album_ep">(

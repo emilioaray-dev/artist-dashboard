@@ -16,9 +16,9 @@ export function generateWaveformData(
   // Create a numeric seed from the string
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
-    const char = seed.charCodeAt(i);
+    const char = seed.codePointAt(i) ?? 0;
     hash = (hash << 5) - hash + char;
-    hash |= 0; // Convert to 32bit integer
+    hash = Math.trunc(hash); // Convert to 32bit integer
   }
 
   // Normalize the hash to a positive value
@@ -46,9 +46,9 @@ export function generateWaveformData(
 function createSeedFromId(releaseId: string): number {
   let hash = 0;
   for (let i = 0; i < releaseId.length; i++) {
-    const char = releaseId.charCodeAt(i);
+    const char = releaseId.codePointAt(i) ?? 0;
     hash = (hash << 5) - hash + char;
-    hash |= 0; // Convert to 32bit integer
+    hash = Math.trunc(hash); // Convert to 32bit integer
   }
   return Math.abs(hash);
 }

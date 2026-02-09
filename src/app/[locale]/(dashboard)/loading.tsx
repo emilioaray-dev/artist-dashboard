@@ -6,8 +6,8 @@ export default function Loading() {
         <div className="bg-muted mt-2 h-4 w-64 animate-pulse rounded" />
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="bg-muted h-28 animate-pulse rounded-xl" />
+        {Array.from({ length: 4 }, (_, i) => (
+          <div key={`card-${i}`} className="bg-muted h-28 animate-pulse rounded-xl" />
         ))}
       </div>
     </div>

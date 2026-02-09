@@ -66,15 +66,6 @@ export const AnimatedElement: React.FC<CustomMotionProps> = ({
             },
           },
         };
-
-      default:
-        return {
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { duration, delay },
-          },
-        };
     }
   };
 

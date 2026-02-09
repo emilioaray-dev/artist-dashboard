@@ -1,4 +1,4 @@
-import { Release, SalesSummary, EngagementMetrics, ApiResponse } from "@/types";
+import { Release, SalesSummary, EngagementMetrics, ApiResponse, Fan } from "@/types";
 
 // Import mock data
 import { mockReleases } from "@/__mocks__/releases";
@@ -9,7 +9,6 @@ import { mockFans } from "@/__mocks__/fans";
 /**
  * Abstract interface for data service
  */
-import { Fan } from "@/types";
 
 export interface IDataService {
   getReleases(): Promise<ApiResponse<Release[]>>;

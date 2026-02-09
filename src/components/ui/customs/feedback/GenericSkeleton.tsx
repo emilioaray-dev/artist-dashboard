@@ -16,6 +16,8 @@ interface GenericSkeletonProps extends SkeletonProps {
   variant?: SkeletonVariant;
 }
 
+const CHART_BAR_WIDTHS = ["w-full", "w-5/6", "w-4/6", "w-3/6", "w-2/6"] as const;
+
 /**
  * Componente genérico de skeleton para diferentes tipos de contenido
  * Permite estandarizar los estados de carga en toda la aplicación
@@ -44,20 +46,10 @@ export const GenericSkeleton: React.FC<GenericSkeletonProps> = ({
           <div className="bg-card rounded-xl border p-6">
             <Skeleton className="mb-6 h-6 w-1/4" />
             <div className="space-y-4">
-              {[...Array(5)].map((_, i) => (
+              {CHART_BAR_WIDTHS.map((width) => (
                 <Skeleton
-                  key={i}
-                  className={`h-4 ${
-                    i === 0
-                      ? "w-full"
-                      : i === 1
-                        ? "w-5/6"
-                        : i === 2
-                          ? "w-4/6"
-                          : i === 3
-                            ? "w-3/6"
-                            : "w-2/6"
-                  }`}
+                  key={width}
+                  className={`h-4 ${width}`}
                 />
               ))}
             </div>
@@ -99,8 +91,8 @@ export const GenericSkeleton: React.FC<GenericSkeletonProps> = ({
   if (count > 1) {
     return (
       <div className={className}>
-        {[...Array(count)].map((_, index) => (
-          <div key={index} className="mb-2 last:mb-0">
+        {Array.from({ length: count }, (_, index) => (
+          <div key={`skeleton-${index}`} className="mb-2 last:mb-0">
             {renderSkeletonByVariant()}
           </div>
         ))}

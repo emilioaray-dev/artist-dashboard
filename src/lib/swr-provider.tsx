@@ -36,6 +36,6 @@ interface SWRProviderProps {
   children: React.ReactNode;
 }
 
-export function SWRProvider({ children }: SWRProviderProps) {
+export function SWRProvider({ children }: Readonly<SWRProviderProps>) {
   return <SWRConfig value={swrGlobalConfig}>{children}</SWRConfig>;
 }

@@ -14,7 +14,7 @@ type StaggerContainerProps = {
 export function StaggerContainer({
   children,
   className,
-}: StaggerContainerProps) {
+}: Readonly<StaggerContainerProps>) {
   return (
     <motion.div
       className={className}

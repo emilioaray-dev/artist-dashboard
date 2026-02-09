@@ -1,7 +1,4 @@
 import {
-  Release, // eslint-disable-line @typescript-eslint/no-unused-vars
-  SalesSummary, // eslint-disable-line @typescript-eslint/no-unused-vars
-  EngagementMetrics, // eslint-disable-line @typescript-eslint/no-unused-vars
   ReleasesResponse,
   SalesResponse,
   EngagementResponse,
@@ -15,9 +12,9 @@ export async function fetchReleases(): Promise<ReleasesResponse> {
   try {
     // Use absolute URL for server-side compatibility
     const apiUrl =
-      typeof window !== "undefined"
-        ? "/api/releases"
-        : `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/releases`;
+      globalThis.window === undefined
+        ? `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/releases`
+        : "/api/releases";
 
     const response = await fetch(apiUrl);
     const data: ReleasesResponse = await response.json();
@@ -45,9 +42,9 @@ export async function fetchSales(
   try {
     // Use absolute URL for server-side compatibility
     const apiUrl =
-      typeof window !== "undefined"
-        ? `/api/sales?range=${range}`
-        : `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/sales?range=${range}`;
+      globalThis.window === undefined
+        ? `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/sales?range=${range}`
+        : `/api/sales?range=${range}`;
 
     const response = await fetch(apiUrl);
     const data: SalesResponse = await response.json();
@@ -72,9 +69,9 @@ export async function fetchEngagement(): Promise<EngagementResponse> {
   try {
     // Use absolute URL for server-side compatibility
     const apiUrl =
-      typeof window !== "undefined"
-        ? "/api/engagement"
-        : `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/engagement`;
+      globalThis.window === undefined
+        ? `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/engagement`
+        : "/api/engagement";
 
     const response = await fetch(apiUrl);
     const data: EngagementResponse = await response.json();

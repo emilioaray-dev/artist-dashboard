@@ -26,7 +26,7 @@ describe("DataService", () => {
 
     it("should handle errors gracefully", async () => {
       // Mock an error scenario
-      vi.spyOn(global, "setTimeout").mockImplementation((callback) => {
+      vi.spyOn(globalThis, "setTimeout").mockImplementation((callback) => {
         callback();
         return 0 as unknown as ReturnType<typeof setTimeout>;
       });

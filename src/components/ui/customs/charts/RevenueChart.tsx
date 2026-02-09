@@ -31,7 +31,7 @@ type RevenueChartProps = {
  * Revenue chart with time range tabs and clickable legend
  * Uses shadcn/ui AreaChart with Gross vs Net lines
  */
-export function RevenueChart({ initialSalesData }: RevenueChartProps) {
+export function RevenueChart({ initialSalesData }: Readonly<RevenueChartProps>) {
   const locale = useLocale();
   const t = useTranslations("Formats");
   const tCommon = useTranslations("Common");

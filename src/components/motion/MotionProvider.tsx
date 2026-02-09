@@ -10,7 +10,7 @@ type MotionProviderProps = {
  * Provides motion context for the entire application
  * Wraps children with LazyMotion for bundle optimization and MotionConfig for accessibility
  */
-export function MotionProvider({ children }: MotionProviderProps) {
+export function MotionProvider({ children }: Readonly<MotionProviderProps>) {
   return (
     <LazyMotion features={domAnimation}>
       <MotionConfig reducedMotion="user">{children}</MotionConfig>

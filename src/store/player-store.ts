@@ -142,18 +142,16 @@ export const usePlayerStore = create<PlayerState>()(
           isBuffering: isNewTrack,
           currentTime: isNewTrack ? 0 : get().currentTime,
         });
-      } else {
-        // Si no se proporciona URL, continuar con la pista actual
-        if (currentTrack) {
-          set({ isPlaying: true, isBuffering: false });
-        } else if (playlist.length > 0 && currentTrackIndex >= 0) {
-          set({
-            currentTrack: playlist[currentTrackIndex],
-            isPlaying: true,
-            isBuffering: true,
-            currentTime: 0,
-          });
-        }
+      } else if (currentTrack) {
+        // Continuar con la pista actual
+        set({ isPlaying: true, isBuffering: false });
+      } else if (playlist.length > 0 && currentTrackIndex >= 0) {
+        set({
+          currentTrack: playlist[currentTrackIndex],
+          isPlaying: true,
+          isBuffering: true,
+          currentTime: 0,
+        });
       }
 
       // Iniciar el temporizador de progreso
@@ -280,7 +278,7 @@ export const usePlayerStore = create<PlayerState>()(
     },
 
     addToPlaylist: (track) => {
-      const { playlist, currentTrackIndex } = get();
+      const { playlist } = get();
       const newPlaylist = [...playlist, track];
       set({ playlist: newPlaylist });
       // Si era la primera pista, establecerla como actual

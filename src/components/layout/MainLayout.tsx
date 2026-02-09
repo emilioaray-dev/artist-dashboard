@@ -8,7 +8,7 @@ interface MainLayoutProps {
   children: ReactNode;
 }
 
-export function MainLayout({ children }: MainLayoutProps) {
+export function MainLayout({ children }: Readonly<MainLayoutProps>) {
   const { collapsed } = useSidebar();
   const isPlaying = usePlayerStore((s) => s.isPlaying);
 

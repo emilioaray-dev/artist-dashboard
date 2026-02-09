@@ -18,7 +18,7 @@ type ReleasesGridProps = {
  * Responsive grid of releases with 3 cols desktop, 2 tablet, 1 mobile
  * StaggerContainer wrapping FadeIn children
  */
-export function ReleasesGrid({ releases, onAddRelease }: ReleasesGridProps) {
+export function ReleasesGrid({ releases, onAddRelease }: Readonly<ReleasesGridProps>) {
   const t = useTranslations("Releases");
   const tCommon = useTranslations("Common");
 

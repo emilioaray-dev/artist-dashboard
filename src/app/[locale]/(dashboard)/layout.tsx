@@ -16,7 +16,7 @@ interface ClientLayoutProps {
   children: ReactNode;
 }
 
-export default function ClientLayout({ children }: ClientLayoutProps) {
+export default function ClientLayout({ children }: Readonly<ClientLayoutProps>) {
   const locale = useLocale();
 
   useEffect(() => {
