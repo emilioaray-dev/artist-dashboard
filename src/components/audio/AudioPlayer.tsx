@@ -2,10 +2,8 @@
 
 import { useSidebar } from "@/hooks/useSidebar";
 import { usePlayerStore } from "@/store/player-store";
-import { useEffect, useRef } from "react";
 
 export function AudioPlayer() {
-  const audioRef = useRef<HTMLAudioElement>(null);
   const { collapsed } = useSidebar();
   const {
     currentTrack,
@@ -14,128 +12,14 @@ export function AudioPlayer() {
     currentTime,
     duration,
     volume,
-    seekTime,
-    setCurrentTime,
-    setDuration,
-    setBuffering,
-    clearSeek,
     pause,
     play,
+    seekTo,
   } = usePlayerStore();
-
-  // Update audio element when track changes
-  useEffect(() => {
-    if (audioRef.current && currentTrack) {
-      // Pause before changing the source to prevent conflicts
-      audioRef.current.pause();
-
-      // Update the source and load the new track
-      audioRef.current.src = currentTrack;
-      audioRef.current.load();
-
-      // Reset time to 0 when changing tracks
-      setCurrentTime(0);
-    }
-  }, [currentTrack, setCurrentTime]);
-
-  // Handle play/pause
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      if (currentTrack) {
-        audio.play().catch((e) => {
-          if (e.name !== "AbortError") {
-            console.error("Audio play error:", e);
-          }
-        });
-      }
-    } else {
-      audio.pause();
-    }
-  }, [isPlaying, currentTrack]);
-
-  // Clear buffering when audio actually starts playing
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const handlePlaying = () => setBuffering(false);
-
-    audio.addEventListener("playing", handlePlaying);
-    return () => {
-      audio.removeEventListener("playing", handlePlaying);
-    };
-  }, [setBuffering]);
-
-  // Handle time updates
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateTime = () => {
-      setCurrentTime(audio.currentTime);
-    };
-
-    audio.addEventListener("timeupdate", updateTime);
-    return () => {
-      audio.removeEventListener("timeupdate", updateTime);
-    };
-  }, [setCurrentTime]);
-
-  // Handle when track ends
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const handleEnded = () => {
-      pause();
-      setCurrentTime(0);
-    };
-
-    audio.addEventListener("ended", handleEnded);
-    return () => {
-      audio.removeEventListener("ended", handleEnded);
-    };
-  }, [pause, setCurrentTime]);
-
-  // Handle duration change
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateDuration = () => {
-      setDuration(audio.duration);
-    };
-
-    audio.addEventListener("loadedmetadata", updateDuration);
-    return () => {
-      audio.removeEventListener("loadedmetadata", updateDuration);
-    };
-  }, [setDuration]);
-
-  // Handle volume changes
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
-
-  // Handle seek requests from waveform or other components
-  useEffect(() => {
-    if (seekTime !== null && audioRef.current) {
-      audioRef.current.currentTime = seekTime;
-      clearSeek();
-    }
-  }, [seekTime, clearSeek]);
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = Number.parseFloat(e.target.value);
-    setCurrentTime(newTime);
-    if (audioRef.current) {
-      audioRef.current.currentTime = newTime;
-    }
+    seekTo(newTime);
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,23 +39,13 @@ export function AudioPlayer() {
 
   return (
     <div
-      className={`bg-background fixed right-0 bottom-[var(--mobile-nav-height)] left-0 z-50 border-t px-4 transition-all duration-300 md:bottom-0 ${collapsed ? "md:ml-16" : "md:ml-60"} ${
+      className={`bg-background fixed right-0 bottom-(--mobile-nav-height) left-0 z-50 border-t px-4 transition-all duration-300 md:bottom-0 ${collapsed ? "md:ml-16" : "md:ml-60"} ${
         isPlaying
           ? "translate-y-0"
           : "translate-y-[calc(100%+var(--mobile-nav-height))] md:translate-y-full"
       }`}
     >
       <div className="container mx-auto flex h-14 items-center gap-4">
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <audio
-          ref={audioRef}
-          src={currentTrack}
-          onEnded={() => {
-            pause();
-            setCurrentTime(0);
-          }}
-        />
-
         <div className="flex min-w-0 flex-1 items-center gap-3">
           <button
             onClick={() => (isPlaying ? pause() : play(currentTrack))}

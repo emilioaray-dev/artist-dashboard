@@ -9,6 +9,40 @@ function secureRandomInt(max: number): number {
   return Math.floor(Math.random() * max);
 }
 
+// ---------------------------------------------------------------------------
+// Singleton HTMLAudioElement — lives at module scope, outside the React tree.
+// This ensures playback survives component remounts (e.g. locale changes).
+// ---------------------------------------------------------------------------
+let audioEl: HTMLAudioElement | null = null;
+
+function getAudioElement(): HTMLAudioElement | null {
+  if (globalThis.window === undefined) return null;
+  if (!audioEl) {
+    audioEl = new Audio();
+    audioEl.preload = "auto";
+
+    // Sync real audio events back into the Zustand store
+    audioEl.addEventListener("timeupdate", () => {
+      usePlayerStore.setState({ currentTime: audioEl!.currentTime });
+    });
+    audioEl.addEventListener("loadedmetadata", () => {
+      usePlayerStore.setState({ duration: audioEl!.duration });
+    });
+    audioEl.addEventListener("playing", () => {
+      usePlayerStore.setState({ isBuffering: false });
+    });
+    audioEl.addEventListener("waiting", () => {
+      usePlayerStore.setState({ isBuffering: true });
+    });
+    audioEl.addEventListener("ended", () => {
+      const s = usePlayerStore.getState();
+      s.pause();
+      s.setCurrentTime(0);
+    });
+  }
+  return audioEl;
+}
+
 // Player state types
 interface PlayerState {
   currentTrack: string | null;
@@ -140,6 +174,8 @@ export const usePlayerStore = create<PlayerState>()(
       // Stop any existing timer
       _stopProgressTimer();
 
+      const audio = getAudioElement();
+
       // If a specific URL is provided, play it
       if (trackUrl) {
         const isNewTrack = trackUrl !== currentTrack;
@@ -150,16 +186,38 @@ export const usePlayerStore = create<PlayerState>()(
           isBuffering: isNewTrack,
           currentTime: isNewTrack ? 0 : get().currentTime,
         });
+        if (audio) {
+          if (isNewTrack) {
+            audio.src = trackUrl;
+            audio.load();
+          }
+          audio.play()?.catch((e) => {
+            if (e.name !== "AbortError") console.error("Audio play error:", e);
+          });
+        }
       } else if (currentTrack) {
         // Resume the current track
         set({ isPlaying: true, isBuffering: false });
+        if (audio) {
+          audio.play()?.catch((e) => {
+            if (e.name !== "AbortError") console.error("Audio play error:", e);
+          });
+        }
       } else if (playlist.length > 0 && currentTrackIndex >= 0) {
+        const track = playlist[currentTrackIndex];
         set({
-          currentTrack: playlist[currentTrackIndex],
+          currentTrack: track,
           isPlaying: true,
           isBuffering: true,
           currentTime: 0,
         });
+        if (audio) {
+          audio.src = track;
+          audio.load();
+          audio.play()?.catch((e) => {
+            if (e.name !== "AbortError") console.error("Audio play error:", e);
+          });
+        }
       }
 
       // Start the progress timer
@@ -169,6 +227,8 @@ export const usePlayerStore = create<PlayerState>()(
     pause: () => {
       get()._stopProgressTimer();
       set({ isPlaying: false });
+      const audio = getAudioElement();
+      if (audio) audio.pause();
     },
 
     togglePlayPause: () => {
@@ -183,6 +243,11 @@ export const usePlayerStore = create<PlayerState>()(
     stop: () => {
       get()._stopProgressTimer();
       set({ isPlaying: false, currentTime: 0 });
+      const audio = getAudioElement();
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
     },
 
     next: () => {
@@ -252,7 +317,11 @@ export const usePlayerStore = create<PlayerState>()(
 
     setDuration: (duration) => set({ duration }),
 
-    seekTo: (time) => set({ seekTime: time, currentTime: time }),
+    seekTo: (time) => {
+      set({ seekTime: time, currentTime: time });
+      const audio = getAudioElement();
+      if (audio) audio.currentTime = time;
+    },
 
     skipForward: (seconds = 10) => {
       const { currentTime, duration } = get();
@@ -267,15 +336,27 @@ export const usePlayerStore = create<PlayerState>()(
     },
 
     // Volume and speed actions
-    setVolume: (volume) => set({ volume: Math.max(0, Math.min(1, volume)) }), // Clamp between 0 and 1
+    setVolume: (volume) => {
+      const clamped = Math.max(0, Math.min(1, volume));
+      set({ volume: clamped });
+      const audio = getAudioElement();
+      if (audio) audio.volume = clamped;
+    },
 
     toggleMute: () => {
       const { volume } = get();
-      set({ volume: volume > 0 ? 0 : 0.7 }); // If muted, set to medium volume
+      const newVolume = volume > 0 ? 0 : 0.7;
+      set({ volume: newVolume });
+      const audio = getAudioElement();
+      if (audio) audio.volume = newVolume;
     },
 
-    setPlaybackRate: (rate) =>
-      set({ playbackRate: Math.max(0.5, Math.min(2, rate)) }), // Clamp between 0.5x and 2x
+    setPlaybackRate: (rate) => {
+      const clamped = Math.max(0.5, Math.min(2, rate));
+      set({ playbackRate: clamped });
+      const audio = getAudioElement();
+      if (audio) audio.playbackRate = clamped;
+    },
 
     // Playlist actions
     setPlaylist: (tracks) => {
@@ -324,6 +405,12 @@ export const usePlayerStore = create<PlayerState>()(
 
     reset: () => {
       get()._stopProgressTimer();
+      const audio = getAudioElement();
+      if (audio) {
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+      }
       set({
         currentTrack: null,
         currentTrackTitle: null,
