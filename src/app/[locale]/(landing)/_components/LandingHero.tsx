@@ -25,7 +25,13 @@ export function LandingHero() {
           className="h-full w-full object-cover object-[75%_center] md:object-center"
         >
           <source src="/video/landing-cover.mp4" type="video/mp4" />
-          <track kind="captions" src="/video/landing-cover-captions.vtt" srcLang="en" label="English" default />
+          <track
+            kind="captions"
+            src="/video/landing-cover-captions.vtt"
+            srcLang="en"
+            label="English"
+            default
+          />
         </video>
         <div className="from-background via-background/85 to-background/40 absolute inset-0 bg-gradient-to-r" />
         <div className="from-background absolute inset-0 bg-gradient-to-t via-transparent to-transparent" />

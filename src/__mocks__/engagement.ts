@@ -44,7 +44,11 @@ const fanGrowthAbsolute = totalFans - initialFanCount;
 const fanGrowthPercentage = (fanGrowthAbsolute / initialFanCount) * 100;
 type Trend = "up" | "down" | "stable";
 
-function getTrend(value: number, upperThreshold: number, lowerThreshold: number): Trend {
+function getTrend(
+  value: number,
+  upperThreshold: number,
+  lowerThreshold: number,
+): Trend {
   if (value > upperThreshold) return "up";
   if (value < lowerThreshold) return "down";
   return "stable";

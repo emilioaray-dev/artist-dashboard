@@ -53,14 +53,16 @@ export function RecentReleasesList({
           return (
             <div
               key={release.id}
-              className="hover:bg-accent/5 block rounded-lg border p-4 hover:shadow-sm"
+              className="hover:bg-accent/5 rounded-lg border p-4 hover:shadow-sm"
             >
-              <div className="flex flex-col items-center gap-4 md:flex-row">
+              <div className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-1 md:flex md:items-center md:gap-4">
+                {/* Link: contents on mobile (children become grid items), flex on desktop */}
                 <Link
                   href={ROUTES.releaseDetail(release.id)}
-                  className="flex flex-1 items-center gap-4 sm:w-full md:w-fit"
+                  className="contents md:flex md:flex-1 md:items-center md:gap-4"
                 >
-                  <div className="relative size-16 overflow-hidden rounded-md">
+                  {/* Cover — spans 2 rows on mobile grid */}
+                  <div className="relative row-span-2 size-16 self-start overflow-hidden rounded-md md:row-auto md:self-auto">
                     {release.coverArtUrl ? (
                       <Image
                         src={release.coverArtUrl}
@@ -79,12 +81,16 @@ export function RecentReleasesList({
                     )}
                   </div>
 
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-start justify-between">
-                      <h3 className="truncate font-medium">{release.title}</h3>
+                  {/* Info — contents on mobile, block on desktop */}
+                  <div className="contents md:block md:min-w-0 md:flex-1">
+                    {/* Title + Badge */}
+                    <div className="contents md:flex md:items-start md:justify-between">
+                      <h3 className="min-w-0 truncate font-medium">
+                        {release.title}
+                      </h3>
                       <span
                         className={cn(
-                          "ml-2 inline-flex items-center rounded-full px-2 py-1 text-xs font-medium text-white",
+                          "inline-flex items-center justify-self-end rounded-full px-2 py-1 text-xs font-medium text-white md:ml-2 md:justify-self-auto",
                           STATUS_COLORS[release.status],
                         )}
                       >
@@ -92,15 +98,22 @@ export function RecentReleasesList({
                       </span>
                     </div>
 
-                    <p className="text-muted-foreground mt-1 text-xs">
+                    {/* Date */}
+                    <p className="text-muted-foreground col-span-2 text-xs md:col-auto md:mt-1">
                       {formatDate(release.releaseDate, locale)}
                     </p>
 
-                    <div className="mt-2 flex items-center justify-between">
-                      <span className="font-medium">
+                    {/* Revenue + Trend */}
+                    <div className="contents md:mt-2 md:flex md:items-center md:justify-between">
+                      <span className="col-span-2 font-medium md:col-auto">
                         {formatCurrency(release.totalRevenue, locale)}
                       </span>
-                      <span className={cn("text-xs font-medium", trendColor)}>
+                      <span
+                        className={cn(
+                          "justify-self-end pr-2 text-xs font-medium md:justify-self-auto md:pr-0",
+                          trendColor,
+                        )}
+                      >
                         {trendIcon}{" "}
                         {(release.totalRevenue / 1000000).toFixed(1)}M
                       </span>
@@ -108,8 +121,8 @@ export function RecentReleasesList({
                   </div>
                 </Link>
 
-                {/* Audio player */}
-                <div className="ml-4">
+                {/* Audio Waveform — spans all grid cols on mobile */}
+                <div className="col-span-3 md:col-auto md:ml-4">
                   <AudioWaveform release={release} />
                 </div>
               </div>

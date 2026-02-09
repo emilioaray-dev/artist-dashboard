@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/core/button";
 import { useSidebar } from "@/hooks/useSidebar";
-import { BRAND_NAME, NAV_ITEMS } from "@/lib/constants";
+import { BRAND_NAME, NAV_ITEMS, ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Link, usePathname } from "@/i18n/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -30,7 +30,7 @@ export function Sidebar() {
     >
       <div className="flex h-16 items-center justify-between border-b px-4">
         {!collapsed && (
-          <div className="flex items-center gap-2">
+          <Link href={ROUTES.overview} className="flex items-center gap-2">
             <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
               <span className="text-primary-foreground text-sm font-bold">
                 {BRAND_NAME[0]}
@@ -39,14 +39,16 @@ export function Sidebar() {
             <span className="text-foreground text-lg font-semibold">
               Backstage
             </span>
-          </div>
+          </Link>
         )}
         {collapsed && (
-          <div className="bg-primary mx-auto flex h-8 w-8 items-center justify-center rounded-lg">
-            <span className="text-primary-foreground text-sm font-bold">
-              {BRAND_NAME[0]}
-            </span>
-          </div>
+          <Link href={ROUTES.overview} className="mx-auto">
+            <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+              <span className="text-primary-foreground text-sm font-bold">
+                {BRAND_NAME[0]}
+              </span>
+            </div>
+          </Link>
         )}
       </div>
       <nav className="flex-1 p-3">

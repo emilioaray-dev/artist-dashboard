@@ -112,9 +112,10 @@ export default function SettingsPageClient() {
                 className="group relative"
               >
                 <Avatar size="lg" className="size-16">
-                  {avatarPreview ? (
-                    <AvatarImage src={avatarPreview} alt={t("avatar")} />
-                  ) : null}
+                  <AvatarImage
+                    src={avatarPreview || "/avatars/user.jpg"}
+                    alt={t("avatar")}
+                  />
                   <AvatarFallback className="text-lg">MA</AvatarFallback>
                 </Avatar>
                 <div className="bg-background/80 absolute inset-0 flex items-center justify-center rounded-full opacity-0 transition-opacity group-hover:opacity-100">

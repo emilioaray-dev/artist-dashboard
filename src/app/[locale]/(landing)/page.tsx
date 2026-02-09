@@ -28,8 +28,10 @@ export default function LandingPage() {
   return (
     <div className="bg-background text-foreground landing-page min-h-dvh">
       <LandingHeader />
-      <LandingHero />
-      <LandingFeatures />
+      <main>
+        <LandingHero />
+        <LandingFeatures />
+      </main>
       <LandingFooter />
     </div>
   );

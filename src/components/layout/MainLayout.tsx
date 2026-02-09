@@ -14,6 +14,7 @@ export function MainLayout({ children }: Readonly<MainLayoutProps>) {
 
   return (
     <main
+      tabIndex={0}
       className={`relative flex-1 overflow-x-hidden overflow-y-auto pr-4 pl-4 transition-all duration-300 md:pr-6 md:pb-12 md:pl-6 ${collapsed ? "md:ml-16" : "md:ml-60"} ${
         isPlaying
           ? "pb-[calc(var(--mobile-nav-height)+var(--audio-player-height)+1rem)]"

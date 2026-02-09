@@ -26,7 +26,9 @@ type FanGrowthChartProps = {
  * Fan growth chart with Total vs Active fans lines
  * Amber gradient fill, tooltips, responsive, FadeIn wrapper
  */
-export function FanGrowthChart({ engagementData }: Readonly<FanGrowthChartProps>) {
+export function FanGrowthChart({
+  engagementData,
+}: Readonly<FanGrowthChartProps>) {
   const locale = useLocale();
   const t = useTranslations("Fans");
   const tFormats = useTranslations("Formats");

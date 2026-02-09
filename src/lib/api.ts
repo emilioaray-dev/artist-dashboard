@@ -1,8 +1,4 @@
-import {
-  ReleasesResponse,
-  SalesResponse,
-  EngagementResponse,
-} from "@/types";
+import { ReleasesResponse, SalesResponse, EngagementResponse } from "@/types";
 
 /**
  * Fetches releases from the API

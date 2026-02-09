@@ -14,14 +14,27 @@ type AudioWaveformProps = Readonly<{
   className?: string;
 }>;
 
-function getPlayButtonLabel(isCurrentTrack: boolean, isBuffering: boolean, isPlaying: boolean) {
+function getPlayButtonLabel(
+  isCurrentTrack: boolean,
+  isBuffering: boolean,
+  isPlaying: boolean,
+) {
   if (isCurrentTrack && isBuffering) return "Loading";
   if (isCurrentTrack && isPlaying) return "Pause";
   return "Play";
 }
 
-function PlayButtonIcon({ isCurrentTrack, isBuffering, isPlaying }: Readonly<{ isCurrentTrack: boolean; isBuffering: boolean; isPlaying: boolean }>) {
-  if (isCurrentTrack && isBuffering) return <Loader2 className="size-4 animate-spin" />;
+function PlayButtonIcon({
+  isCurrentTrack,
+  isBuffering,
+  isPlaying,
+}: Readonly<{
+  isCurrentTrack: boolean;
+  isBuffering: boolean;
+  isPlaying: boolean;
+}>) {
+  if (isCurrentTrack && isBuffering)
+    return <Loader2 className="size-4 animate-spin" />;
   if (isCurrentTrack && isPlaying) return <Pause className="size-4" />;
   return <Play className="size-4" />;
 }
@@ -227,9 +240,10 @@ export function AudioWaveform({ release, className }: AudioWaveformProps) {
                   previewPercent !== null &&
                   barPosition <= previewPercent * 100;
 
-                const barColor = (isPlayed || (showPreview && isInPreview))
-                  ? "var(--primaryDark)"
-                  : "var(--muted)";
+                const barColor =
+                  isPlayed || (showPreview && isInPreview)
+                    ? "var(--primaryDark)"
+                    : "var(--muted)";
 
                 return (
                   <motion.rect
@@ -241,14 +255,12 @@ export function AudioWaveform({ release, className }: AudioWaveformProps) {
                     rx="2"
                     fill={barColor}
                     animate={{
-                      scaleY:
-                        isActive && !isDragging ? [1, 1.3, 1] : 1,
+                      scaleY: isActive && !isDragging ? [1, 1.3, 1] : 1,
                       originY: "center",
                     }}
                     transition={{
                       duration: 0.5,
-                      repeat:
-                        isActive && !isDragging ? Infinity : 0,
+                      repeat: isActive && !isDragging ? Infinity : 0,
                       delay: index * 0.02,
                       ease: "easeInOut",
                     }}
@@ -285,9 +297,17 @@ export function AudioWaveform({ release, className }: AudioWaveformProps) {
         <button
           onClick={handleToggle}
           className="bg-accent text-accent-foreground hover:bg-accent/90 focus:ring-accent flex size-8 items-center justify-center rounded-full focus:ring-2 focus:ring-offset-2 focus:outline-none"
-          aria-label={getPlayButtonLabel(isCurrentTrack, isBuffering, isPlaying)}
+          aria-label={getPlayButtonLabel(
+            isCurrentTrack,
+            isBuffering,
+            isPlaying,
+          )}
         >
-          <PlayButtonIcon isCurrentTrack={isCurrentTrack} isBuffering={isBuffering} isPlaying={isPlaying} />
+          <PlayButtonIcon
+            isCurrentTrack={isCurrentTrack}
+            isBuffering={isBuffering}
+            isPlaying={isPlaying}
+          />
         </button>
       </div>
       {/* Time indicators */}

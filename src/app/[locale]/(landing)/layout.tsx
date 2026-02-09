@@ -8,7 +8,9 @@ interface LandingLayoutProps {
   children: ReactNode;
 }
 
-export default function LandingLayout({ children }: Readonly<LandingLayoutProps>) {
+export default function LandingLayout({
+  children,
+}: Readonly<LandingLayoutProps>) {
   const locale = useLocale();
 
   useEffect(() => {

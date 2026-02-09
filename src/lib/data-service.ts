@@ -1,4 +1,10 @@
-import { Release, SalesSummary, EngagementMetrics, ApiResponse, Fan } from "@/types";
+import {
+  Release,
+  SalesSummary,
+  EngagementMetrics,
+  ApiResponse,
+  Fan,
+} from "@/types";
 
 // Import mock data
 import { mockReleases } from "@/__mocks__/releases";

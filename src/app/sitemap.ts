@@ -14,7 +14,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return locale === defaultLocale ? "" : `/${locale}`;
   }
 
-  function entry(path: string, priority: number, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] = "weekly") {
+  function entry(
+    path: string,
+    priority: number,
+    changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] = "weekly",
+  ) {
     return locales.map((locale) => ({
       url: `${SITE_PRODUCTION_URL}${localePrefix(locale)}${path}`,
       lastModified: new Date(),

@@ -5,7 +5,11 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { BRAND_NAME, ROUTES } from "@/lib/constants";
 import { Button } from "@/components/ui/core/button";
-import { Avatar, AvatarFallback } from "@/components/ui/core/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/core/avatar";
 import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import {
   DropdownMenu,
@@ -27,10 +31,13 @@ export function DashboardHeader() {
       className={`bg-card/80 border-border sticky top-0 z-40 flex h-16 items-center justify-between border-b px-4 backdrop-blur-sm transition-all duration-300 md:px-6 ${collapsed ? "md:ml-16" : "md:ml-60"}`}
     >
       {/* Brand - hidden on desktop since sidebar shows it, visible on mobile */}
-      <div className="flex items-center gap-2 md:hidden">
+      <Link
+        href={ROUTES.overview}
+        className="flex items-center gap-2 md:hidden"
+      >
         <span className="text-primary text-lg font-bold">{BRAND_NAME}</span>
         <span className="text-muted-foreground text-sm">Backstage</span>
-      </div>
+      </Link>
       <div className="hidden md:block" />
 
       {/* Right side: language + notifications + avatar */}
@@ -46,6 +53,7 @@ export function DashboardHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
               <Avatar size="default">
+                <AvatarImage src="/avatars/user.jpg" alt="Marco Alvarez" />
                 <AvatarFallback>MA</AvatarFallback>
               </Avatar>
             </Button>
