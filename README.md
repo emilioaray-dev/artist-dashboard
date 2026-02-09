@@ -228,7 +228,8 @@ specs/
 ├── 002-i18n-multi-language/  # Internationalization
 ├── 003-landing-page/         # Landing page
 ├── 004-dashboard-ui-ux/      # Dashboard UI/UX redesign
-└── 005-responsive-mobile-fix/ # Responsive mobile layout fixes
+├── 005-responsive-mobile-fix/ # Responsive mobile layout fixes
+└── 006-mobile-a11y-audio-persist/ # Mobile a11y, audio persistence & UI enhancements
 ```
 
 Each spec contains: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model.md`, and `quickstart.md`.
@@ -241,6 +242,7 @@ Each spec contains: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model
 - `feature/003-landing-page` - Landing page
 - `feature/004-dashboard-ui-ux` - Dashboard UI/UX redesign
 - `feature/005-responsive-mobile-fix` - Responsive mobile layout fixes
+- `fix/mobile-a11y-audio-improvements` - Mobile a11y, audio persistence & UI enhancements
 
 ## License
 
