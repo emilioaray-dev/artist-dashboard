@@ -76,3 +76,6 @@ jest.setup.ts
 # Local dev scripts/files
 generate-covers.js
 traks
+
+# Personal notes
+/notes/
