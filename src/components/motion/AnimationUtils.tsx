@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import React from "react";
 import { AnimationProps } from "@/types/component-types";
 
@@ -70,14 +70,14 @@ export const AnimatedElement: React.FC<CustomMotionProps> = ({
   };
 
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       animate="visible"
       variants={getVariants()}
       {...props}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 
