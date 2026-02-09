@@ -17,7 +17,7 @@ export function LandingHero() {
           loop
           muted
           playsInline
-          className="h-full w-full object-cover object-[70%_center] md:object-center"
+          className="h-full w-full object-cover object-[75%_center] md:object-center"
         >
           <source src="/video/landing-cover.mp4" type="video/mp4" />
         </video>
