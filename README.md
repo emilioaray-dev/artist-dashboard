@@ -1,9 +1,9 @@
 # Music Artist Dashboard
 
-[![Quality Gate Status](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=alert_status)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
-[![Coverage](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=coverage)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
-[![Bugs](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=bugs)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
-[![Code Smells](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=code_smells)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
+[![Quality Gate Status](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=alert_status&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
+[![Coverage](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=coverage&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
+[![Bugs](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=bugs&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
+[![Code Smells](https://sonarqube.celsiusaray.com/api/project_badges/measure?project=artist-dashboard&metric=code_smells&token=sqb_9034758a2cb82b124a041a587bf4e69ae21e38c9)](https://sonarqube.celsiusaray.com/dashboard?id=artist-dashboard)
 
 A modern dashboard for music artists to track releases, sales analytics, and fan engagement. Built as a Senior Frontend Engineer take-home assignment.
 
