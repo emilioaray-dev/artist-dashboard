@@ -99,10 +99,11 @@ export function LandingWebMCP() {
       "Get information about how to change the application language/locale. Returns instruction with available URLs.",
     annotations: READ_ONLY,
     handler: () => {
-      const t = useTranslations("WebMCP");
       const urls = ["/en/", "/es/", "/fr/", "/pt/"].join(", ");
+      // Using direct string formatting instead of useTranslations hook to comply with React Hooks rules
+      // The translations are handled in the client application that consumes this tool
       return {
-        instruction: t("localeChangeInstruction", { urls }),
+        instruction: `To change the language, navigate to one of these URLs: ${urls}. Example: Navigate to /es/ to switch to Spanish.`,
         availableUrls: ["/en/", "/es/", "/fr/", "/pt/"]
       };
     },
