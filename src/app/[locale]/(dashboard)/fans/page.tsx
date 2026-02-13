@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     title: "Fans | MUSIC Backstage",
     description: "Track your community growth and engagement",
     images: ["/images/android-chrome-512x512.png"],
+    site: "@musicbackstage",
   },
 };
 

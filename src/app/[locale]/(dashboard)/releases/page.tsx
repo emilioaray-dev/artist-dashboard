@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     title: "Releases | MUSIC Backstage",
     description: "Manage and track your exclusive drops",
     images: ["/images/android-chrome-512x512.png"],
+    site: "@musicbackstage",
   },
 };
 

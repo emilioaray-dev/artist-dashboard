@@ -32,6 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: t("metaTitle"),
       description: t("metaDescription"),
       images: ["/images/android-chrome-512x512.png"],
+      site: "@musicbackstage",
     },
   };
 }

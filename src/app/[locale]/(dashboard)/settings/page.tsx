@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     title: "Settings | MUSIC Backstage",
     description: "Manage your account settings and preferences",
     images: ["/images/android-chrome-512x512.png"],
+    site: "@musicbackstage",
   },
 };
 

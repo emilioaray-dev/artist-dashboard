@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       title: `${release.title} | MUSIC Backstage`,
       description: `Details for ${release.title} release`,
       images: [release.coverArtUrl || "/images/android-chrome-512x512.png"],
+      site: "@musicbackstage",
     },
   };
 }
