@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const EXPECTED_TOOLS = [
+const EXPECTED_DASHBOARD_TOOLS = [
   "get_user_locale",
   "get_releases",
   "get_release_by_id",
@@ -33,7 +33,7 @@ test.describe("WebMCP Tool Registration", () => {
       return mc.listTools().map((t) => t.name);
     });
 
-    for (const name of EXPECTED_TOOLS) {
+    for (const name of EXPECTED_DASHBOARD_TOOLS) {
       expect(toolNames).toContain(name);
     }
   });
@@ -77,7 +77,7 @@ test.describe("WebMCP Tool Registration", () => {
     });
 
     // Dashboard tools should not be registered on the landing page
-    for (const name of EXPECTED_TOOLS) {
+    for (const name of EXPECTED_DASHBOARD_TOOLS) {
       expect(toolNames).not.toContain(name);
     }
   });
