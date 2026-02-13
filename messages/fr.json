@@ -188,6 +188,12 @@
     "salesByChannel": "Ventes par canal",
     "revenue": "Revenus"
   },
+  "WebMCP": {
+    "playConfirmation": "Lire \"{title}\" ?",
+    "playDeclined": "L'utilisateur a refusé",
+    "trackNotFound": "Sortie introuvable : {id}",
+    "noAudioAvailable": "Aucun audio disponible pour : {title}"
+  },
   "Formats": {
     "timeRange7d": "7 jours",
     "timeRange30d": "30 jours",
