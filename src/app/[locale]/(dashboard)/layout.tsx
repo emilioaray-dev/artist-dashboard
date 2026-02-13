@@ -7,6 +7,7 @@ import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { MotionProvider } from "@/components/motion/MotionProvider";
+import { WebMCPProvider } from "@/components/webmcp/WebMCPProvider";
 import { SidebarProvider } from "@/hooks/useSidebar";
 import { SWRProvider } from "@/lib/swr-provider";
 import { useLocale } from "next-intl";
@@ -40,6 +41,7 @@ export default function ClientLayout({
             <MobileBottomNav />
           </Suspense>
           <AccessibilityChecker />
+          <WebMCPProvider />
         </SidebarProvider>
       </MotionProvider>
     </SWRProvider>

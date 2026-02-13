@@ -1,6 +1,7 @@
 "use client";
 
 import { MotionProvider } from "@/components/motion/MotionProvider";
+import { LandingWebMCP } from "@/components/webmcp/LandingWebMCP";
 import { useLocale } from "next-intl";
 import { ReactNode, useEffect } from "react";
 
@@ -17,5 +18,10 @@ export default function LandingLayout({
     document.documentElement.lang = locale;
   }, [locale]);
 
-  return <MotionProvider>{children}</MotionProvider>;
+  return (
+    <MotionProvider>
+      {children}
+      <LandingWebMCP />
+    </MotionProvider>
+  );
 }
