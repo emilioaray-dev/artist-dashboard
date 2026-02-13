@@ -100,6 +100,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the landing page and
 - [x] **Feature Cards** - 4 animated cards showcasing platform features with scroll-triggered animations
 - [x] **Fixed Header** - Logo, language selector, and "Try Demo" button linking to dashboard
 - [x] **Footer** - Minimal footer with brand text
+- [x] **WebMCP Integration** - AI agents can interact with the landing page to search and play releases directly from the homepage
 
 ### Internationalization (i18n)
 
@@ -117,6 +118,14 @@ Open [http://localhost:3000](http://localhost:3000) to view the landing page and
 - [x] TypeScript strict mode throughout
 - [x] Clean, organized code with clear separation of concerns
 - [x] Custom dark scrollbar styling (primary accent at 50% opacity)
+
+### WebMCP (Web Model Context Protocol) Integration
+
+- [x] **Dashboard Tools** - 9 structured tools available in dashboard: `get_releases`, `get_release_by_id`, `get_sales`, `get_revenue_summary`, `get_engagement`, `get_top_fans`, `get_player_state`, `play_track`, `control_player`
+- [x] **Landing Page Tools** - 2 tools available on landing page: `search_release`, `navigate_and_play` to search and play releases from homepage
+- [x] **Internationalized Messages** - All WebMCP interactions support 4 languages (en, es, fr, pt)
+- [x] **User Confirmation** - Playback actions require user confirmation for security
+- [x] **Polyfill Support** - Works in all browsers with `@mcp-b/global` polyfill
 
 ### Nice-to-Haves (All Implemented)
 
@@ -229,7 +238,8 @@ specs/
 ├── 003-landing-page/         # Landing page
 ├── 004-dashboard-ui-ux/      # Dashboard UI/UX redesign
 ├── 005-responsive-mobile-fix/ # Responsive mobile layout fixes
-└── 006-mobile-a11y-audio-persist/ # Mobile a11y, audio persistence & UI enhancements
+├── 006-mobile-a11y-audio-persist/ # Mobile a11y, audio persistence & UI enhancements
+└── 007-webmcp-integration/   # WebMCP integration for AI agents
 ```
 
 Each spec contains: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model.md`, and `quickstart.md`.
@@ -243,6 +253,7 @@ Each spec contains: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model
 - `feature/004-dashboard-ui-ux` - Dashboard UI/UX redesign
 - `feature/005-responsive-mobile-fix` - Responsive mobile layout fixes
 - `fix/mobile-a11y-audio-improvements` - Mobile a11y, audio persistence & UI enhancements
+- `feature/007-webmcp-integration` - WebMCP integration for AI agents
 
 ## License
 
