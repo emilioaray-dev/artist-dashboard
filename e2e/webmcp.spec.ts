@@ -49,10 +49,45 @@ test.describe("WebMCP Tool Registration", () => {
     test.skip(!hasModelContext, "navigator.modelContext not available");
 
     const result = await page.evaluate(async () => {
-      const mc = (navigator as unknown as { modelContext: { callTool: (p: { name: string }) => Promise<{ content?: Array<{ text: string }> }> } }).modelContext;
-      const response = await mc.callTool({ name: "get_releases" });
-      const text = response?.content?.[0]?.text;
-      return text ? JSON.parse(text) : null;
+      const modelContext = (navigator as any).modelContext;
+      if (!modelContext) {
+        throw new Error("modelContext is not available");
+      }
+      
+      // Look for the registered tools differently
+      if (!modelContext.tools || !Array.isArray(modelContext.tools)) {
+        // Alternative API: maybe tools are accessed differently
+        if (typeof modelContext.executeTool === 'function') {
+          // If there's a direct executeTool method
+          const response = await modelContext.executeTool("get_releases", {});
+          const text = response?.content?.[0]?.text;
+          return text ? JSON.parse(text) : null;
+        } else {
+          // Try to find the tool in a different way
+          const toolEntries = Object.entries(modelContext).filter(([key, value]) => 
+            typeof value === 'object' && value !== null && 'execute' in value
+          );
+          
+          const getReleasesTool = toolEntries.find(([name]) => name === "get_releases");
+          if (getReleasesTool && getReleasesTool[1] && typeof getReleasesTool[1].execute === 'function') {
+            const response = await getReleasesTool[1].execute({});
+            const text = response?.content?.[0]?.text;
+            return text ? JSON.parse(text) : null;
+          } else {
+            throw new Error("Could not find get_releases tool with expected API");
+          }
+        }
+      } else {
+        // Original approach if tools is an array-like object
+        const tool = modelContext.tools.get("get_releases");
+        if (!tool) {
+          throw new Error("get_releases tool not found");
+        }
+        
+        const response = await tool.execute({});
+        const text = response?.content?.[0]?.text;
+        return text ? JSON.parse(text) : null;
+      }
     });
 
     expect(result).toBeTruthy();
