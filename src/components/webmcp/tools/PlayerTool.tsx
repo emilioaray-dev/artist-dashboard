@@ -67,7 +67,7 @@ export function PlayerTool() {
       if (!release) throw new Error(t("trackNotFound", { id: releaseId }));
       if (!release.audioUrl) throw new Error(t("noAudioAvailable", { title: release.title }));
 
-      usePlayerStore.getState().play(release.audioUrl, release.title);
+      usePlayerStore.getState().play(release.audioUrl, release.title, releaseId);
       return { played: true, title: release.title, releaseId };
     },
   });

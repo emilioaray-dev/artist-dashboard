@@ -175,7 +175,7 @@ export function AudioWaveform({ release, className }: AudioWaveformProps) {
     } else {
       // When playing this track, update the global store with its specific duration
       setDuration(trackDuration);
-      play(audioUrl, release.title);
+      play(audioUrl, release.title, release.id);
     }
   };
 

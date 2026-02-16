@@ -270,7 +270,7 @@ describe("WebMCP Tool Execution", () => {
 
       expect(result.played).toBe(true);
       expect(result.title).toBe("Test Track");
-      expect(mockStore.play).toHaveBeenCalledWith("/api/audio/rel_001", "Test Track");
+      expect(mockStore.play).toHaveBeenCalledWith("/api/audio/rel_001", "Test Track", "rel_001");
     });
   });
 
