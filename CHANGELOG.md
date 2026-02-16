@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-02-16
+
+### Added
+
+- **AudioPlayer Track Link**: Navigation icon next to track title in the floating player bar, linking to the release detail page; hidden when already on that page
+- **404 Redirect**: Middleware validates routes and redirects invalid paths back to referrer or home instead of showing a 404 page
+- **Go Back Button**: Client-side back navigation button on the not-found page as fallback
+- **Vercel Silent Mode**: `vercel.json` with `github.silent: true` to suppress PR deployment checks
+
+### Fixed
+
+- **CI Job Ordering**: E2E tests now depend on lint and unit tests passing first (`needs: [lint, unit-tests]`)
+
 ## [1.0.0] - 2026-02-16
 
 ### Added
