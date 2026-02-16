@@ -20,11 +20,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/core/dropdown-menu";
+import { useHydrated } from "@/hooks/useHydrated";
 import { useSidebar } from "@/hooks/useSidebar";
 
 export function DashboardHeader() {
   const t = useTranslations("Header");
   const { collapsed } = useSidebar();
+  const hydrated = useHydrated();
 
   return (
     <header
@@ -42,57 +44,66 @@ export function DashboardHeader() {
 
       {/* Right side: language + notifications + avatar */}
       <div className="flex items-center gap-2">
-        <LanguageSelector compact />
+        {hydrated && <LanguageSelector compact />}
 
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="size-5" />
           <span className="sr-only">{t("notifications")}</span>
         </Button>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-              <Avatar size="default">
-                <AvatarImage src="/avatars/user.jpg" alt="Marco Alvarez" />
-                <AvatarFallback>MA</AvatarFallback>
-              </Avatar>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" align="end" forceMount>
-            <DropdownMenuLabel className="font-normal">
-              <div className="flex flex-col space-y-1">
-                <p className="text-sm leading-none font-medium">
-                  {t("artistName")}
-                </p>
-                <p className="text-muted-foreground text-xs leading-none">
-                  {t("artistEmail")}
-                </p>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
+        {hydrated ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                <Avatar size="default">
+                  <AvatarImage src="/avatars/user.jpg" alt="Marco Alvarez" />
+                  <AvatarFallback>MA</AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm leading-none font-medium">
+                    {t("artistName")}
+                  </p>
+                  <p className="text-muted-foreground text-xs leading-none">
+                    {t("artistEmail")}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                  <Link href={ROUTES.settings}>
+                    <User className="mr-2 size-4" />
+                    {t("profile")}
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={ROUTES.settings}>
+                    <Settings className="mr-2 size-4" />
+                    {t("settings")}
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href={ROUTES.settings}>
-                  <User className="mr-2 size-4" />
-                  {t("profile")}
+                <Link href={ROUTES.home}>
+                  <LogOut className="mr-2 size-4" />
+                  {t("signOut")}
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href={ROUTES.settings}>
-                  <Settings className="mr-2 size-4" />
-                  {t("settings")}
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href={ROUTES.home}>
-                <LogOut className="mr-2 size-4" />
-                {t("signOut")}
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            <Avatar size="default">
+              <AvatarImage src="/avatars/user.jpg" alt="Marco Alvarez" />
+              <AvatarFallback>MA</AvatarFallback>
+            </Avatar>
+          </Button>
+        )}
       </div>
     </header>
   );
