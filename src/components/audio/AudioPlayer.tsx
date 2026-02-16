@@ -1,13 +1,16 @@
 "use client";
 
 import { useSidebar } from "@/hooks/useSidebar";
+import { Link, usePathname } from "@/i18n/navigation";
 import { usePlayerStore } from "@/store/player-store";
 
 export function AudioPlayer() {
   const { collapsed } = useSidebar();
+  const pathname = usePathname();
   const {
     currentTrack,
     currentTrackTitle,
+    currentTrackId,
     isPlaying,
     currentTime,
     duration,
@@ -84,8 +87,33 @@ export function AudioPlayer() {
           </button>
 
           <div className="min-w-0 flex-1">
-            <div className="truncate text-sm font-medium">
-              {currentTrackTitle || "Current Track"}
+            <div className="flex items-center gap-1.5">
+              <span className="truncate text-sm font-medium">
+                {currentTrackTitle || "Current Track"}
+              </span>
+              {currentTrackId && pathname !== `/releases/${currentTrackId}` && (
+                <Link
+                  href={`/releases/${currentTrackId}`}
+                  className="text-muted-foreground hover:text-primary shrink-0 rounded p-0.5 transition-colors"
+                  aria-label="Go to track detail"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M15 3h6v6" />
+                    <path d="M10 14 21 3" />
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  </svg>
+                </Link>
+              )}
             </div>
             <div className="text-muted-foreground flex items-center gap-2 text-xs">
               <span>

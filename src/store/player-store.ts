@@ -47,6 +47,7 @@ function getAudioElement(): HTMLAudioElement | null {
 interface PlayerState {
   currentTrack: string | null;
   currentTrackTitle: string | null;
+  currentTrackId: string | null;
   isPlaying: boolean;
   isBuffering: boolean;
   currentTime: number;
@@ -61,7 +62,7 @@ interface PlayerState {
   _intervalId: ReturnType<typeof setInterval> | null;
 
   // Playback controls
-  play: (trackUrl?: string, title?: string) => void;
+  play: (trackUrl?: string, title?: string, trackId?: string) => void;
   pause: () => void;
   togglePlayPause: () => void;
   stop: () => void;
@@ -102,6 +103,7 @@ export const usePlayerStore = create<PlayerState>()(
     // Initial state
     currentTrack: null,
     currentTrackTitle: null,
+    currentTrackId: null,
     isPlaying: false,
     isBuffering: false,
     currentTime: 0,
@@ -162,7 +164,7 @@ export const usePlayerStore = create<PlayerState>()(
     },
 
     // Playback controls
-    play: (trackUrl, title) => {
+    play: (trackUrl, title, trackId) => {
       const {
         currentTrack,
         _stopProgressTimer,
@@ -182,6 +184,7 @@ export const usePlayerStore = create<PlayerState>()(
         set({
           currentTrack: trackUrl,
           currentTrackTitle: title ?? get().currentTrackTitle,
+          currentTrackId: trackId ?? get().currentTrackId,
           isPlaying: true,
           isBuffering: isNewTrack,
           currentTime: isNewTrack ? 0 : get().currentTime,
@@ -414,6 +417,7 @@ export const usePlayerStore = create<PlayerState>()(
       set({
         currentTrack: null,
         currentTrackTitle: null,
+        currentTrackId: null,
         isPlaying: false,
         isBuffering: false,
         currentTime: 0,
