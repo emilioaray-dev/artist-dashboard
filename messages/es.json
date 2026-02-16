@@ -102,6 +102,7 @@
     "pageNotFound": "Página no encontrada",
     "pageNotFoundDescription": "La página que buscas no existe.",
     "tryAgain": "Intentar de nuevo",
+    "goBack": "Volver",
     "goHome": "Ir al inicio"
   },
   "Landing": {

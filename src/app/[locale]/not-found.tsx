@@ -1,3 +1,4 @@
+import { GoBackButton } from "@/components/ui/customs/feedback/GoBackButton";
 import { Link } from "@/i18n/navigation";
 import { ROUTES } from "@/lib/constants";
 import { useTranslations } from "next-intl";
@@ -11,12 +12,15 @@ export default function NotFound() {
       <p className="text-muted-foreground text-sm">
         {t("pageNotFoundDescription")}
       </p>
-      <Link
-        href={ROUTES.home}
-        className="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-medium"
-      >
-        {t("goHome")}
-      </Link>
+      <div className="flex gap-3">
+        <GoBackButton />
+        <Link
+          href={ROUTES.home}
+          className="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm font-medium"
+        >
+          {t("goHome")}
+        </Link>
+      </div>
     </div>
   );
 }
