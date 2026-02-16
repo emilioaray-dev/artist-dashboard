@@ -1,8 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { ROUTES } from "../src/lib/constants";
 
 test.describe("Releases Page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/releases");
+    await page.goto(ROUTES.releases);
     await page.waitForSelector("h1", { timeout: 15000 });
   });
 
@@ -21,12 +22,13 @@ test.describe("Releases Page", () => {
 
     // Check that the page has meaningful content beyond just the header
     const pageText = await page.textContent("body");
-    // Releases data includes types like Single, EP, Album
+    // Releases data includes types like single, ep, album, drop, bundle
     const hasReleaseContent =
-      pageText?.includes("Single") ||
-      pageText?.includes("EP") ||
-      pageText?.includes("Album") ||
-      pageText?.includes("LP");
+      pageText?.includes("single") ||
+      pageText?.includes("ep") ||
+      pageText?.includes("album") ||
+      pageText?.includes("drop") ||
+      pageText?.includes("bundle");
     expect(hasReleaseContent).toBeTruthy();
   });
 

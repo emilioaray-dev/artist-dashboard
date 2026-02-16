@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/core/button";
 import { useSidebar } from "@/hooks/useSidebar";
-import { BRAND_NAME, NAV_ITEMS, ROUTES } from "@/lib/constants";
+import { BRAND_NAME, NAV_ITEMS, PLATFORM_NAME, ROUTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Link, usePathname } from "@/i18n/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -37,7 +37,7 @@ export function Sidebar() {
               </span>
             </div>
             <span className="text-foreground text-lg font-semibold">
-              Backstage
+              {PLATFORM_NAME}
             </span>
           </Link>
         )}

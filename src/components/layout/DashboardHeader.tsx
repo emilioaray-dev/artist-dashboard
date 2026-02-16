@@ -3,7 +3,7 @@
 import { Bell, User, LogOut, Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { BRAND_NAME, ROUTES } from "@/lib/constants";
+import { BRAND_NAME, PLATFORM_NAME, ROUTES } from "@/lib/constants";
 import { Button } from "@/components/ui/core/button";
 import {
   Avatar,
@@ -36,7 +36,7 @@ export function DashboardHeader() {
         className="flex items-center gap-2 md:hidden"
       >
         <span className="text-primary text-lg font-bold">{BRAND_NAME}</span>
-        <span className="text-muted-foreground text-sm">Backstage</span>
+        <span className="text-muted-foreground text-sm">{PLATFORM_NAME}</span>
       </Link>
       <div className="hidden md:block" />
 

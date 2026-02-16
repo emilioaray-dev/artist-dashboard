@@ -188,6 +188,17 @@
     "salesByChannel": "Ventes par canal",
     "revenue": "Revenus"
   },
+  "WebMCP": {
+    "playConfirmation": "Lire \"{title}\" ?",
+    "playDeclined": "L'utilisateur a refusé",
+    "trackNotFound": "Sortie introuvable : {id}",
+    "noAudioAvailable": "Aucun audio disponible pour : {title}",
+    "releaseNotFound": "Sortie introuvable : {title}",
+    "navigateAndPlayConfirmation": "Naviguer vers le tableau de bord et lire \"{title}\" ?",
+    "userDeclined": "Utilisateur a refusé",
+    "actionCancelled": "Action annulée",
+    "localeChangeInstruction": "Pour changer la langue, accédez à l'une de ces URLs : {urls}. Exemple : Accédez à /fr/ pour passer au français."
+  },
   "Formats": {
     "timeRange7d": "7 jours",
     "timeRange30d": "30 jours",
