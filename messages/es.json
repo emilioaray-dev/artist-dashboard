@@ -189,14 +189,9 @@
     "revenue": "Ingresos"
   },
   "WebMCP": {
-    "playConfirmation": "¿Reproducir \"{title}\"?",
-    "playDeclined": "El usuario declinó",
     "trackNotFound": "Lanzamiento no encontrado: {id}",
     "noAudioAvailable": "No hay audio disponible para: {title}",
     "releaseNotFound": "Lanzamiento no encontrado: {title}",
-    "navigateAndPlayConfirmation": "¿Navegar al panel de control y reproducir \"{title}\"?",
-    "userDeclined": "Usuario declinó",
-    "actionCancelled": "Acción cancelada",
     "localeChangeInstruction": "Para cambiar el idioma, navegue a una de estas URLs: {urls}. Ejemplo: Navegue a /es/ para cambiar al español."
   },
   "Formats": {

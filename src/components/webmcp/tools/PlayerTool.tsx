@@ -53,7 +53,7 @@ export function PlayerTool() {
   useWebMCP({
     name: "play_track",
     description:
-      "Play a music track from the dashboard audio player. Requires user confirmation before starting playback.",
+      "Play a music track from the dashboard audio player.",
     inputSchema: playTrackInput,
     annotations: { readOnlyHint: false },
     handler: async ({ releaseId }) => {
@@ -66,11 +66,6 @@ export function PlayerTool() {
       );
       if (!release) throw new Error(t("trackNotFound", { id: releaseId }));
       if (!release.audioUrl) throw new Error(t("noAudioAvailable", { title: release.title }));
-
-      const confirmed = globalThis.confirm(
-        t("playConfirmation", { title: release.title }),
-      );
-      if (!confirmed) return { played: false, reason: t("playDeclined") };
 
       usePlayerStore.getState().play(release.audioUrl, release.title);
       return { played: true, title: release.title, releaseId };

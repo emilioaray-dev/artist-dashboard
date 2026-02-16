@@ -43,6 +43,9 @@ export const metadata: Metadata = {
     description: "Track your releases, direct-to-fan sales, and fan engagement",
     images: ["/images/android-chrome-512x512.png"],
   },
+  other: {
+    "mcp-server": "/.well-known/mcp.json",
+  },
 };
 
 export default function RootLayout({

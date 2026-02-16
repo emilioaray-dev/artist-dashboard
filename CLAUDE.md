@@ -5,6 +5,8 @@ Auto-generated from all feature plans. Last updated: 2026-02-05
 ## Active Technologies
 - TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + Tailwind v4, shadcn/ui, Recharts, Motion, next-intl v4.x (005-responsive-mobile-fix)
 - N/A (presentation-layer changes only) (005-responsive-mobile-fix)
+- TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + `@mcp-b/react-webmcp` v1.1.1, `@mcp-b/global` v1.5.0, `next-intl` v4.x, `zod`, Zustand (007-webmcp-discoverability)
+- N/A (uses existing API routes for data) (007-webmcp-discoverability)
 
 - TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + next-intl v4.x (i18n library with App Router + Server Component support) (feature/002-i18n-multi-language)
 - localStorage (language preference persistence via next-intl cookie) (feature/002-i18n-multi-language)
@@ -98,10 +100,10 @@ npm test && npm run lint
 TypeScript 5.x with React 19.2.3: Follow standard conventions. Motion animations use `motion` package (not framer-motion). Import from `motion/react`.
 
 ## Recent Changes
+- 007-webmcp-discoverability: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + `@mcp-b/react-webmcp` v1.1.1, `@mcp-b/global` v1.5.0, `next-intl` v4.x, `zod`, Zustand
 - 005-responsive-mobile-fix: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + Tailwind v4, shadcn/ui, Recharts, Motion, next-intl v4.x
 - 005-responsive-mobile-fix: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + Tailwind v4, shadcn/ui, Recharts, Motion, next-intl v4.x
 
-- feature/004-dashboard-ui-ux: Added TypeScript 5.x with React 19.2.3 + Next.js 16.1.6 + shadcn/ui, Recharts, Lucide React, Motion (animation), next-intl v4.x, Tailwind v4
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

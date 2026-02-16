@@ -251,7 +251,7 @@ describe("WebMCP Tool Execution", () => {
   });
 
   describe("play_track", () => {
-    it("requests user confirmation before playing", async () => {
+    it("plays track immediately without confirmation", async () => {
       const mockReleases = [
         {
           id: "rel_001",
@@ -262,37 +262,15 @@ describe("WebMCP Tool Execution", () => {
       mockFetch.mockResolvedValueOnce({
         json: async () => ({ data: mockReleases, status: 200 }),
       });
-      vi.spyOn(globalThis, "confirm").mockReturnValue(true);
 
       renderWithIntl(<PlayerTool />);
       const result = await executeTool("play_track", {
         releaseId: "rel_001",
       });
 
-      expect(globalThis.confirm).toHaveBeenCalled();
       expect(result.played).toBe(true);
-    });
-
-    it("returns declined when user cancels confirmation", async () => {
-      const mockReleases = [
-        {
-          id: "rel_001",
-          title: "Test Track",
-          audioUrl: "/api/audio/rel_001",
-        },
-      ];
-      mockFetch.mockResolvedValueOnce({
-        json: async () => ({ data: mockReleases, status: 200 }),
-      });
-      vi.spyOn(globalThis, "confirm").mockReturnValue(false);
-
-      renderWithIntl(<PlayerTool />);
-      const result = await executeTool("play_track", {
-        releaseId: "rel_001",
-      });
-
-      expect(result.played).toBe(false);
-      expect(result.reason).toBe("User declined");
+      expect(result.title).toBe("Test Track");
+      expect(mockStore.play).toHaveBeenCalledWith("/api/audio/rel_001", "Test Track");
     });
   });
 
