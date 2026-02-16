@@ -1,8 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { ROUTES } from "../src/lib/constants";
 
 test.describe("Fans Page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/fans");
+    await page.goto(ROUTES.fans);
     await page.waitForSelector("h1", { timeout: 15000 });
   });
 

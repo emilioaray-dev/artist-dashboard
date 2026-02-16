@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { ROUTES } from "../src/lib/constants";
 
 const EXPECTED_DASHBOARD_TOOLS = [
   "get_user_locale",
@@ -15,7 +16,7 @@ const EXPECTED_DASHBOARD_TOOLS = [
 
 test.describe("WebMCP Tool Registration", () => {
   test("registers all 10 tools on dashboard pages", async ({ page }) => {
-    await page.goto("/overview");
+    await page.goto(ROUTES.overview);
     await page.waitForSelector("h1", { timeout: 15000 });
 
     // Wait for WebMCP polyfill + tool registration
@@ -39,7 +40,7 @@ test.describe("WebMCP Tool Registration", () => {
   });
 
   test("get_releases tool returns data", async ({ page }) => {
-    await page.goto("/overview");
+    await page.goto(ROUTES.overview);
     await page.waitForSelector("h1", { timeout: 15000 });
     await page.waitForTimeout(2000);
 
@@ -48,46 +49,37 @@ test.describe("WebMCP Tool Registration", () => {
     );
     test.skip(!hasModelContext, "navigator.modelContext not available");
 
+    await page.waitForFunction(() => {
+      const mc = (navigator as unknown as { modelContext?: { listTools?: () => Array<{ name: string }> } }).modelContext;
+      return !!mc?.listTools?.().some((tool) => tool.name === "get_releases");
+    });
+
     const result = await page.evaluate(async () => {
-      const modelContext = (navigator as any).modelContext;
-      if (!modelContext) {
-        throw new Error("modelContext is not available");
+      type ToolResponse = { content?: Array<{ type?: string; text?: string }> };
+      const mc = (navigator as unknown as {
+        modelContext?: {
+          callTool?: (params: { name: string; arguments?: Record<string, unknown> }) => Promise<ToolResponse>;
+          executeTool?: (name: string, args: Record<string, unknown>) => Promise<ToolResponse>;
+        };
+      }).modelContext;
+
+      if (!mc) {
+        throw new Error("modelContext missing");
       }
-      
-      // Look for the registered tools differently
-      if (!modelContext.tools || !Array.isArray(modelContext.tools)) {
-        // Alternative API: maybe tools are accessed differently
-        if (typeof modelContext.executeTool === 'function') {
-          // If there's a direct executeTool method
-          const response = await modelContext.executeTool("get_releases", {});
-          const text = response?.content?.[0]?.text;
-          return text ? JSON.parse(text) : null;
-        } else {
-          // Try to find the tool in a different way
-          const toolEntries = Object.entries(modelContext).filter(([key, value]) => 
-            typeof value === 'object' && value !== null && 'execute' in value
-          );
-          
-          const getReleasesTool = toolEntries.find(([name]) => name === "get_releases");
-          if (getReleasesTool && getReleasesTool[1] && typeof getReleasesTool[1].execute === 'function') {
-            const response = await getReleasesTool[1].execute({});
-            const text = response?.content?.[0]?.text;
-            return text ? JSON.parse(text) : null;
-          } else {
-            throw new Error("Could not find get_releases tool with expected API");
-          }
-        }
+
+      // callTool (native Chromium API) and executeTool (polyfill) both return MCP format
+      let response: ToolResponse;
+      if (typeof mc.callTool === "function") {
+        response = await mc.callTool({ name: "get_releases", arguments: {} });
+      } else if (typeof mc.executeTool === "function") {
+        response = await mc.executeTool("get_releases", {});
       } else {
-        // Original approach if tools is an array-like object
-        const tool = modelContext.tools.get("get_releases");
-        if (!tool) {
-          throw new Error("get_releases tool not found");
-        }
-        
-        const response = await tool.execute({});
-        const text = response?.content?.[0]?.text;
-        return text ? JSON.parse(text) : null;
+        throw new TypeError("No tool execution API available on modelContext");
       }
+
+      const text = response?.content?.[0]?.text;
+      if (!text) throw new Error("No response text from tool execution");
+      return JSON.parse(text);
     });
 
     expect(result).toBeTruthy();
@@ -98,7 +90,7 @@ test.describe("WebMCP Tool Registration", () => {
   });
 
   test("tools are NOT registered on landing page", async ({ page }) => {
-    await page.goto("/");
+    await page.goto(ROUTES.home);
     await page.waitForTimeout(2000);
 
     const hasModelContext = await page.evaluate(

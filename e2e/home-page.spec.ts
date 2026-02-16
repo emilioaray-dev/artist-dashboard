@@ -1,8 +1,9 @@
 import { test, expect } from "@playwright/test";
+import { ROUTES } from "../src/lib/constants";
 
 test.describe("Overview Page", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/overview");
+    await page.goto(ROUTES.overview);
     // Wait for the main content to render (streaming SSR may take a moment)
     await page.waitForSelector("h1", { timeout: 15000 });
   });

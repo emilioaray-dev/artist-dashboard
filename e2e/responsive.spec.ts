@@ -1,9 +1,10 @@
 import { test, expect } from "@playwright/test";
+import { ROUTES } from "../src/lib/constants";
 
 test.describe("Responsive Design", () => {
   test("sidebar is visible on desktop", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
-    await page.goto("/overview");
+    await page.goto(ROUTES.overview);
     await page.waitForSelector("h1", { timeout: 15000 });
 
     const sidebar = page.locator("aside");
@@ -12,7 +13,7 @@ test.describe("Responsive Design", () => {
 
   test("sidebar is hidden on mobile", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/overview");
+    await page.goto(ROUTES.overview);
     await page.waitForSelector("h1", { timeout: 15000 });
 
     const sidebar = page.locator("aside");
@@ -21,7 +22,7 @@ test.describe("Responsive Design", () => {
 
   test("mobile bottom navigation is visible on mobile", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/overview");
+    await page.goto(ROUTES.overview);
     await page.waitForSelector("h1", { timeout: 15000 });
 
     // Bottom nav is a fixed div at the bottom with md:hidden
@@ -36,16 +37,16 @@ test.describe("Responsive Design", () => {
     page,
   }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/overview");
+    await page.goto(ROUTES.overview);
     await page.waitForSelector("h1", { timeout: 15000 });
 
-    // Find the Releases button in the bottom nav (below the main content)
+    // Find the Releases link in the bottom nav (below the main content)
     // The sidebar is hidden, so the only "Releases" link is in the bottom nav
     await page
       .getByRole("link", { name: "Releases" })
       .evaluate((el) => (el as HTMLAnchorElement).click());
 
-    await expect(page).toHaveURL("/releases");
+    await expect(page).toHaveURL(/\/(en|es|fr|pt)?\/?releases$/);
     await expect(page.locator("h1")).toContainText("Releases", {
       timeout: 15000,
     });
@@ -53,7 +54,7 @@ test.describe("Responsive Design", () => {
 
   test("metric cards are visible on mobile", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto("/overview");
+    await page.goto(ROUTES.overview);
     await page.waitForSelector("h1", { timeout: 15000 });
 
     await expect(page.getByText("Total Revenue")).toBeVisible({
