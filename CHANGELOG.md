@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-02-16
+
+### Added
+
+- **Version Sync Script**: `npm run version:patch/minor/major` bumps version across `package.json`, `package-lock.json`, `sonar-project.properties`, and `CHANGELOG.md` in one command
+- **Dynamic MCP Version**: MCP manifest version now reads from `package.json` via `next.config.ts` env instead of hardcoded value
+- **SonarQube Version Tracking**: Added `sonar.projectVersion` to `sonar-project.properties`
+- **CHANGELOG Comparison Links**: Added keep-a-changelog reference links
+
+### Fixed
+
+- **Version Drift**: Aligned `package.json` version with git tags and `CHANGELOG.md` (was stuck at `0.1.0`)
+
 ## [1.0.1] - 2026-02-16
 
 ### Added
@@ -53,3 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 - 0 npm audit vulnerabilities
+
+[1.0.2]: https://github.com/emilioaray-dev/artist-dashboard/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/emilioaray-dev/artist-dashboard/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/emilioaray-dev/artist-dashboard/releases/tag/v1.0.0
