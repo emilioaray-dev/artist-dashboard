@@ -37,15 +37,18 @@ Open [http://localhost:3000](http://localhost:3000) to view the landing page and
 
 ### Available Scripts
 
-| Command            | Description                 |
-| ------------------ | --------------------------- |
-| `npm run dev`      | Start development server    |
-| `npm run build`    | Build for production        |
-| `npm run start`    | Start production server     |
-| `npm run lint`     | Run ESLint                  |
-| `npm test`         | Run unit tests (watch mode) |
-| `npm run test:run` | Run unit tests (single run) |
-| `npm run test:e2e` | Run Playwright E2E tests    |
+| Command                 | Description                        |
+| ----------------------- | ---------------------------------- |
+| `npm run dev`           | Start development server           |
+| `npm run build`         | Build for production               |
+| `npm run start`         | Start production server            |
+| `npm run lint`          | Run ESLint                         |
+| `npm test`              | Run unit tests (watch mode)        |
+| `npm run test:run`      | Run unit tests (single run)        |
+| `npm run test:e2e`      | Run Playwright E2E tests           |
+| `npm run version:patch` | Bump patch version (e.g. 1.0.2 → 1.0.3) |
+| `npm run version:minor` | Bump minor version (e.g. 1.0.2 → 1.1.0) |
+| `npm run version:major` | Bump major version (e.g. 1.0.2 → 2.0.0) |
 
 ## Technology Choices
 
@@ -254,6 +257,36 @@ Each spec contains: `spec.md`, `plan.md`, `tasks.md`, `research.md`, `data-model
 - `feature/005-responsive-mobile-fix` - Responsive mobile layout fixes
 - `fix/mobile-a11y-audio-improvements` - Mobile a11y, audio persistence & UI enhancements
 - `feature/007-webmcp-integration` - WebMCP integration for AI agents
+
+## Versioning
+
+This project follows [Semantic Versioning](https://semver.org/). `package.json` is the **single source of truth** for the version number.
+
+### How to bump a version
+
+```bash
+npm run version:patch   # 1.0.2 → 1.0.3
+npm run version:minor   # 1.0.2 → 1.1.0
+npm run version:major   # 1.0.2 → 2.0.0
+```
+
+The script (`scripts/bump-version.mjs`) updates **all** version-bearing files in one command:
+
+| File                       | What changes                                          |
+| -------------------------- | ----------------------------------------------------- |
+| `package.json`             | `"version"` field                                     |
+| `package-lock.json`        | Lockfile version (via `npm install --package-lock-only`) |
+| `sonar-project.properties` | `sonar.projectVersion`                                |
+| `CHANGELOG.md`             | Inserts `## [Unreleased]` + new version header, updates comparison links |
+
+### Rules
+
+1. **Never edit version numbers by hand** — always use `npm run version:*`
+2. The script does **not** auto-commit or auto-tag — follow the project's manual release workflow
+3. To also create a git tag: `node scripts/bump-version.mjs patch --tag`
+4. After bumping, commit all changed files, open a PR, and create the GitHub release after CI passes on `main`
+
+See [CHANGELOG.md](./CHANGELOG.md) for the full release history.
 
 ## License
 

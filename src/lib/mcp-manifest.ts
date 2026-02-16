@@ -206,7 +206,7 @@ export const MCP_MANIFEST: McpManifest = {
   name: "MUSIC Backstage",
   description:
     "Artist dashboard with AI-accessible tools for music releases, sales analytics, fan engagement, and audio playback control.",
-  version: "1.0.0",
+  version: process.env.PACKAGE_VERSION ?? "0.0.0",
   tools: {
     dashboard: DASHBOARD_TOOLS,
     landing: LANDING_TOOLS,
