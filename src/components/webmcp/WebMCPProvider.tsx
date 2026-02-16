@@ -1,8 +1,11 @@
 "use client";
 
 import { useWebMCPContext } from "@mcp-b/react-webmcp";
+import { patchModelContextRegistration } from "@/lib/webmcp-patch";
 import { useLocale } from "next-intl";
 import { ReleasesTool } from "./tools/ReleasesTool";
+
+patchModelContextRegistration();
 import { SalesTool } from "./tools/SalesTool";
 import { EngagementTool } from "./tools/EngagementTool";
 import { PlayerTool } from "./tools/PlayerTool";

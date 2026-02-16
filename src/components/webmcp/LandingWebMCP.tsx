@@ -1,7 +1,11 @@
 "use client";
 
 import { useWebMCP } from "@mcp-b/react-webmcp";
-import { useTranslations } from "next-intl";
+import { routing } from "@/i18n/routing";
+import { patchModelContextRegistration } from "@/lib/webmcp-patch";
+import { useLocale, useTranslations } from "next-intl";
+
+patchModelContextRegistration();
 import { z } from "zod";
 
 const READ_ONLY = { readOnlyHint: true } as const;
@@ -16,6 +20,8 @@ const navigateAndPlayInput = {
 
 export function LandingWebMCP() {
   const t = useTranslations("WebMCP");
+  const locale = useLocale();
+  const localePrefix = locale === routing.defaultLocale ? "" : `/${locale}`;
 
   useWebMCP({
     name: "search_release",
@@ -55,13 +61,14 @@ export function LandingWebMCP() {
       if (!release.audioUrl)
         throw new Error(t("noAudioAvailable", { title: release.title }));
 
-      globalThis.open(`/releases/${releaseId}`, "_self");
+      const destination = `${localePrefix}/releases/${releaseId}`;
+      globalThis.open(destination, "_self");
 
       return {
         action: "navigated",
         title: release.title,
         releaseId,
-        destination: `/releases/${releaseId}`,
+        destination,
       };
     },
   });
@@ -79,10 +86,8 @@ export function LandingWebMCP() {
           { code: "fr", name: "Français" },
           { code: "pt", name: "Português" },
         ],
-        default: "en",
-        current: typeof globalThis !== "undefined" && typeof globalThis.location !== "undefined"
-          ? globalThis.location.pathname.split('/')[1] || "en"
-          : "en"
+        default: routing.defaultLocale,
+        current: locale
       };
     },
   });
