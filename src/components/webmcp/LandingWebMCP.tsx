@@ -40,7 +40,7 @@ export function LandingWebMCP() {
   useWebMCP({
     name: "navigate_and_play",
     description:
-      "Navigate to the dashboard releases page and play a music track. Requires user confirmation before navigating.",
+      "Navigate to the dashboard and play a music track.",
     inputSchema: navigateAndPlayInput,
     annotations: { readOnlyHint: false },
     handler: async ({ releaseId }) => {
@@ -55,12 +55,6 @@ export function LandingWebMCP() {
       if (!release.audioUrl)
         throw new Error(t("noAudioAvailable", { title: release.title }));
 
-      const confirmed = globalThis.confirm(
-        t("navigateAndPlayConfirmation", { title: release.title }),
-      );
-      if (!confirmed) return { action: "cancelled", reason: t("userDeclined") };
-
-      // Abrir la página de detalle del lanzamiento en una nueva pestaña/ventana
       globalThis.open(`/releases/${releaseId}`, "_self");
 
       return {
@@ -86,8 +80,8 @@ export function LandingWebMCP() {
           { code: "pt", name: "Português" },
         ],
         default: "en",
-        current: typeof globalThis !== "undefined" && typeof globalThis.location !== "undefined" 
-          ? globalThis.location.pathname.split('/')[1] || "en" 
+        current: typeof globalThis !== "undefined" && typeof globalThis.location !== "undefined"
+          ? globalThis.location.pathname.split('/')[1] || "en"
           : "en"
       };
     },
@@ -100,8 +94,6 @@ export function LandingWebMCP() {
     annotations: READ_ONLY,
     handler: () => {
       const urls = ["/en/", "/es/", "/fr/", "/pt/"].join(", ");
-      // Using direct string formatting instead of useTranslations hook to comply with React Hooks rules
-      // The translations are handled in the client application that consumes this tool
       return {
         instruction: `To change the language, navigate to one of these URLs: ${urls}. Example: Navigate to /es/ to switch to Spanish.`,
         availableUrls: ["/en/", "/es/", "/fr/", "/pt/"]
