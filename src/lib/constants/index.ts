@@ -1,4 +1,9 @@
-export { BRAND_NAME, SITE_PRODUCTION_URL } from "./branding";
+export {
+  BRAND_NAME,
+  PLATFORM_NAME,
+  SITE_PRODUCTION_URL,
+  SITE_TITLE,
+} from "./branding";
 export { CHANNEL_INFO, CHART_COLORS, TIME_RANGES, TREND_ICONS } from "./charts";
 export { NAV_ITEMS } from "./navigation";
 export { ROUTES } from "./routes";
